@@ -22,8 +22,8 @@ export function Highway({ velocity = 0 }: HighwayProps) {
         <planeGeometry args={[11, roadLength]} />
         <meshStandardMaterial
           color="#050B18"
-          roughness={0.22}
-          metalness={0.88}
+          roughness={0.52}
+          metalness={0.62}
           side={THREE.DoubleSide}
         />
       </mesh>
