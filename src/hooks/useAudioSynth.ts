@@ -2,9 +2,12 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const AUDIO_SRC = `${basePath}/assets/audio/ambient-cyber.mp3`;
+
 /**
- * Procedural Web Audio API sound generator for cyberpunk futuristic soundscape:
- * - Ambient sci-fi drone (smooth low-pass filtered oscillators)
+ * Cyberpunk futuristic soundscape:
+ * - Plays user-uploaded ambient cyber music loop (`ambient-cyber.mp3`) with smooth volume fades
  * - Scroll acceleration whoosh
  * - Futuristic UI click / blip
  * - Warp transition chime
@@ -12,16 +15,35 @@ import { useEffect, useRef, useState, useCallback } from "react";
 export function useAudioSynth() {
   const [isMuted, setIsMuted] = useState(true);
   const audioCtxRef = useRef<AudioContext | null>(null);
-  const droneNodesRef = useRef<{
-    osc1: OscillatorNode;
-    osc2: OscillatorNode;
-    gain: GainNode;
-    filter: BiquadFilterNode;
-  } | null>(null);
+  const bgAudioRef = useRef<HTMLAudioElement | null>(null);
+  const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Initialize background audio element on client
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const audio = new Audio(AUDIO_SRC);
+      audio.loop = true;
+      audio.volume = 0;
+      audio.preload = "auto";
+      bgAudioRef.current = audio;
+    }
+    return () => {
+      if (bgAudioRef.current) {
+        bgAudioRef.current.pause();
+        bgAudioRef.current.src = "";
+        bgAudioRef.current = null;
+      }
+      if (fadeIntervalRef.current) {
+        clearInterval(fadeIntervalRef.current);
+      }
+    };
+  }, []);
 
   const initAudio = useCallback(() => {
     if (!audioCtxRef.current && typeof window !== "undefined") {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (AudioCtx) {
         audioCtxRef.current = new AudioCtx();
       }
@@ -31,57 +53,47 @@ export function useAudioSynth() {
     }
   }, []);
 
-  // Ambient Sci-Fi Drone
-  const startDrone = useCallback(() => {
-    if (!audioCtxRef.current || droneNodesRef.current) return;
-    try {
-      const ctx = audioCtxRef.current;
-      const osc1 = ctx.createOscillator();
-      const osc2 = ctx.createOscillator();
-      const filter = ctx.createBiquadFilter();
-      const gain = ctx.createGain();
+  // Smooth fade-in of background ambient track
+  const playTrack = useCallback(() => {
+    const audio = bgAudioRef.current;
+    if (!audio) return;
 
-      osc1.type = "sawtooth";
-      osc1.frequency.setValueAtTime(55, ctx.currentTime); // Low A1
+    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
 
-      osc2.type = "sine";
-      osc2.frequency.setValueAtTime(110, ctx.currentTime); // A2
+    audio.volume = 0.02;
+    audio.play().catch(() => {
+      // Browser autoplay policy fallback
+    });
 
-      filter.type = "lowpass";
-      filter.frequency.setValueAtTime(220, ctx.currentTime);
-      filter.Q.setValueAtTime(2, ctx.currentTime);
-
-      gain.gain.setValueAtTime(0.001, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 3);
-
-      osc1.connect(filter);
-      osc2.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc1.start();
-      osc2.start();
-
-      droneNodesRef.current = { osc1, osc2, gain, filter };
-    } catch {
-      // Audio autoplay policy fallback
-    }
+    const targetVolume = 0.38;
+    fadeIntervalRef.current = setInterval(() => {
+      if (!audio) return;
+      if (audio.volume < targetVolume - 0.03) {
+        audio.volume = Math.min(targetVolume, audio.volume + 0.04);
+      } else {
+        audio.volume = targetVolume;
+        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+      }
+    }, 80);
   }, []);
 
-  const stopDrone = useCallback(() => {
-    if (!droneNodesRef.current || !audioCtxRef.current) return;
-    try {
-      const { osc1, osc2, gain } = droneNodesRef.current;
-      const ctx = audioCtxRef.current;
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.5);
-      setTimeout(() => {
-        osc1.stop();
-        osc2.stop();
-        droneNodesRef.current = null;
-      }, 600);
-    } catch {
-      droneNodesRef.current = null;
-    }
+  // Smooth fade-out of background ambient track
+  const pauseTrack = useCallback(() => {
+    const audio = bgAudioRef.current;
+    if (!audio) return;
+
+    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+
+    fadeIntervalRef.current = setInterval(() => {
+      if (!audio) return;
+      if (audio.volume > 0.05) {
+        audio.volume = Math.max(0, audio.volume - 0.06);
+      } else {
+        audio.volume = 0;
+        audio.pause();
+        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+      }
+    }, 60);
   }, []);
 
   const toggleSound = useCallback(() => {
@@ -89,13 +101,13 @@ export function useAudioSynth() {
     setIsMuted((prev) => {
       const next = !prev;
       if (!next) {
-        startDrone();
+        playTrack();
       } else {
-        stopDrone();
+        pauseTrack();
       }
       return next;
     });
-  }, [initAudio, startDrone, stopDrone]);
+  }, [initAudio, playTrack, pauseTrack]);
 
   // UI interaction blip
   const playClick = useCallback(() => {
@@ -183,12 +195,12 @@ export function useAudioSynth() {
 
   useEffect(() => {
     return () => {
-      stopDrone();
+      pauseTrack();
       if (audioCtxRef.current) {
         audioCtxRef.current.close().catch(() => {});
       }
     };
-  }, [stopDrone]);
+  }, [pauseTrack]);
 
   return {
     isMuted,
@@ -198,4 +210,3 @@ export function useAudioSynth() {
     playWarp,
   };
 }
-
