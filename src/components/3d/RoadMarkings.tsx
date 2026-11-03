@@ -25,7 +25,7 @@ export function RoadMarkings({ velocity = 0 }: RoadMarkingsProps) {
 
     for (let i = 0; i < totalDashes; i++) {
       const zPos = 20 - i * spacing;
-      dummy.position.set(0, 0.03, zPos);
+      dummy.position.set(0, 0.048, zPos);
       dummy.scale.set(0.10, 0.01, 2.4); // Slim, sleek profile
       dummy.updateMatrix();
 

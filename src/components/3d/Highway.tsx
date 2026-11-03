@@ -2,6 +2,7 @@
 
 import * as THREE from "three";
 import { RoadMarkings } from "./RoadMarkings";
+import { HighwayTiles } from "./HighwayTiles";
 
 interface HighwayProps {
   velocity?: number;
@@ -13,7 +14,7 @@ export function Highway({ velocity = 0 }: HighwayProps) {
 
   return (
     <group>
-      {/* Main Asphalt Road Surface (Rotated flat onto XZ plane) */}
+      {/* Foundation Road Bed Surface (Underneath the tiles) */}
       <mesh
         position={[0, 0, roadCenterZ]}
         rotation={[-Math.PI / 2, 0, 0]}
@@ -21,16 +22,19 @@ export function Highway({ velocity = 0 }: HighwayProps) {
       >
         <planeGeometry args={[11, roadLength]} />
         <meshStandardMaterial
-          color="#050B18"
-          roughness={0.52}
-          metalness={0.62}
+          color="#02040A"
+          roughness={0.65}
+          metalness={0.4}
           side={THREE.DoubleSide}
         />
       </mesh>
 
+      {/* Realistic Black Shiny Highway Tiles */}
+      <HighwayTiles roadLength={roadLength} roadCenterZ={roadCenterZ} />
+
       {/* Shoulder Lane Guide Stripes (Left & Right) */}
       <mesh
-        position={[-3.2, 0.015, roadCenterZ]}
+        position={[-3.2, 0.042, roadCenterZ]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
         <planeGeometry args={[0.07, roadLength]} />
@@ -42,7 +46,7 @@ export function Highway({ velocity = 0 }: HighwayProps) {
         />
       </mesh>
       <mesh
-        position={[3.2, 0.015, roadCenterZ]}
+        position={[3.2, 0.042, roadCenterZ]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
         <planeGeometry args={[0.07, roadLength]} />
