@@ -140,12 +140,12 @@ export function HighwayTiles({
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial
           color="#040712"
-          roughness={0.34} // Balanced roughness: not a flat mirror, authentic stone texture
-          metalness={0.82} // High specular reflectivity for wet-look glossy glints
+          roughness={0.42} // Balanced diffused roughness: no harsh glare, authentic wet stone texture
+          metalness={0.65} // Subtle specular response to neon and ambient lights
           bumpMap={bumpTexture || undefined}
-          bumpScale={0.035} // Tactile micro-grain surface relief
+          bumpScale={0.045} // Tactile micro-grain surface relief
           roughnessMap={bumpTexture || undefined}
-          envMapIntensity={1.7}
+          envMapIntensity={1.2}
         />
       </instancedMesh>
 

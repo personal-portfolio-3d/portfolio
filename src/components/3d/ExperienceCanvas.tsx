@@ -58,8 +58,8 @@ export function ExperienceCanvas({
 
         {/* Ambient & Sci-Fi City Lighting */}
         <ambientLight intensity={0.5} color="#081426" />
-        <directionalLight position={[0, 25, currentZ + 15]} intensity={1.8} color="#168BFF" />
-        <pointLight position={[0, 10, currentZ - 12]} intensity={0.75} color="#22D3EE" distance={55} decay={2} />
+        <directionalLight position={[0, 25, currentZ + 15]} intensity={1.2} color="#168BFF" />
+        <pointLight position={[0, 14, currentZ - 16]} intensity={0.28} color="#22D3EE" distance={70} decay={2} />
 
         <Suspense fallback={null}>
           {/* Camera Controller driven by scroll progress */}
