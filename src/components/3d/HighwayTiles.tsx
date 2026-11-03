@@ -83,12 +83,12 @@ export function HighwayTiles({
 
     // Natural obsidian / dark wet basalt paver shades
     const tileShades = [
-      "#020409", // Deep obsidian
-      "#040712", // Midnight basalt
-      "#060A18", // Dark wet slate
-      "#03050C", // Jet black paver
-      "#050914", // Polished charcoal
-      "#020307", // Basalt shadow
+      "#080e1c", // Polished Graphite
+      "#0b1426", // Midnight Basalt
+      "#0e1930", // Slate Cyber Paver
+      "#070c18", // Dark Charcoal
+      "#0a1222", // Deep River Stone
+      "#060a14", // Shadowed Basalt
     ];
 
     let idx = 0;
@@ -139,13 +139,13 @@ export function HighwayTiles({
       >
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial
-          color="#040712"
-          roughness={0.42} // Balanced diffused roughness: no harsh glare, authentic wet stone texture
-          metalness={0.65} // Subtle specular response to neon and ambient lights
+          color="#080e1c"
+          roughness={0.44} // Diffused tactile texture, no harsh glare
+          metalness={0.62} // Subtle specular response to ambient cyber lights
           bumpMap={bumpTexture || undefined}
           bumpScale={0.045} // Tactile micro-grain surface relief
           roughnessMap={bumpTexture || undefined}
-          envMapIntensity={1.2}
+          envMapIntensity={1.3}
         />
       </instancedMesh>
 
