@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#03060D" />
+      <stop offset="100%" stop-color="#081426" />
+    </linearGradient>
+    <linearGradient id="glow2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#168BFF" />
+      <stop offset="100%" stop-color="#22D3EE" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#bg2)" rx="16" />
+
+  <!-- App Header -->
+  <rect x="24" y="24" width="752" height="48" rx="8" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <rect x="42" y="38" width="20" height="20" rx="4" fill="#168BFF" />
+  <text x="74" y="53" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="14" font-weight="bold">GADGET SOFTWARE // ENTERPRISE PWA MANUALS</text>
+  <rect x="620" y="34" width="140" height="28" rx="6" fill="#101F38" stroke="#168BFF" stroke-width="1" />
+  <text x="636" y="52" fill="#22D3EE" font-family="monospace" font-size="11" font-weight="bold">● OFFLINE READY</text>
+
+  <!-- Left Sidebar (Multi-tenant Document Trees) -->
+  <rect x="24" y="86" width="230" height="370" rx="10" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="44" y="116" fill="#A5B6D0" font-family="sans-serif" font-size="12" font-weight="bold">TENANT MANUALS (10+ ORGS)</text>
+
+  <!-- Folder 1 -->
+  <rect x="38" y="132" width="202" height="42" rx="6" fill="#101F38" stroke="#168BFF" stroke-width="1" />
+  <text x="52" y="157" fill="#22D3EE" font-family="sans-serif" font-size="12" font-weight="bold">📁 Industrial Robotics V4.2</text>
+  
+  <!-- Folder 2 -->
+  <rect x="38" y="182" width="202" height="42" rx="6" fill="#081426" stroke="#1B2A40" stroke-width="1" />
+  <text x="52" y="207" fill="#A5B6D0" font-family="sans-serif" font-size="12">📁 Avionics Flight Controls</text>
+
+  <!-- Folder 3 -->
+  <rect x="38" y="232" width="202" height="42" rx="6" fill="#081426" stroke="#1B2A40" stroke-width="1" />
+  <text x="52" y="257" fill="#A5B6D0" font-family="sans-serif" font-size="12">📁 Medical Imaging Systems</text>
+
+  <rect x="38" y="282" width="202" height="42" rx="6" fill="#081426" stroke="#1B2A40" stroke-width="1" />
+  <text x="52" y="307" fill="#A5B6D0" font-family="sans-serif" font-size="12">📁 Enterprise Server Racks</text>
+
+  <!-- Device Synchronization Status -->
+  <rect x="38" y="340" width="202" height="100" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="50" y="362" fill="#EDF4FF" font-family="monospace" font-size="10" font-weight="bold">DEVICE MATRIX</text>
+  <text x="50" y="382" fill="#71839F" font-family="monospace" font-size="10">Windows • macOS • iOS • Android</text>
+  <text x="50" y="402" fill="#22D3EE" font-family="monospace" font-size="10">FCM Push Notification: Active</text>
+  <text x="50" y="422" fill="#168BFF" font-family="monospace" font-size="10">IndexedDB Storage: Synchronized</text>
+
+  <!-- Main Viewer Center Panel -->
+  <rect x="270" y="86" width="506" height="370" rx="10" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  
+  <!-- Interactive Manual Viewer Bar -->
+  <rect x="290" y="106" width="466" height="38" rx="6" fill="#081426" stroke="#1B2A40" stroke-width="1" />
+  <text x="306" y="130" fill="#EDF4FF" font-family="sans-serif" font-size="12" font-weight="bold">📖 Section 3.4 — High-Torque Actuator Calibration</text>
+  <rect x="660" y="112" width="84" height="26" rx="4" fill="#168BFF" />
+  <text x="674" y="129" fill="#EDF4FF" font-family="sans-serif" font-size="10" font-weight="bold">EXPORT PDF</text>
+
+  <!-- Technical Schematic Wireframe Illustration -->
+  <rect x="290" y="156" width="466" height="180" rx="8" fill="#101F38" stroke="#168BFF" stroke-width="1" />
+  <!-- Wireframe lines -->
+  <g stroke="#22D3EE" stroke-width="1.5" fill="none" opacity="0.8">
+    <rect x="340" y="180" width="120" height="90" rx="4" />
+    <circle cx="400" cy="225" r="28" stroke="#168BFF" stroke-dasharray="4" />
+    <line x1="460" y1="225" x2="540" y2="225" />
+    <polygon points="540,225 580,195 580,255" />
+    <circle cx="630" cy="225" r="34" stroke="#6D45E8" />
+    <line x1="630" y1="191" x2="630" y2="259" />
+  </g>
+  <text x="310" y="322" fill="#22D3EE" font-family="monospace" font-size="11">INTERACTIVE 3D COMPONENT EXPLORER // REAL-TIME RENDERING</text>
+
+  <!-- Telemetry Bar at bottom -->
+  <rect x="290" y="352" width="466" height="84" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="306" y="376" fill="#A5B6D0" font-family="sans-serif" font-size="11" font-weight="bold">MULTI-TENANT ANALYTICS PIPELINE</text>
+  <text x="306" y="398" fill="#71839F" font-family="monospace" font-size="10">Non-blocking background events • 10,000+ daily reading sessions</text>
+  <text x="306" y="418" fill="#168BFF" font-family="monospace" font-size="10">Cross-Platform Sync Latency: &lt; 42ms</text>
+</svg>
+

@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-orbitron: 'Orbitron', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --bg-main: #03060D;
+  --bg-secondary: #050B18;
+  --bg-navy: #081426;
+  --bg-panel: rgba(10, 20, 37, 0.45);
+  --bg-card: rgba(13, 27, 48, 0.40);
+  
+  --accent-electric-blue: #168BFF;
+  --accent-neon-blue: #007BFF;
+  --accent-cyan: #22D3EE;
+  
+  --accent-violet: #6D45E8;
+  --accent-purple: #925CFF;
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #E2E8F0;
+  --text-neon-cyan: #22D3EE;
+  --text-neon-blue: #60A5FA;
+  
+  --border-primary: rgba(34, 211, 238, 0.45);
+  --border-subtle: rgba(22, 139, 255, 0.30);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #03060D;
+  color: #FFFFFF;
+  font-family: var(--font-inter);
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #03060D;
+}
+::-webkit-scrollbar-thumb {
+  background: #22D3EE;
+  border-radius: 3px;
+  box-shadow: 0 0 10px #22D3EE;
+}
+
+/* Ultra-Transparent Glassmorphism System */
+.glass-cyber-card {
+  background: rgba(8, 18, 38, 0.42);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(34, 211, 238, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.65), 0 0 18px rgba(34, 211, 238, 0.2);
+}
+
+.glass-cyber-card:hover {
+  border-color: #22D3EE;
+  background: rgba(10, 24, 52, 0.52);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.75), 0 0 24px rgba(34, 211, 238, 0.45);
+}
+
+/* High-Luminance Neon Text Glows */
+.text-glow-white {
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 14px rgba(34, 211, 238, 0.95), 0 0 28px rgba(34, 211, 238, 0.5);
+}
+
+.text-glow-blue {
+  text-shadow: 0 0 14px rgba(22, 139, 255, 0.95), 0 0 28px rgba(22, 139, 255, 0.5);
+}
+
+.text-glow-violet {
+  text-shadow: 0 0 14px rgba(168, 85, 247, 0.9), 0 0 28px rgba(168, 85, 247, 0.4);
+}
+
+/* Modal Smooth Cinematic Entrance & Exit Animations */
+@keyframes modalBackdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalBackdropFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalContentIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.90) translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modalContentOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.92) translateY(18px);
+  }
+}
+
+.modal-backdrop-in {
+  animation: modalBackdropFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-backdrop-out {
+  animation: modalBackdropFadeOut 0.32s ease-out forwards;
+}
+
+.modal-content-in {
+  animation: modalContentIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-content-out {
+  animation: modalContentOut 0.32s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
