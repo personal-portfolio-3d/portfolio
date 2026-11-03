@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { SECTIONS } from "@/data/portfolioData";
 
 export const MIN_Z = 5;
-export const MAX_Z = -450;
+export const MAX_Z = -550;
 const TOTAL_SPAN = Math.abs(MAX_Z - MIN_Z);
 
 export function useScrollProgress(isLocked: boolean = false) {

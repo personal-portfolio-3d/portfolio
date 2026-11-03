@@ -13,6 +13,7 @@ import { Scene2About } from "./scenes/Scene2About";
 import { Scene3Skills } from "./scenes/Scene3Skills";
 import { Scene4Projects } from "./scenes/Scene4Projects";
 import { Scene5Experience } from "./scenes/Scene5Experience";
+import { Scene6Articles } from "./scenes/Scene6Articles";
 import { Scene6Github } from "./scenes/Scene6Github";
 import { Scene7Contact } from "./scenes/Scene7Contact";
 import { Project, ExperienceItem } from "@/types/portfolio";
@@ -70,7 +71,7 @@ export function ExperienceCanvas({
           <CitySkyline currentZ={currentZ} />
           <ParticleField />
 
-          {/* 7 Interactive Spatial Scenes */}
+          {/* 8 Interactive Spatial Scenes */}
           <Scene1Portal currentZ={currentZ} onExploreClick={onExploreClick} isModalOpen={isModalOpen} />
           <Scene2About currentZ={currentZ} onExploreMore={onExploreMoreAbout} isModalOpen={isModalOpen} />
           <Scene3Skills currentZ={currentZ} isModalOpen={isModalOpen} />
@@ -81,6 +82,7 @@ export function ExperienceCanvas({
             selectedExperienceId={selectedExperienceId}
             isModalOpen={isModalOpen}
           />
+          <Scene6Articles currentZ={currentZ} isModalOpen={isModalOpen} />
           <Scene6Github currentZ={currentZ} />
           <Scene7Contact currentZ={currentZ} onRestartExperience={onRestartExperience} />
 

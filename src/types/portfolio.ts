@@ -38,3 +38,17 @@ export interface SectionCoord {
   cameraOffset?: [number, number, number];
 }
 
+export interface MediumArticle {
+  id: string;
+  title: string;
+  url: string;
+  publishedAt: string;
+  readTime: string;
+  description: string;
+  tags: string[];
+  categories: string[];
+  image: string;
+  accentColor: "pink" | "blue" | "violet" | "cyan";
+}
+
+

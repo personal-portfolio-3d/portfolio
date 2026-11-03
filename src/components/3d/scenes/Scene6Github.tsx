@@ -12,7 +12,7 @@ interface Scene6GithubProps {
 }
 
 export function Scene6Github({ currentZ }: Scene6GithubProps) {
-  const zPos = -365;
+  const zPos = -455;
   const dist = Math.abs(currentZ - zPos);
   const constellationRef = useRef<THREE.Group>(null);
 

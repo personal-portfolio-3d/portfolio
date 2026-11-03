@@ -8,8 +8,8 @@ interface HighwayProps {
 }
 
 export function Highway({ velocity = 0 }: HighwayProps) {
-  const roadLength = 540;
-  const roadCenterZ = -225; // Extends from Z = 45 to Z = -495
+  const roadLength = 680;
+  const roadCenterZ = -275; // Extends from Z = 65 to Z = -615
 
   return (
     <group>

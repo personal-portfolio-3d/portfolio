@@ -1,0 +1,50 @@
+[
+  {
+    "id": "duckdb-gemma-webgpu",
+    "title": "Building a Zero-Server-Cost AI Analytics App: Running DuckDB-WASM and Gemma on WebGPU in a Static Hugging Face Space",
+    "url": "https://medium.com/@ashish50514561/building-a-zero-server-cost-ai-analytics-app-running-duckdb-wasm-and-gemma-on-webgpu-in-a-static-37cd793f5794",
+    "publishedAt": "Oct 26, 2026",
+    "readTime": "6 min read",
+    "description": "How I built a browser-native research tool for 41,000+ US government contracts without spending a dime on backend servers using DuckDB-WASM and Gemma on WebGPU.",
+    "tags": ["#DuckDB", "#WebGPU", "#Gemma", "#AI"],
+    "categories": ["Engineering", "AI / ML", "Tech Insights", "Open Source"],
+    "image": "/assets/articles/duckdb-gemma-webgpu.png",
+    "accentColor": "pink"
+  },
+  {
+    "id": "fcm-dynamic-sw",
+    "title": "FCM : Handle dynamic firebase config in Service Worker",
+    "url": "https://medium.com/@ashish50514561/fcm-handle-dynamic-firebase-config-in-service-worker-bd4ef63a56ae",
+    "publishedAt": "May 08, 2024",
+    "readTime": "4 min read",
+    "description": "Solving dynamic Firebase Cloud Messaging configuration injection in Service Workers for multi-tenant and multi-environment client applications.",
+    "tags": ["#Firebase", "#FCM", "#ServiceWorker", "#PWA"],
+    "categories": ["Engineering", "Tech Insights"],
+    "image": "/assets/articles/fcm-service-worker.png",
+    "accentColor": "blue"
+  },
+  {
+    "id": "event-driven-microservices",
+    "title": "Scalable Microservices: Event-Driven Processing with Kafka & AWS",
+    "url": "https://medium.com/@ashish50514561",
+    "publishedAt": "Mar 15, 2024",
+    "readTime": "8 min read",
+    "description": "Architectural blueprint for building resilient distributed event pipelines with dead-letter retries, outbox pattern, and high-throughput streaming.",
+    "tags": ["#Kafka", "#AWS", "#Microservices", "#Architecture"],
+    "categories": ["Engineering", "Open Source", "Tech Insights"],
+    "image": "/assets/articles/event-driven-microservices.svg",
+    "accentColor": "violet"
+  },
+  {
+    "id": "ai-enterprise-workflows",
+    "title": "Integrating Autonomous AI Workflows into Developer Tools",
+    "url": "https://medium.com/@ashish50514561",
+    "publishedAt": "Feb 18, 2024",
+    "readTime": "5 min read",
+    "description": "Bridging foundational LLMs, structured function calling, and deterministic business logic into production software engineering workflows.",
+    "tags": ["#AI", "#DeveloperTools", "#Productivity", "#LLM"],
+    "categories": ["AI / ML", "Tech Insights", "Career"],
+    "image": "/assets/articles/ai-brain.svg",
+    "accentColor": "cyan"
+  }
+]

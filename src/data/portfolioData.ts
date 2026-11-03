@@ -6,8 +6,9 @@ export const SECTIONS: SectionCoord[] = [
   { id: "skills", name: "SKILLS", number: "03", zPos: -130 },
   { id: "projects", name: "PROJECTS", number: "04", zPos: -215 },
   { id: "experience", name: "EXPERIENCE", number: "05", zPos: -295 },
-  { id: "github", name: "GITHUB", number: "06", zPos: -365 },
-  { id: "contact", name: "CONTACT", number: "07", zPos: -435 },
+  { id: "articles", name: "ARTICLES", number: "06", zPos: -375 },
+  { id: "github", name: "GITHUB", number: "07", zPos: -455 },
+  { id: "contact", name: "CONTACT", number: "08", zPos: -535 },
 ];
 
 export const PERSONAL_INFO = {
