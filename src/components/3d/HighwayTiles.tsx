@@ -13,147 +13,161 @@ export function HighwayTiles({
   roadCenterZ = -275,
 }: HighwayTilesProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
-  const outerMeshRef = useRef<THREE.InstancedMesh>(null);
 
-  // Tile dimensions
-  const tileLength = 4.75; // Slabs of length 4.75m
-  const seamZ = 0.25; // 0.25m groove between rows
-  const stepZ = tileLength + seamZ; // 5.0m step per row
-  const tileHeight = 0.035; // 3.5cm slab thickness
+  // Smaller paver dimensions for a tangible, authentic street pavement feel
+  const tileWidth = 0.98; // ~1 meter wide paver
+  const tileLength = 1.55; // 1.55 meters long
+  const seamGap = 0.08; // 8cm recessed groove between tiles
+  const stepZ = tileLength + seamGap; // 1.63m step per row
+  const tileHeight = 0.028; // 2.8cm paver thickness
 
   const startZ = roadCenterZ + roadLength / 2 - 2; // ~Z = +63
   const endZ = roadCenterZ - roadLength / 2 + 2; // ~Z = -613
   const numRows = Math.floor((startZ - endZ) / stepZ);
 
-  // 4 Highway Lanes (2 inner lanes + 2 outer shoulder lanes)
-  const innerLanesX = useMemo(() => [-1.48, 1.48], []);
-  const outerLanesX = useMemo(() => [-4.15, 4.15], []);
+  // 10 columns of tiles across the 11m highway width
+  const columnsX = useMemo(
+    () => [-4.72, -3.67, -2.62, -1.57, -0.52, 0.52, 1.57, 2.62, 3.67, 4.72],
+    []
+  );
 
-  const innerTileWidth = 2.55;
-  const outerTileWidth = 2.35;
+  const totalTiles = numRows * columnsX.length;
 
-  const innerTotalCount = numRows * innerLanesX.length;
-  const outerTotalCount = numRows * outerLanesX.length;
+  // Procedural micro-grain bump & roughness texture for genuine stone/asphalt tactile grit
+  const bumpTexture = useMemo(() => {
+    if (typeof document === "undefined") return null;
+    const canvas = document.createElement("canvas");
+    canvas.width = 512;
+    canvas.height = 512;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+
+    // Midtone neutral base
+    ctx.fillStyle = "#808080";
+    ctx.fillRect(0, 0, 512, 512);
+
+    const imgData = ctx.getImageData(0, 0, 512, 512);
+    const data = imgData.data;
+
+    let seed = 98765;
+    const rand = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+
+    // Synthesize fine asphalt grit + micro-stone speckle
+    for (let i = 0; i < data.length; i += 4) {
+      const fineGrit = (rand() - 0.5) * 55;
+      const stoneSpeckle = (rand() - 0.5) * 35;
+      const noise = fineGrit + stoneSpeckle;
+      const val = Math.min(255, Math.max(0, 128 + noise));
+      data[i] = val;
+      data[i + 1] = val;
+      data[i + 2] = val;
+      data[i + 3] = 255;
+    }
+    ctx.putImageData(imgData, 0, 0);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1.5, 2.5);
+    return texture;
+  }, []);
 
   useEffect(() => {
+    if (!meshRef.current) return;
+
     const dummy = new THREE.Object3D();
     const colorObj = new THREE.Color();
 
-    // Palette of subtle glossy obsidian black shades
-    const shades = [
-      "#020408", // Deep Obsidian Black
-      "#040710", // Midnight Carbon
-      "#03050C", // Jet Black
-      "#050914", // Polished Basalt
+    // Natural obsidian / dark wet basalt paver shades
+    const tileShades = [
+      "#020409", // Deep obsidian
+      "#040712", // Midnight basalt
+      "#060A18", // Dark wet slate
+      "#03050C", // Jet black paver
+      "#050914", // Polished charcoal
+      "#020307", // Basalt shadow
     ];
 
-    // 1. Populate Inner Lanes
-    if (meshRef.current) {
-      let idx = 0;
-      for (let r = 0; r < numRows; r++) {
-        const z = startZ - r * stepZ;
-        for (let l = 0; l < innerLanesX.length; l++) {
-          const x = innerLanesX[l];
-          dummy.position.set(x, tileHeight / 2 + 0.005, z);
-          dummy.scale.set(innerTileWidth, tileHeight, tileLength);
-          dummy.updateMatrix();
-          meshRef.current.setMatrixAt(idx, dummy.matrix);
+    let idx = 0;
+    for (let r = 0; r < numRows; r++) {
+      for (let c = 0; c < columnsX.length; c++) {
+        const x = columnsX[c];
+        // Stagger alternate columns by half a tile for realistic masonry running bond
+        const isStaggered = c % 2 === 1;
+        const z = startZ - r * stepZ - (isStaggered ? stepZ * 0.5 : 0);
 
-          // Subtle natural variation in black tile polish
-          const shadeHex = shades[(r * 2 + l) % shades.length];
-          colorObj.set(shadeHex);
-          meshRef.current.setColorAt(idx, colorObj);
-          idx++;
-        }
-      }
-      meshRef.current.instanceMatrix.needsUpdate = true;
-      if (meshRef.current.instanceColor) {
-        meshRef.current.instanceColor.needsUpdate = true;
+        // Subtle micro-height variation (±1.5mm) so tiles feel individually laid
+        const microY = tileHeight / 2 + 0.005 + ((r * 3 + c * 7) % 5) * 0.001;
+
+        dummy.position.set(x, microY, z);
+        dummy.scale.set(tileWidth, tileHeight, tileLength);
+
+        // Microscopic tilt variation across pavers to catch reflections organically
+        const tiltX = (((r * 5 + c * 3) % 7) - 3) * 0.0008;
+        const tiltZ = (((r * 3 + c * 5) % 7) - 3) * 0.0008;
+        dummy.rotation.set(tiltX, 0, tiltZ);
+
+        dummy.updateMatrix();
+        meshRef.current.setMatrixAt(idx, dummy.matrix);
+
+        // Individual tile shade variation
+        const shadeIndex = (r * 3 + c * 5) % tileShades.length;
+        colorObj.set(tileShades[shadeIndex]);
+        meshRef.current.setColorAt(idx, colorObj);
+
+        idx++;
       }
     }
 
-    // 2. Populate Outer Shoulder Lanes
-    if (outerMeshRef.current) {
-      let idx = 0;
-      for (let r = 0; r < numRows; r++) {
-        const z = startZ - r * stepZ;
-        for (let l = 0; l < outerLanesX.length; l++) {
-          const x = outerLanesX[l];
-          dummy.position.set(x, tileHeight / 2 + 0.005, z);
-          dummy.scale.set(outerTileWidth, tileHeight, tileLength);
-          dummy.updateMatrix();
-          outerMeshRef.current.setMatrixAt(idx, dummy.matrix);
-
-          const shadeHex = shades[(r * 3 + l) % shades.length];
-          colorObj.set(shadeHex);
-          outerMeshRef.current.setColorAt(idx, colorObj);
-          idx++;
-        }
-      }
-      outerMeshRef.current.instanceMatrix.needsUpdate = true;
-      if (outerMeshRef.current.instanceColor) {
-        outerMeshRef.current.instanceColor.needsUpdate = true;
-      }
+    meshRef.current.instanceMatrix.needsUpdate = true;
+    if (meshRef.current.instanceColor) {
+      meshRef.current.instanceColor.needsUpdate = true;
     }
-  }, [numRows, startZ, stepZ, innerLanesX, outerLanesX, tileHeight, tileLength, innerTileWidth, outerTileWidth]);
+  }, [numRows, startZ, stepZ, columnsX, tileHeight, tileLength, tileWidth]);
 
   return (
     <group>
-      {/* 1. Inner Center Tiles (High-Gloss Obsidian Mirror Finish) */}
+      {/* 4,000+ Smaller Rough & Glossy Obsidian Paver Tiles */}
       <instancedMesh
         ref={meshRef}
-        args={[undefined, undefined, innerTotalCount]}
+        args={[undefined, undefined, totalTiles]}
         receiveShadow
         frustumCulled={false}
       >
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial
-          color="#020408"
-          roughness={0.14} // High-gloss wet shine
-          metalness={0.92} // Reflects city skyline and neon bloom
-          envMapIntensity={1.8}
+          color="#040712"
+          roughness={0.34} // Balanced roughness: not a flat mirror, authentic stone texture
+          metalness={0.82} // High specular reflectivity for wet-look glossy glints
+          bumpMap={bumpTexture || undefined}
+          bumpScale={0.035} // Tactile micro-grain surface relief
+          roughnessMap={bumpTexture || undefined}
+          envMapIntensity={1.7}
         />
       </instancedMesh>
 
-      {/* 2. Outer Shoulder Tiles */}
-      <instancedMesh
-        ref={outerMeshRef}
-        args={[undefined, undefined, outerTotalCount]}
-        receiveShadow
-        frustumCulled={false}
-      >
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial
-          color="#020408"
-          roughness={0.18}
-          metalness={0.88}
-          envMapIntensity={1.5}
-        />
-      </instancedMesh>
-
-      {/* 3. Subtle Cyber Seam Accent Grooves (Glowing faintly in deep navy/cyan in the seams) */}
-      {/* Longitudinal Seam - Left Shoulder */}
-      <mesh position={[-2.82, 0.008, roadCenterZ]} rotation={[-Math.PI / 2, 0, 0]}>
+      {/* Recessed Cyber Foundation Seams (Glowing softly in deep blue/cyan in the grooves) */}
+      <mesh position={[-3.15, 0.006, roadCenterZ]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.04, roadLength]} />
         <meshStandardMaterial
-          color="#0B1A30"
+          color="#0A182E"
           emissive="#168BFF"
-          emissiveIntensity={0.65}
+          emissiveIntensity={0.5}
           side={THREE.DoubleSide}
         />
       </mesh>
-
-      {/* Longitudinal Seam - Right Shoulder */}
-      <mesh position={[2.82, 0.008, roadCenterZ]} rotation={[-Math.PI / 2, 0, 0]}>
+      <mesh position={[3.15, 0.006, roadCenterZ]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.04, roadLength]} />
         <meshStandardMaterial
-          color="#0B1A30"
+          color="#0A182E"
           emissive="#168BFF"
-          emissiveIntensity={0.65}
+          emissiveIntensity={0.5}
           side={THREE.DoubleSide}
         />
       </mesh>
     </group>
   );
 }
-
