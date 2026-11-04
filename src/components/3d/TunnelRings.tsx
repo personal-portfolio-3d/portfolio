@@ -16,15 +16,15 @@ export function TunnelRings({ velocity = 0 }: TunnelRingsProps) {
       // Skills entrance
       -115, -125,
       // Projects portal
-      -195, -205,
+      -185, -195,
       // Experience timeline arch
-      -275, -285,
+      -342, -352,
       // Medium Articles entrance
-      -355, -365,
-      // GitHub network portal
-      -435, -445,
+      -442, -452,
+      // Achievements & Open Source portal
+      -542, -552,
       // Final destination hyper-portal (Scene 8 Contact)
-      -515, -522, -528, -534,
+      -640, -648, -654, -660,
     ],
     []
   );
@@ -32,7 +32,7 @@ export function TunnelRings({ velocity = 0 }: TunnelRingsProps) {
   return (
     <group>
       {portalZPositions.map((z, index) => {
-        const isExit = z <= -510;
+        const isExit = z <= -635;
         const radius = isExit ? 7.6 + (index % 4) * 0.4 : 7.0;
 
         // 70% Electric Blue, 20% Cyan, 10% Violet

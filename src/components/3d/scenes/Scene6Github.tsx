@@ -32,7 +32,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
   const { size, viewport } = useThree();
   const isMobile = size.width < 768 || viewport.aspect < 1.0;
 
-  const zPos = -455;
+  const zPos = -560;
   const dist = Math.abs(currentZ - zPos);
   const constellationRef = useRef<THREE.Group>(null);
 

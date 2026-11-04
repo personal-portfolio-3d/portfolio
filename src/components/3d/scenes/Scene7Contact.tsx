@@ -14,7 +14,7 @@ interface Scene7ContactProps {
 }
 
 export function Scene7Contact({ currentZ, onRestartExperience }: Scene7ContactProps) {
-  const zPos = -535;
+  const zPos = -660;
   const dist = Math.abs(currentZ - zPos);
 
   const portalRingsRef = useRef<THREE.Group>(null);

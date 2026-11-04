@@ -12,9 +12,9 @@ export function RoadMarkings({ velocity = 0 }: RoadMarkingsProps) {
   const pinkMeshRef = useRef<THREE.InstancedMesh>(null);
   const blueMeshRef = useRef<THREE.InstancedMesh>(null);
 
-  const totalDashes = 128;
+  const totalDashes = 160;
   const setSize = 16; // At least 15+ dashes of the exact same color in a row
-  const halfCount = totalDashes / 2; // 64 pink, 64 blue
+  const halfCount = totalDashes / 2; // 80 pink, 80 blue
   const spacing = 5.5; // Distance between dashes
 
   const dummy = useMemo(() => new THREE.Object3D(), []);

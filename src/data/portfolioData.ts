@@ -4,11 +4,11 @@ export const SECTIONS: SectionCoord[] = [
   { id: "intro", name: "INTRO", number: "01", zPos: 0 },
   { id: "about", name: "ABOUT", number: "02", zPos: -60 },
   { id: "skills", name: "SKILLS", number: "03", zPos: -130 },
-  { id: "projects", name: "PROJECTS", number: "04", zPos: -215 },
-  { id: "experience", name: "EXPERIENCE", number: "05", zPos: -295 },
-  { id: "articles", name: "ARTICLES", number: "06", zPos: -375 },
-  { id: "achievements", name: "ACHIEVEMENTS", number: "07", zPos: -455 },
-  { id: "contact", name: "CONTACT", number: "08", zPos: -535 },
+  { id: "projects", name: "PROJECTS", number: "04", zPos: -220 },
+  { id: "experience", name: "EXPERIENCE", number: "05", zPos: -360 },
+  { id: "articles", name: "ARTICLES", number: "06", zPos: -460 },
+  { id: "achievements", name: "ACHIEVEMENTS", number: "07", zPos: -560 },
+  { id: "contact", name: "CONTACT", number: "08", zPos: -660 },
 ];
 
 export const PERSONAL_INFO = {

@@ -477,7 +477,7 @@ export function Scene5Experience({
   selectedExperienceId,
   isModalOpen,
 }: Scene5ExperienceProps) {
-  const zPos = -295;
+  const zPos = -360;
   const dist = Math.abs(currentZ - zPos);
   const ringRef = useRef<THREE.Mesh>(null);
 

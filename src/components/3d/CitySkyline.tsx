@@ -16,8 +16,8 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
   const edgesRightRef = useRef<THREE.InstancedMesh>(null);
   const flyingVehiclesRef = useRef<THREE.Group>(null);
 
-  const buildingCount = 100; // 100 on each side for dense urban density
-  const distantCount = 75; // 75 massive distant horizon towers
+  const buildingCount = 135; // 135 on each side for deep urban density extending past Z = -750
+  const distantCount = 100; // 100 massive distant horizon towers
 
   // Generate deterministic architectural city data
   const { leftBuildings, rightBuildings, distantBuildings, windowsData } = useMemo(() => {

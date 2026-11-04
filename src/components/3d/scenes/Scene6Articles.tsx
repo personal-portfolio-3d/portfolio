@@ -46,7 +46,7 @@ export function Scene6Articles({ currentZ, isModalOpen }: Scene6ArticlesProps) {
   const { size, viewport } = useThree();
   const isMobile = size.width < 768 || viewport.aspect < 1.0;
 
-  const zPos = -375;
+  const zPos = -460;
   const dist = Math.abs(currentZ - zPos);
 
   const [activeCategory, setActiveCategory] = useState("All Posts");
