@@ -25,6 +25,8 @@ export function TunnelRings({ velocity = 0 }: TunnelRingsProps) {
       -542, -552,
       // Final destination hyper-portal (Scene 8 Contact)
       -640, -648, -654, -660,
+      // Distant highway arches extending deep into the horizon past Contact
+      -675, -695, -720, -750, -785, -825, -870, -920, -975, -1035, -1100, -1170, -1250, -1340,
     ],
     []
   );
@@ -32,8 +34,8 @@ export function TunnelRings({ velocity = 0 }: TunnelRingsProps) {
   return (
     <group>
       {portalZPositions.map((z, index) => {
-        const isExit = z <= -635;
-        const radius = isExit ? 7.6 + (index % 4) * 0.4 : 7.0;
+        const isExitPortal = z >= -665 && z <= -635;
+        const radius = isExitPortal ? 7.6 + (index % 4) * 0.4 : 7.2;
 
         // 70% Electric Blue, 20% Cyan, 10% Violet
         const color =
@@ -51,13 +53,13 @@ export function TunnelRings({ velocity = 0 }: TunnelRingsProps) {
               <meshStandardMaterial
                 color={color}
                 emissive={color}
-                emissiveIntensity={isExit ? 3.8 : 2.2}
+                emissiveIntensity={isExitPortal ? 3.8 : 2.5}
                 roughness={0.15}
               />
             </mesh>
 
             {/* Subtle Inner Accent Glow */}
-            {isExit && (
+            {(isExitPortal || (z < -665 && index % 3 === 0)) && (
               <mesh position={[0, 0, 0.15]}>
                 <torusGeometry args={[radius - 0.55, 0.05, 16, 48, Math.PI]} />
                 <meshStandardMaterial

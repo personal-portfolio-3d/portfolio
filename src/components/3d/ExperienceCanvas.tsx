@@ -44,7 +44,7 @@ export function ExperienceCanvas({
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#03060D] z-0">
       <Canvas
-        camera={{ position: [0, 2.2, 8], fov: 55, near: 0.1, far: 850 }}
+        camera={{ position: [0, 2.2, 8], fov: 55, near: 0.1, far: 1500 }}
         gl={{
           antialias: true,
           powerPreference: "high-performance",
@@ -54,7 +54,7 @@ export function ExperienceCanvas({
       >
         <color attach="background" args={["#03060D"]} />
         {/* Dark cinematic atmospheric fog blending into horizon */}
-        <fogExp2 attach="fog" args={["#03060D", 0.0062]} />
+        <fogExp2 attach="fog" args={["#03060D", 0.0032]} />
 
         {/* Ambient & Sci-Fi City Lighting */}
         <ambientLight intensity={0.5} color="#081426" />

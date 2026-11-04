@@ -9,8 +9,8 @@ interface HighwayProps {
 }
 
 export function Highway({ velocity = 0 }: HighwayProps) {
-  const roadLength = 840;
-  const roadCenterZ = -340; // Extends from Z = +80 to Z = -760
+  const roadLength = 1500;
+  const roadCenterZ = -600; // Extends from Z = +150 to Z = -1350
 
   return (
     <group>
@@ -32,28 +32,28 @@ export function Highway({ velocity = 0 }: HighwayProps) {
       {/* Realistic Black Shiny Highway Tiles */}
       <HighwayTiles roadLength={roadLength} roadCenterZ={roadCenterZ} />
 
-      {/* Shoulder Lane Guide Stripes (Left & Right) */}
+      {/* Shoulder Lane Guide Stripes (Left & Right - elevated to Y = 0.052 above tiles) */}
       <mesh
-        position={[-3.2, 0.042, roadCenterZ]}
+        position={[-3.2, 0.052, roadCenterZ]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
-        <planeGeometry args={[0.07, roadLength]} />
+        <planeGeometry args={[0.08, roadLength]} />
         <meshStandardMaterial
           color="#168BFF"
           emissive="#168BFF"
-          emissiveIntensity={1.8}
+          emissiveIntensity={2.4}
           side={THREE.DoubleSide}
         />
       </mesh>
       <mesh
-        position={[3.2, 0.042, roadCenterZ]}
+        position={[3.2, 0.052, roadCenterZ]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
-        <planeGeometry args={[0.07, roadLength]} />
+        <planeGeometry args={[0.08, roadLength]} />
         <meshStandardMaterial
           color="#168BFF"
           emissive="#168BFF"
-          emissiveIntensity={1.8}
+          emissiveIntensity={2.4}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -108,7 +108,7 @@ export function Highway({ velocity = 0 }: HighwayProps) {
         position={[0, -0.05, roadCenterZ]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
-        <planeGeometry args={[220, roadLength, 44, 70]} />
+        <planeGeometry args={[260, roadLength, 52, 120]} />
         <meshStandardMaterial
           color="#03060D"
           wireframe

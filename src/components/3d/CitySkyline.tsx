@@ -16,8 +16,8 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
   const edgesRightRef = useRef<THREE.InstancedMesh>(null);
   const flyingVehiclesRef = useRef<THREE.Group>(null);
 
-  const buildingCount = 135; // 135 on each side for deep urban density extending past Z = -750
-  const distantCount = 100; // 100 massive distant horizon towers
+  const buildingCount = 230; // 230 on each side for deep urban density extending past Z = -1500
+  const distantCount = 160; // 160 massive distant horizon towers
 
   // Generate deterministic architectural city data
   const { leftBuildings, rightBuildings, distantBuildings, windowsData } = useMemo(() => {
@@ -31,7 +31,7 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
     const right = [];
     const distant = [];
 
-    // Foreground & Midground Towers spanning Z = 40 to Z = -520
+    // Foreground & Midground Towers flanking both sides of the highway
     for (let i = 0; i < buildingCount; i++) {
       const z = 30 - i * 6.8 + (random() - 0.5) * 4;
       const height = 24 + random() * 85; // Tall skyscrapers
@@ -92,8 +92,8 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
       });
     }
 
-    // Procedural Window Matrices on facades
-    const winCount = 1800;
+    // Procedural Window Matrices on facades across the entire highway length
+    const winCount = 4200;
     const winPos = new Float32Array(winCount * 3);
     const winCol = new Float32Array(winCount * 3);
     const cBlue = new THREE.Color("#168BFF");
@@ -105,7 +105,7 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
       const sideSign = isLeft ? -1 : 1;
       winPos[i * 3] = sideSign * (10 + random() * 45); // X
       winPos[i * 3 + 1] = 2 + random() * 70; // Y
-      winPos[i * 3 + 2] = 20 - random() * 500; // Z
+      winPos[i * 3 + 2] = 30 - random() * 1450; // Z spanning +30 to -1420
 
       const r = random();
       const col = r < 0.65 ? cBlue : r < 0.88 ? cCyan : cViolet;
@@ -169,7 +169,7 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
       const time = state.clock.getElapsedTime();
       flyingVehiclesRef.current.children.forEach((child, idx) => {
         const speed = (idx % 2 === 0 ? 1 : -1) * (18 + (idx % 3) * 6);
-        child.position.z = ((time * speed + idx * 80) % 550) - 480;
+        child.position.z = ((time * speed + idx * 120) % 1200) - 1000;
       });
     }
   });
@@ -248,7 +248,7 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
       </points>
 
       {/* 5. Glowing Rooftop Antennas & Communications Beacons */}
-      {leftBuildings.filter((b) => b.hasAntenna).slice(0, 20).map((b, i) => (
+      {leftBuildings.filter((b) => b.hasAntenna).slice(0, 45).map((b, i) => (
         <group key={`ant-l-${i}`} position={[b.x, b.sy, b.z]}>
           <mesh position={[0, b.antennaHeight / 2, 0]}>
             <cylinderGeometry args={[0.06, 0.12, b.antennaHeight]} />
@@ -269,7 +269,7 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
         </group>
       ))}
 
-      {rightBuildings.filter((b) => b.hasAntenna).slice(0, 20).map((b, i) => (
+      {rightBuildings.filter((b) => b.hasAntenna).slice(0, 45).map((b, i) => (
         <group key={`ant-r-${i}`} position={[b.x, b.sy, b.z]}>
           <mesh position={[0, b.antennaHeight / 2, 0]}>
             <cylinderGeometry args={[0.06, 0.12, b.antennaHeight]} />

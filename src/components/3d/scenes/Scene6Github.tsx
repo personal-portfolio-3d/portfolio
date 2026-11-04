@@ -192,8 +192,8 @@ function Achievement3DCard({
             )}
 
             {/* Feature Highlights */}
-            <div className="mt-2.5 space-y-1">
-              {project.highlights.slice(0, 3).map((item, idx) => (
+            <div className="mt-2 space-y-1">
+              {project.highlights.slice(0, 2).map((item, idx) => (
                 <div key={idx} className="flex items-start gap-1.5 text-[10.5px] text-[#CBD5E1] font-inter leading-tight">
                   <CheckCircle2 className="w-3 h-3 text-[#00D2FF] mt-0.5 flex-shrink-0 drop-shadow-[0_0_4px_#00D2FF]" />
                   <span className="line-clamp-2">{item}</span>
@@ -406,11 +406,11 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
         </lineSegments>
       </group>
 
-      {/* 2. OVERHEAD SECTION HEADER & TOP ACTION BUTTON CARDS (Placed high at Y = 4.25 with generous clearance above cards) */}
+      {/* 2. OVERHEAD SECTION HEADER & TOP ACTION BUTTON CARDS (Placed high at Y = 4.45 with generous clearance above cards) */}
       <Html
         transform
         distanceFactor={6.2}
-        position={[0, 4.25, 0]}
+        position={[0, 4.45, 0]}
         center
         style={{
           opacity,
@@ -475,7 +475,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
         </div>
       </Html>
 
-      {/* 3. THREE CARDS (Left tilted, Middle straight, Right tilted - lowered to Y = 0.25 for ample breathing space) */}
+      {/* 3. THREE CARDS (Left tilted, Middle straight, Right tilted - lowered to Y = 0.05 for ample breathing space) */}
       {!isMobile ? (
         /* --- DESKTOP 3-CARD ARRAY (Spacious separation: x = -5.5, 0, +5.5; Left tilted +29 deg, Right tilted -29 deg) --- */
         <group>
@@ -483,7 +483,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
           <Achievement3DCard
             project={frProject}
             x={-5.5}
-            y={0.25}
+            y={0.05}
             z={0.2}
             side="left"
             opacity={opacity}
@@ -496,7 +496,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
           <Achievement3DCard
             project={specforgeProject}
             x={0.0}
-            y={0.25}
+            y={0.05}
             z={0.0}
             side="middle"
             opacity={opacity}
@@ -509,7 +509,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
           <Achievement3DCard
             project={flociProject}
             x={5.5}
-            y={0.25}
+            y={0.05}
             z={0.2}
             side="right"
             opacity={opacity}
@@ -520,7 +520,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
         </group>
       ) : (
         /* --- MOBILE SCREEN (Centered Card with Sleek Tab Selector) --- */
-        <group position={[0, 0.25, 0]}>
+        <group position={[0, 0.05, 0]}>
           <Html
             transform
             distanceFactor={5.6}

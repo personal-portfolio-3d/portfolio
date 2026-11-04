@@ -9,8 +9,8 @@ interface HighwayTilesProps {
 }
 
 export function HighwayTiles({
-  roadLength = 680,
-  roadCenterZ = -275,
+  roadLength = 1500,
+  roadCenterZ = -600,
 }: HighwayTilesProps) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
 
