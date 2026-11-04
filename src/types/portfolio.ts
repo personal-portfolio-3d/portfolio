@@ -52,6 +52,7 @@ export interface OpenSourceProject {
   tagline: string;
   badge: string;
   badgeColor?: string;
+  image?: string;
   description: string;
   highlights: string[];
   technologies: string[];

@@ -87,7 +87,7 @@ function Achievement3DCard({
       {/* 3D Glowing Wireframe Outline (Desktop only) */}
       {!isMobile && (
         <mesh position={[0, 0, -0.05]}>
-          <planeGeometry args={[3.8, 5.0]} />
+          <planeGeometry args={[4.2, 5.8]} />
           <meshBasicMaterial
             color={isHovered ? "#22D3EE" : "#168BFF"}
             wireframe
@@ -113,7 +113,7 @@ function Achievement3DCard({
         <div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`w-[315px] sm:w-[330px] md:w-[340px] p-4.5 sm:p-5 rounded-3xl backdrop-blur-2xl transition-all duration-300 relative select-none flex flex-col justify-between overflow-visible group ${
+          className={`w-[320px] sm:w-[335px] md:w-[350px] p-4.5 sm:p-5 rounded-3xl backdrop-blur-2xl transition-all duration-300 relative select-none flex flex-col justify-between overflow-visible group ${
             isHovered
               ? "bg-[#061226]/85 border-2 border-[#00D2FF] shadow-[0_0_35px_rgba(0,210,255,0.45)]"
               : "bg-[#040D1E]/80 border border-[#22D3EE]/40 shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_22px_rgba(34,211,238,0.2)]"
@@ -143,6 +143,18 @@ function Achievement3DCard({
                 {side === "left" ? "01 / 03" : side === "middle" ? "02 / 03" : "03 / 03"}
               </span>
             </div>
+
+            {/* Project Image Banner */}
+            {project.image && (
+              <div className="relative w-full h-[120px] sm:h-[130px] rounded-2xl overflow-hidden border border-[#22D3EE]/35 mb-2.5 bg-[#03060D]/80 shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
+                <img
+                  src={project.image}
+                  alt={project.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#040D1E]/95 via-[#040D1E]/15 to-transparent" />
+              </div>
+            )}
 
             {/* Title */}
             <h3 className="text-base sm:text-lg font-bold font-orbitron text-white group-hover:text-[#00D2FF] transition-colors drop-shadow-[0_0_10px_rgba(255,255,255,0.85)] tracking-wide">

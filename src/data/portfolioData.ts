@@ -454,6 +454,7 @@ export const OPEN_SOURCE_ACHIEVEMENTS: OpenSourceProject[] = [
     tagline: "In-Browser DuckDB-WASM & Client-Side Gemma LLM on WebGPU",
     badge: "HUGGING FACE SPACES • LIVE APP",
     badgeColor: "#F59E0B",
+    image: asset("/assets/projects/federal-register-explorer.svg"),
     description:
       "A browser-based application for searching and exploring Federal Register documents from a prepared snapshot of the GadgetSoftware dataset. Features in-browser analytical SQL searches with DuckDB-WASM and private local document chat powered by Google Gemma running locally on your device via WebGPU.",
     highlights: [
@@ -480,6 +481,7 @@ export const OPEN_SOURCE_ACHIEVEMENTS: OpenSourceProject[] = [
     tagline: "Modern, High-Performance OpenAPI & Swagger Alternative",
     badge: "PUBLISHED ON PyPI • PYTHON PACKAGE",
     badgeColor: "#38BDF8",
+    image: asset("/assets/projects/specforge-api.svg"),
     description:
       "An open source Python package engineered and published on PyPI to replace legacy Swagger with high-performance, developer-first interactive API documentation, automated schema generation, and clean dark-mode ergonomics.",
     highlights: [
@@ -507,6 +509,7 @@ export const OPEN_SOURCE_ACHIEVEMENTS: OpenSourceProject[] = [
     tagline: "Open-Source AWS LocalStack Alternative Web UI",
     badge: "OPEN SOURCE CONTRIBUTIONS • LOCAL CLOUD",
     badgeColor: "#10B981",
+    image: asset("/assets/projects/floci-ui.svg"),
     description:
       "Core open source contributions to Floci UI, enabling developers to mock and manage local AWS cloud services. Engineered frontend interfaces, resource monitoring, and developer workflows for cloud simulation.",
     highlights: [
