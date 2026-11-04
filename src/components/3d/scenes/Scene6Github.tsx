@@ -60,34 +60,254 @@ const MAIN_PROJECTS: MainProjectStar[] = [
   },
 ];
 
-// Single Big Star Node in Pure Blue Neon:
-// Bright center dot, neon blue circular border ring, outer glowing aura sheath, vertical connector stem, and floating title badge
-function BigStarNode({
+// --------------------------------------------------------------------------
+// 1. OVERHEAD HIVE CANOPY (At the top of the highway, in place of round arch)
+// Pure constellation of glowing dots and straight lines, NO circles around dots.
+// --------------------------------------------------------------------------
+function OverheadHiveCanopy({
+  isMobile,
+  opacity,
+}: {
+  isMobile: boolean;
+  opacity: number;
+}) {
+  const canopyRef = useRef<THREE.Group>(null);
+  const sparkRefs = useRef<(THREE.Mesh | null)[]>([]);
+
+  // Generate overhead hive constellation dots spanning across the top of the highway
+  const { dots, linePositions, linePairs } = useMemo(() => {
+    const dotList: { pos: [number, number, number]; size: number }[] = [];
+
+    if (isMobile) {
+      // Mobile upper canopy spanning X in [-2.6, 2.6], Y in [4.0, 5.4]
+      const coords: [number, number, number, number][] = [
+        [-2.5, 4.2, -0.4, 0.08],
+        [-2.1, 4.7, 0.3, 0.09],
+        [-1.6, 4.3, -0.2, 0.07],
+        [-1.2, 5.1, 0.2, 0.10],
+        [-0.7, 4.5, -0.3, 0.08],
+        [-0.4, 5.3, 0.4, 0.09],
+        [0.0, 4.6, 0.0, 0.11],
+        [0.4, 5.3, -0.3, 0.09],
+        [0.7, 4.5, 0.3, 0.08],
+        [1.2, 5.1, -0.2, 0.10],
+        [1.6, 4.3, 0.2, 0.07],
+        [2.1, 4.7, -0.3, 0.09],
+        [2.5, 4.2, 0.4, 0.08],
+        [-1.9, 5.4, 0.0, 0.08],
+        [1.9, 5.4, 0.0, 0.08],
+        [0.0, 5.5, -0.4, 0.10],
+      ];
+      coords.forEach(([x, y, z, s]) => dotList.push({ pos: [x, y, z], size: s }));
+    } else {
+      // Desktop grand arched canopy spanning X in [-8.5, 8.5], Y in [3.8, 5.6]
+      const coords: [number, number, number, number][] = [
+        [-8.2, 3.8, -0.5, 0.08],
+        [-7.5, 4.2, 0.4, 0.10],
+        [-6.8, 4.6, -0.3, 0.09],
+        [-6.0, 4.3, 0.5, 0.08],
+        [-5.3, 4.9, -0.4, 0.11],
+        [-4.5, 4.5, 0.3, 0.09],
+        [-3.8, 5.2, -0.2, 0.10],
+        [-3.0, 4.7, 0.4, 0.09],
+        [-2.2, 5.4, -0.5, 0.11],
+        [-1.5, 4.8, 0.3, 0.08],
+        [-0.8, 5.5, -0.2, 0.12],
+        [0.0, 4.9, 0.4, 0.13],
+        [0.0, 5.6, -0.4, 0.11],
+        [0.8, 5.5, 0.2, 0.12],
+        [1.5, 4.8, -0.3, 0.08],
+        [2.2, 5.4, 0.5, 0.11],
+        [3.0, 4.7, -0.4, 0.09],
+        [3.8, 5.2, 0.2, 0.10],
+        [4.5, 4.5, -0.3, 0.09],
+        [5.3, 4.9, 0.4, 0.11],
+        [6.0, 4.3, -0.5, 0.08],
+        [6.8, 4.6, 0.3, 0.09],
+        [7.5, 4.2, -0.4, 0.10],
+        [8.2, 3.8, 0.5, 0.08],
+        [-4.0, 5.6, 0.2, 0.09],
+        [4.0, 5.6, -0.2, 0.09],
+        [-6.2, 5.1, 0.0, 0.08],
+        [6.2, 5.1, 0.0, 0.08],
+      ];
+      coords.forEach(([x, y, z, s]) => dotList.push({ pos: [x, y, z], size: s }));
+    }
+
+    // Connect nearby dots with straight lines to form the overhead hive web
+    const pairs: [number[], number[]][] = [];
+    const maxDist = isMobile ? 1.4 : 2.2;
+
+    for (let i = 0; i < dotList.length; i++) {
+      for (let j = i + 1; j < dotList.length; j++) {
+        const p1 = dotList[i].pos;
+        const p2 = dotList[j].pos;
+        const dx = p1[0] - p2[0];
+        const dy = p1[1] - p2[1];
+        const dz = p1[2] - p2[2];
+        const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        if (d < maxDist) {
+          pairs.push([p1, p2]);
+        }
+      }
+    }
+
+    const flatLines: number[] = [];
+    pairs.forEach(([p1, p2]) => {
+      flatLines.push(p1[0], p1[1], p1[2], p2[0], p2[1], p2[2]);
+    });
+
+    return {
+      dots: dotList,
+      linePositions: new Float32Array(flatLines),
+      linePairs: pairs,
+    };
+  }, [isMobile]);
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+
+    // Gentle canopy breathing float
+    if (canopyRef.current) {
+      canopyRef.current.position.y = Math.sin(time * 0.9) * 0.03;
+    }
+
+    // Animate traveling photon sparks along canopy lines
+    if (linePairs.length > 0) {
+      sparkRefs.current.forEach((sparkMesh, idx) => {
+        if (!sparkMesh) return;
+        const pair = linePairs[idx % linePairs.length];
+        if (!pair) return;
+        const [p1, p2] = pair;
+        const t = (time * (0.35 + (idx % 3) * 0.1) + idx * 0.16) % 1;
+
+        sparkMesh.position.set(
+          p1[0] + (p2[0] - p1[0]) * t,
+          p1[1] + (p2[1] - p1[1]) * t,
+          p1[2] + (p2[2] - p1[2]) * t
+        );
+      });
+    }
+  });
+
+  return (
+    <group ref={canopyRef}>
+      {/* Straight Hive Lines at the top (Connecting Canopy) */}
+      <lineSegments>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            count={linePositions.length / 3}
+            array={linePositions}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <lineBasicMaterial
+          color="#00F0FF"
+          transparent
+          opacity={opacity * 0.68}
+          blending={THREE.AdditiveBlending}
+        />
+      </lineSegments>
+
+      {/* Hive Dots (Just dots, NO circles around them!) */}
+      {dots.map((dot, idx) => (
+        <group key={idx} position={dot.pos}>
+          {/* Outer Glowing Dot Sphere */}
+          <mesh>
+            <sphereGeometry args={[dot.size, 14, 14]} />
+            <meshStandardMaterial
+              color="#00F0FF"
+              emissive="#00F0FF"
+              emissiveIntensity={3.8 * opacity}
+              roughness={0.1}
+              metalness={0.9}
+              transparent
+              opacity={opacity}
+            />
+          </mesh>
+          {/* Inner Radiant White Core */}
+          <mesh>
+            <sphereGeometry args={[dot.size * 0.45, 10, 10]} />
+            <meshBasicMaterial color="#FFFFFF" transparent opacity={opacity} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Traveling Energy Sparks along the Canopy Lines */}
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((idx) => (
+        <mesh
+          key={idx}
+          ref={(el) => {
+            sparkRefs.current[idx] = el;
+          }}
+        >
+          <sphereGeometry args={[0.055, 12, 12]} />
+          <meshBasicMaterial
+            color="#FFFFFF"
+            transparent
+            opacity={opacity * 0.95}
+            blending={THREE.AdditiveBlending}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+// --------------------------------------------------------------------------
+// 2. PROJECT STAR NODE (Three dots with twinkling stars around them)
+// Just a glowing core dot and stars around it, with floating header and link badge.
+// --------------------------------------------------------------------------
+function ProjectStarNode({
   project,
   position,
-  radius,
-  dotRadius,
-  tubeRadius,
   stemHeight = 0.55,
   badgeWidthClass,
   opacity,
   index,
+  isMobile,
 }: {
   project: MainProjectStar;
   position: [number, number, number];
-  radius: number;
-  dotRadius: number;
-  tubeRadius: number;
   stemHeight?: number;
   badgeWidthClass?: string;
   opacity: number;
   index: number;
+  isMobile: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const groupRef = useRef<THREE.Group>(null);
-  const ringRef = useRef<THREE.Group>(null);
-  const innerOrbitRef = useRef<THREE.Mesh>(null);
+  const coreRef = useRef<THREE.Group>(null);
+  const starsGroupRef = useRef<THREE.Group>(null);
   const pulseRef = useRef<THREE.Mesh>(null);
+
+  const dotRadius = isMobile ? 0.16 : 0.22;
+
+  // Orbiting satellite stars around the central dot
+  const satelliteStars = useMemo(() => {
+    const starList: {
+      angle: number;
+      dist: number;
+      speed: number;
+      size: number;
+      zOffset: number;
+    }[] = [];
+    const count = 7;
+    const baseDist = isMobile ? 0.42 : 0.62;
+
+    for (let i = 0; i < count; i++) {
+      starList.push({
+        angle: (i / count) * Math.PI * 2 + (i % 2) * 0.2,
+        dist: baseDist + ((i * 17) % 5) * 0.05,
+        speed: (0.45 + (i % 3) * 0.15) * (i % 2 === 0 ? 1 : -1),
+        size: 0.035 + (i % 3) * 0.012,
+        zOffset: ((i % 3) - 1) * 0.12,
+      });
+    }
+
+    return starList;
+  }, [isMobile]);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
@@ -97,26 +317,33 @@ function BigStarNode({
       groupRef.current.position.y = position[1] + Math.sin(time * 1.6 + index * 1.4) * 0.04;
     }
 
-    // Breathing scale expansion
-    if (ringRef.current) {
-      const baseScale = isHovered ? 1.15 : 1.0;
-      const breath = Math.sin(time * 2.2 + index * 1.2) * 0.07;
+    // Central star breathing pulse
+    if (coreRef.current) {
+      const baseScale = isHovered ? 1.25 : 1.0;
+      const breath = Math.sin(time * 2.4 + index * 1.2) * 0.08;
       const targetScale = baseScale * (1.0 + breath);
-      ringRef.current.scale.lerp(
+      coreRef.current.scale.lerp(
         new THREE.Vector3(targetScale, targetScale, targetScale),
-        0.12
+        0.14
       );
     }
 
-    // Inner orbital tick ring rotation
-    if (innerOrbitRef.current) {
-      innerOrbitRef.current.rotation.z = time * (0.35 + index * 0.1);
+    // Orbiting stars motion and twinkle
+    if (starsGroupRef.current) {
+      starsGroupRef.current.children.forEach((child, idx) => {
+        const starData = satelliteStars[idx];
+        if (!starData) return;
+        const currentAngle = starData.angle + time * starData.speed;
+        child.position.x = Math.cos(currentAngle) * starData.dist;
+        child.position.y = Math.sin(currentAngle) * starData.dist * 0.75;
+        child.position.z = starData.zOffset + Math.sin(time * 1.5 + idx) * 0.08;
+      });
     }
 
-    // Animated energy spark traveling up the stem into the title
+    // Traveling energy spark moving up the connector stem
     if (pulseRef.current) {
       const upT = (time * 1.4 + index * 0.4) % 1;
-      pulseRef.current.position.y = radius + upT * stemHeight;
+      pulseRef.current.position.y = dotRadius + upT * stemHeight;
     }
   });
 
@@ -129,9 +356,9 @@ function BigStarNode({
 
   return (
     <group ref={groupRef} position={position}>
-      {/* 1. INTERACTIVE STAR CORE (Round Neon Blue Border + Bright Center Dot + Hit Area) */}
+      {/* 1. CENTRAL GLOWING STAR DOT (Hit Area + Bright Dot + Point Light) */}
       <group
-        ref={ringRef}
+        ref={coreRef}
         onClick={(e) => handleOpen(e)}
         onPointerOver={(e) => {
           e.stopPropagation();
@@ -144,56 +371,19 @@ function BigStarNode({
           document.body.style.cursor = "auto";
         }}
       >
-        {/* Invisible hit plane for reliable click anywhere inside the circle */}
+        {/* Invisible hit plane */}
         <mesh>
-          <circleGeometry args={[radius * 1.12, 32]} />
+          <sphereGeometry args={[dotRadius * 2.2, 16, 16]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         </mesh>
 
-        {/* Primary Round Neon Border Ring (Neon Blue #00F0FF) */}
-        <mesh>
-          <torusGeometry args={[radius, tubeRadius, 16, 64]} />
-          <meshStandardMaterial
-            color="#00F0FF"
-            emissive="#00F0FF"
-            emissiveIntensity={(isHovered ? 4.8 : 3.4) * opacity}
-            roughness={0.15}
-            metalness={0.88}
-            transparent
-            opacity={opacity}
-          />
-        </mesh>
-
-        {/* Outer Concentric Glowing Aura Sheath (Cyan Glow) */}
-        <mesh>
-          <torusGeometry args={[radius * 1.16, tubeRadius * 1.7, 16, 64]} />
-          <meshBasicMaterial
-            color="#00D2FF"
-            transparent
-            opacity={(isHovered ? 0.45 : 0.22) * opacity}
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-
-        {/* Inner Subtle Rotating Orbital Ring */}
-        <mesh ref={innerOrbitRef}>
-          <ringGeometry args={[radius * 0.68, radius * 0.72, 32]} />
-          <meshBasicMaterial
-            color="#22D3EE"
-            transparent
-            opacity={(isHovered ? 0.4 : 0.2) * opacity}
-            side={THREE.DoubleSide}
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-
-        {/* Bright Dot in Center: Intense Neon Blue Outer Sphere */}
+        {/* Central Intense Neon Blue Outer Star Dot */}
         <mesh>
           <sphereGeometry args={[dotRadius, 24, 24]} />
           <meshStandardMaterial
             color="#00F0FF"
             emissive="#00F0FF"
-            emissiveIntensity={(isHovered ? 5.0 : 3.8) * opacity}
+            emissiveIntensity={(isHovered ? 5.2 : 4.0) * opacity}
             roughness={0.1}
             metalness={0.9}
             transparent
@@ -201,7 +391,7 @@ function BigStarNode({
           />
         </mesh>
 
-        {/* Bright Dot in Center: Radiant White Core */}
+        {/* Radiant White Core */}
         <mesh>
           <sphereGeometry args={[dotRadius * 0.45, 16, 16]} />
           <meshBasicMaterial color="#FFFFFF" transparent opacity={opacity} />
@@ -215,11 +405,34 @@ function BigStarNode({
         />
       </group>
 
-      {/* 2. VERTICAL CONNECTOR STEM (Rising up from top of border to Title) */}
+      {/* 2. STARS AROUND THE CENTRAL DOT */}
+      <group ref={starsGroupRef}>
+        {satelliteStars.map((star, idx) => (
+          <group key={idx}>
+            {/* Twinkling Star Pinpoint */}
+            <mesh>
+              <sphereGeometry args={[star.size, 10, 10]} />
+              <meshStandardMaterial
+                color="#00F0FF"
+                emissive="#00F0FF"
+                emissiveIntensity={(isHovered ? 4.5 : 3.5) * opacity}
+                transparent
+                opacity={opacity * 0.9}
+              />
+            </mesh>
+            {/* Tiny White Spark Core */}
+            <mesh>
+              <sphereGeometry args={[star.size * 0.45, 8, 8]} />
+              <meshBasicMaterial color="#FFFFFF" transparent opacity={opacity} />
+            </mesh>
+          </group>
+        ))}
+      </group>
+
+      {/* 3. VERTICAL CONNECTOR STEM (Rising up from dot to Title) */}
       <group>
-        {/* Glowing vertical cylinder */}
-        <mesh position={[0, radius + stemHeight / 2, 0]}>
-          <cylinderGeometry args={[0.016, 0.016, stemHeight, 16]} />
+        <mesh position={[0, dotRadius + stemHeight / 2, 0]}>
+          <cylinderGeometry args={[0.014, 0.014, stemHeight, 16]} />
           <meshStandardMaterial
             color="#00F0FF"
             emissive="#00F0FF"
@@ -230,27 +443,27 @@ function BigStarNode({
         </mesh>
 
         {/* Joint Spheres */}
-        <mesh position={[0, radius, 0]}>
-          <sphereGeometry args={[0.045, 16, 16]} />
+        <mesh position={[0, dotRadius, 0]}>
+          <sphereGeometry args={[0.035, 14, 14]} />
           <meshBasicMaterial color="#00F0FF" transparent opacity={opacity} />
         </mesh>
-        <mesh position={[0, radius + stemHeight, 0]}>
-          <sphereGeometry args={[0.045, 16, 16]} />
+        <mesh position={[0, dotRadius + stemHeight, 0]}>
+          <sphereGeometry args={[0.035, 14, 14]} />
           <meshBasicMaterial color="#FFFFFF" transparent opacity={opacity} />
         </mesh>
 
-        {/* Traveling energy spark moving up the stem */}
-        <mesh ref={pulseRef} position={[0, radius, 0]}>
-          <sphereGeometry args={[0.055, 16, 16]} />
+        {/* Animated pulse travelling up the stem */}
+        <mesh ref={pulseRef} position={[0, dotRadius, 0]}>
+          <sphereGeometry args={[0.045, 14, 14]} />
           <meshBasicMaterial color="#FFFFFF" transparent opacity={opacity} />
         </mesh>
       </group>
 
-      {/* 3. FLOATING HEADER & LINK BADGE (Directly Above the Node) */}
+      {/* 4. FLOATING HEADER & LINK BADGE */}
       <Html
         transform
         distanceFactor={5.5}
-        position={[0, radius + stemHeight + 0.22, 0]}
+        position={[0, dotRadius + stemHeight + 0.18, 0]}
         center
         style={{
           opacity,
@@ -264,7 +477,7 @@ function BigStarNode({
           onMouseLeave={() => setIsHovered(false)}
           className="cursor-pointer group flex flex-col items-center select-none transform transition-transform duration-300 hover:scale-105"
         >
-          {/* Neon Blue Cyber Glass Badge */}
+          {/* Pure Blue Neon Cyber Glass Badge */}
           <div
             className={`${
               badgeWidthClass || "w-[85vw] max-w-[250px] sm:max-w-none sm:w-[240px]"
@@ -337,73 +550,15 @@ function BigStarNode({
   );
 }
 
-// Small Hive Satellite Node in Pure Blue Neon: Circular border + center glowing dot
-function SmallSatelliteNode({
-  position,
-  radius,
-  dotRadius,
-  opacity,
-  index,
-}: {
-  position: [number, number, number];
-  radius: number;
-  dotRadius: number;
-  opacity: number;
-  index: number;
-}) {
-  const groupRef = useRef<THREE.Group>(null);
-
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    if (groupRef.current) {
-      groupRef.current.position.y =
-        position[1] + Math.sin(time * 1.5 + index * 1.1) * 0.04;
-    }
-  });
-
-  return (
-    <group ref={groupRef} position={position}>
-      {/* Small Neon Blue Round Border */}
-      <mesh>
-        <torusGeometry args={[radius, 0.015, 12, 32]} />
-        <meshStandardMaterial
-          color="#00F0FF"
-          emissive="#00F0FF"
-          emissiveIntensity={3.2 * opacity}
-          transparent
-          opacity={opacity * 0.85}
-        />
-      </mesh>
-
-      {/* Bright Center Glowing Dot */}
-      <mesh>
-        <sphereGeometry args={[dotRadius, 12, 12]} />
-        <meshStandardMaterial
-          color="#00F0FF"
-          emissive="#00F0FF"
-          emissiveIntensity={4.2 * opacity}
-          transparent
-          opacity={opacity}
-        />
-      </mesh>
-
-      {/* Inner White Pinpoint */}
-      <mesh>
-        <sphereGeometry args={[dotRadius * 0.45, 8, 8]} />
-        <meshBasicMaterial color="#FFFFFF" transparent opacity={opacity} />
-      </mesh>
-    </group>
-  );
-}
-
+// --------------------------------------------------------------------------
+// 3. MAIN SCENE COMPONENT
+// --------------------------------------------------------------------------
 export function Scene6Github({ currentZ }: Scene6GithubProps) {
   const { size, viewport } = useThree();
   const isMobile = size.width < 768 || viewport.aspect < 1.0;
 
   const zPos = -560;
   const dist = Math.abs(currentZ - zPos);
-  const ringRef = useRef<THREE.Mesh>(null);
-  const sparksGroupRef = useRef<THREE.Group>(null);
 
   // Smooth continuous opacity across 46 units approach
   const opacity = useMemo(() => {
@@ -411,204 +566,46 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
     return Math.max(0, 1 - dist / 46);
   }, [dist]);
 
-  // SIZES FOR THE 3 BIGGER NODES
-  const bigNodeSizes = useMemo(() => {
+  // 3D POSITIONS SPREAD ACROSS THE SCREEN WITH ZERO OVERLAP
+  // Desktop: Wide span across X (-5.5, 0.0, +5.5). Canopy at Y = 4.0+. Heading at Y = 4.4.
+  // Mobile: Triangular constellation hive (Top apex at Y = 2.45, Bottom two at Y = 0.4, X = +-1.4). Heading at Y = 4.7.
+  const projectPositions: [number, number, number][] = useMemo(() => {
     if (isMobile) {
       return [
-        { radius: 0.44, dotRadius: 0.10, tubeRadius: 0.020, stemHeight: 0.42 },
-        { radius: 0.50, dotRadius: 0.12, tubeRadius: 0.022, stemHeight: 0.42 },
-        { radius: 0.44, dotRadius: 0.10, tubeRadius: 0.020, stemHeight: 0.42 },
+        [-1.4, 0.4, 0.0],  // Node 0: FR AI Explorer (Bottom Left)
+        [0.0, 2.45, 0.0],  // Node 1: SpecForge API (Top Apex)
+        [1.4, 0.4, 0.0],   // Node 2: Floci (Bottom Right)
       ];
     }
     return [
-      { radius: 0.68, dotRadius: 0.14, tubeRadius: 0.026, stemHeight: 0.55 },
-      { radius: 0.78, dotRadius: 0.16, tubeRadius: 0.028, stemHeight: 0.55 },
-      { radius: 0.68, dotRadius: 0.14, tubeRadius: 0.026, stemHeight: 0.55 },
+      [-5.5, 0.7, 0.0],  // Node 0: FR AI Explorer (Left roadside)
+      [0.0, 1.4, -0.6],  // Node 1: SpecForge API (Center elevated apex)
+      [5.5, 0.7, 0.0],   // Node 2: Floci (Right roadside)
     ];
   }, [isMobile]);
 
-  // 3D POSITIONS SPREAD ACROSS THE WHOLE SCREEN WITH ZERO OVERLAP
-  // Desktop: Wide span across X (-5.5, 0.0, +5.5). Heading at Y = 4.4.
-  // Mobile: Triangular constellation hive (Top apex at Y = 2.5, Bottom two at Y = 0.4, X = +-1.4). Heading at Y = 4.7.
-  const bigNodePositions: [number, number, number][] = useMemo(() => {
+  // Stem heights for clean vertical separation
+  const stemHeights = useMemo(() => {
     if (isMobile) {
-      return [
-        [-1.4, 0.35, 0.0],  // Node 0: FR AI Explorer (Bottom Left)
-        [0.0, 2.45, 0.0],   // Node 1: SpecForge API (Top Apex, badge top at ~3.8, heading at 4.7)
-        [1.4, 0.35, 0.0],   // Node 2: Floci (Bottom Right)
-      ];
+      return [0.42, 0.42, 0.42];
     }
-    return [
-      [-5.5, 0.7, 0.0],   // Node 0: FR AI Explorer (Left roadside)
-      [0.0, 1.4, -0.6],   // Node 1: SpecForge API (Center elevated apex, badge top at ~3.4, heading at 4.4)
-      [5.5, 0.7, 0.0],    // Node 2: Floci (Right roadside)
-    ];
+    return [0.55, 0.55, 0.55];
   }, [isMobile]);
 
   // Responsive badge width classes for zero overlap
   const badgeWidthClasses = useMemo(() => {
     if (isMobile) {
-      return [
-        "w-[172px]", // Left
-        "w-[185px]", // Top Center
-        "w-[172px]", // Right
-      ];
+      return ["w-[172px]", "w-[185px]", "w-[172px]"];
     }
-    return [
-      "w-[245px]",
-      "w-[250px]",
-      "w-[245px]",
-    ];
+    return ["w-[245px]", "w-[250px]", "w-[245px]"];
   }, [isMobile]);
-
-  // SMALL SATELLITE HIVE NODES (Spread out across the screen perimeter)
-  const smallSatellites = useMemo(() => {
-    const coords: [number, number, number, number, number][] = isMobile
-      ? [
-          [-2.3, 2.6, -0.3, 0.18, 0.045],
-          [-2.1, 0.2, 0.3, 0.20, 0.050],
-          [-1.9, -0.7, -0.2, 0.16, 0.040],
-          [0.0, -0.6, 0.2, 0.20, 0.050],
-          [1.9, -0.7, -0.2, 0.16, 0.040],
-          [2.1, 0.2, 0.3, 0.20, 0.050],
-          [2.3, 2.6, -0.3, 0.18, 0.045],
-          [-1.2, 4.0, 0.2, 0.20, 0.050],
-          [1.2, 4.0, 0.2, 0.20, 0.050],
-          [0.0, 4.3, -0.3, 0.18, 0.045],
-          [-2.4, 1.4, 0.4, 0.17, 0.042],
-          [2.4, 1.4, 0.4, 0.17, 0.042],
-          [-0.7, 1.4, 0.5, 0.18, 0.045],
-          [0.7, 1.4, 0.5, 0.18, 0.045],
-          [-1.5, 3.2, -0.3, 0.16, 0.040],
-          [1.5, 3.2, -0.3, 0.16, 0.040],
-        ]
-      : [
-          [-7.8, 2.5, -0.8, 0.22, 0.055],
-          [-7.2, 0.5, 0.6, 0.24, 0.060],
-          [-7.0, 3.8, 0.3, 0.20, 0.050],
-          [-3.5, 0.2, -0.4, 0.18, 0.045],
-          [-2.8, 2.6, 0.4, 0.20, 0.050],
-          [-2.4, 4.1, -0.6, 0.22, 0.055],
-          [-4.8, 3.8, 0.5, 0.19, 0.048],
-          [-1.3, 0.4, -0.5, 0.17, 0.042],
-          [-1.0, 4.3, 0.4, 0.22, 0.055],
-          [0.0, 0.0, 0.3, 0.21, 0.052],
-          [0.0, 4.6, -0.4, 0.19, 0.048],
-          [1.0, 4.3, 0.4, 0.22, 0.055],
-          [1.3, 0.4, -0.5, 0.17, 0.042],
-          [2.4, 4.1, -0.6, 0.22, 0.055],
-          [2.8, 2.6, 0.4, 0.20, 0.050],
-          [3.5, 0.2, -0.4, 0.18, 0.045],
-          [4.8, 3.8, 0.5, 0.19, 0.048],
-          [7.0, 3.8, 0.3, 0.20, 0.050],
-          [7.2, 0.5, 0.6, 0.24, 0.060],
-          [7.8, 2.5, -0.8, 0.22, 0.055],
-        ];
-
-    return coords.map(([x, y, z, r, dr]) => ({
-      pos: [x, y, z] as [number, number, number],
-      radius: r,
-      dotRadius: dr,
-    }));
-  }, [isMobile]);
-
-  // STRAIGHT CONNECTING LINES (Blue Neon Hive Web)
-  const { linePositions, linePairs } = useMemo(() => {
-    const pairs: [number[], number[]][] = [];
-
-    // 1. Direct straight lines connecting the 3 bigger stars
-    pairs.push([bigNodePositions[0], bigNodePositions[1]]);
-    pairs.push([bigNodePositions[1], bigNodePositions[2]]);
-    pairs.push([bigNodePositions[2], bigNodePositions[0]]);
-
-    // 2. Connect each Big Node to its nearest small satellite nodes
-    bigNodePositions.forEach((bPos) => {
-      const sorted = [...smallSatellites]
-        .map((s) => {
-          const dx = s.pos[0] - bPos[0];
-          const dy = s.pos[1] - bPos[1];
-          const dz = s.pos[2] - bPos[2];
-          return { s, dist: Math.sqrt(dx * dx + dy * dy + dz * dz) };
-        })
-        .sort((a, b) => a.dist - b.dist);
-
-      // Connect 4 closest satellites to this big star
-      sorted.slice(0, 4).forEach((item) => {
-        pairs.push([bPos, item.s.pos]);
-      });
-    });
-
-    // 3. Connect neighboring small satellite nodes to each other
-    for (let i = 0; i < smallSatellites.length; i++) {
-      for (let j = i + 1; j < smallSatellites.length; j++) {
-        const p1 = smallSatellites[i].pos;
-        const p2 = smallSatellites[j].pos;
-        const dx = p1[0] - p2[0];
-        const dy = p1[1] - p2[1];
-        const dz = p1[2] - p2[2];
-        const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
-        const maxLinkDist = isMobile ? 1.7 : 2.8;
-        if (d < maxLinkDist) {
-          pairs.push([p1, p2]);
-        }
-      }
-    }
-
-    // Convert pairs to flat Float32Array for lineSegments
-    const flat: number[] = [];
-    pairs.forEach(([p1, p2]) => {
-      flat.push(p1[0], p1[1], p1[2], p2[0], p2[1], p2[2]);
-    });
-
-    return {
-      linePositions: new Float32Array(flat),
-      linePairs: pairs,
-    };
-  }, [bigNodePositions, smallSatellites, isMobile]);
-
-  // Pre-allocate traveling energy sparks along main network lines
-  const sparkRefs = useRef<(THREE.Mesh | null)[]>([]);
-
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-
-    if (ringRef.current) {
-      ringRef.current.rotation.z = time * 0.12;
-    }
-
-    // Animate traveling photon sparks along the hive lines
-    if (linePairs.length > 0) {
-      sparkRefs.current.forEach((sparkMesh, idx) => {
-        if (!sparkMesh) return;
-        const pair = linePairs[idx % Math.min(linePairs.length, 9)];
-        if (!pair) return;
-        const [p1, p2] = pair;
-        const t = (time * (0.35 + (idx % 3) * 0.1) + idx * 0.18) % 1;
-
-        sparkMesh.position.set(
-          p1[0] + (p2[0] - p1[0]) * t,
-          p1[1] + (p2[1] - p1[1]) * t,
-          p1[2] + (p2[2] - p1[2]) * t
-        );
-      });
-    }
-  });
 
   if (opacity <= 0.005) return null;
 
   return (
     <group position={[0, 2.0, zPos]}>
-      {/* 1. OVERHEAD RADAR ARCH (Pure Blue Neon) */}
-      <mesh ref={ringRef} position={[0, isMobile ? 4.3 : 3.8, 0]}>
-        <torusGeometry args={[isMobile ? 3.0 : 8.8, 0.06, 16, 64, Math.PI]} />
-        <meshStandardMaterial
-          color="#00F0FF"
-          emissive="#00F0FF"
-          emissiveIntensity={opacity * 2.8}
-          transparent
-          opacity={opacity}
-        />
-      </mesh>
+      {/* 1. OVERHEAD HIVE CANOPY AT TOP (Replacing the round circle arch) */}
+      <OverheadHiveCanopy isMobile={isMobile} opacity={opacity} />
 
       {/* 2. OVERHEAD SECTION HEADER AT TOP: "Open source contributions and launched products" */}
       <Html
@@ -638,69 +635,17 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
         </div>
       </Html>
 
-      {/* 3. STRAIGHT CONNECTING LINES (Pure Blue Neon Hive Web) */}
-      <lineSegments>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            count={linePositions.length / 3}
-            array={linePositions}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <lineBasicMaterial
-          color="#00F0FF"
-          transparent
-          opacity={opacity * 0.72}
-          blending={THREE.AdditiveBlending}
-        />
-      </lineSegments>
-
-      {/* Traveling Energy Sparks along Hive Lines */}
-      <group ref={sparksGroupRef}>
-        {[0, 1, 2, 3, 4, 5, 6, 7].map((idx) => (
-          <mesh
-            key={idx}
-            ref={(el) => {
-              sparkRefs.current[idx] = el;
-            }}
-          >
-            <sphereGeometry args={[0.065, 12, 12]} />
-            <meshBasicMaterial
-              color="#FFFFFF"
-              transparent
-              opacity={opacity * 0.95}
-              blending={THREE.AdditiveBlending}
-            />
-          </mesh>
-        ))}
-      </group>
-
-      {/* 4. SMALL SATELLITE HIVE NODES (Blue Neon Circles & Dots) */}
-      {smallSatellites.map((s, idx) => (
-        <SmallSatelliteNode
-          key={idx}
-          position={s.pos}
-          radius={s.radius}
-          dotRadius={s.dotRadius}
-          opacity={opacity}
-          index={idx}
-        />
-      ))}
-
-      {/* 5. THE THREE BIGGER STAR NODES (FR AI Explorer, SpecForge API, Floci) */}
+      {/* 3. THE THREE PROJECT STAR NODES (Three glowing dots with stars orbiting around them) */}
       {MAIN_PROJECTS.map((proj, idx) => (
-        <BigStarNode
+        <ProjectStarNode
           key={proj.id}
           project={proj}
-          position={bigNodePositions[idx]}
-          radius={bigNodeSizes[idx].radius}
-          dotRadius={bigNodeSizes[idx].dotRadius}
-          tubeRadius={bigNodeSizes[idx].tubeRadius}
-          stemHeight={bigNodeSizes[idx].stemHeight}
+          position={projectPositions[idx]}
+          stemHeight={stemHeights[idx]}
           badgeWidthClass={badgeWidthClasses[idx]}
           opacity={opacity}
           index={idx}
+          isMobile={isMobile}
         />
       ))}
     </group>
