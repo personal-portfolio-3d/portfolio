@@ -33,7 +33,7 @@ export function HeaderNav({
             <img
               src={PERSONAL_INFO.avatar}
               alt={PERSONAL_INFO.name}
-              className="w-full h-full object-cover object-top"
+              className="w-full h-full object-cover object-[center_20%]"
               loading="eager"
               decoding="async"
             />

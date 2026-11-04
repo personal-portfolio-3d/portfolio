@@ -17,7 +17,7 @@ export const SECTIONS: SectionCoord[] = [
 export const PERSONAL_INFO = {
   name: "ASHISH DOGRA",
   shortName: "AD",
-  avatar: asset("/assets/my-image/my-image-logo.webp"),
+  avatar: asset("/assets/my-image/my-image-logo.jpg"),
   title: "SENIOR SOFTWARE ENGINEER",
   tagline: "Building scalable applications, intelligent systems, and immersive digital experiences.",
   location: "Uttarakhand, India",

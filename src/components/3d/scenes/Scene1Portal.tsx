@@ -95,28 +95,33 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
               </div>
 
               {/* Name & Avatar */}
-              <div className="flex items-center gap-4 sm:gap-5 my-1">
-                <div className="relative shrink-0">
+              <div className="flex items-stretch gap-4 sm:gap-6 my-2">
+                <div className="relative shrink-0 w-28 sm:w-32 lg:w-[140px] aspect-square">
                   <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-[#00D2FF] via-[#168BFF] to-[#22D3EE] opacity-75 blur-sm" />
-                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl p-[2px] bg-gradient-to-br from-[#00D2FF] via-[#007BFF] to-[#22D3EE] shadow-[0_0_20px_rgba(0,210,255,0.6)]">
+                  <div className="relative w-full h-full rounded-2xl p-[2px] bg-gradient-to-br from-[#00D2FF] via-[#007BFF] to-[#22D3EE] shadow-[0_0_24px_rgba(0,210,255,0.6)]">
                     <div className="w-full h-full rounded-[14px] overflow-hidden bg-[#040816]">
                       <img
                         src={PERSONAL_INFO.avatar}
                         alt={PERSONAL_INFO.name}
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-[center_20%]"
                         loading="eager"
                         decoding="async"
                       />
                     </div>
                   </div>
                   <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#00D2FF] border-2 border-[#03060D] shadow-[0_0_8px_#00D2FF] flex items-center justify-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   </div>
                 </div>
 
-                <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.95)] leading-tight text-4xl sm:text-5xl lg:text-6xl">
-                  {PERSONAL_INFO.name}
-                </h1>
+                <div className="flex flex-col justify-between py-1">
+                  <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.95)] leading-none text-4xl sm:text-5xl lg:text-[62px]">
+                    <span className="block">ASHISH</span>
+                    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-[#EDF4FF] to-[#22D3EE] mt-1.5 sm:mt-2">
+                      DOGRA
+                    </span>
+                  </h1>
+                </div>
               </div>
 
               {/* Role / Title */}
@@ -317,26 +322,33 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
               </div>
 
               {/* Name & Avatar: Ashish Dogra */}
-              <div className="flex items-center justify-center gap-3 my-1">
-                <div className="relative shrink-0">
-                  <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-[#00D2FF] via-[#168BFF] to-[#22D3EE] opacity-80 blur-xs" />
-                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl p-[1.5px] bg-gradient-to-br from-[#00D2FF] via-[#007BFF] to-[#22D3EE] shadow-[0_0_16px_rgba(0,210,255,0.6)]">
-                    <div className="w-full h-full rounded-[10px] overflow-hidden bg-[#040816]">
+              <div className="flex items-stretch justify-center gap-3.5 my-1.5">
+                <div className="relative shrink-0 w-[72px] sm:w-[84px] aspect-square">
+                  <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-[#00D2FF] via-[#168BFF] to-[#22D3EE] opacity-80 blur-xs" />
+                  <div className="relative w-full h-full rounded-2xl p-[1.5px] bg-gradient-to-br from-[#00D2FF] via-[#007BFF] to-[#22D3EE] shadow-[0_0_18px_rgba(0,210,255,0.6)]">
+                    <div className="w-full h-full rounded-[14px] overflow-hidden bg-[#040816]">
                       <img
                         src={PERSONAL_INFO.avatar}
                         alt={PERSONAL_INFO.name}
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-[center_20%]"
                         loading="eager"
                         decoding="async"
                       />
                     </div>
                   </div>
-                  <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#00D2FF] border-2 border-[#03060D] shadow-[0_0_6px_#00D2FF]" />
+                  <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#00D2FF] border-2 border-[#03060D] shadow-[0_0_6px_#00D2FF] flex items-center justify-center">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                  </div>
                 </div>
 
-                <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_32px_rgba(255,255,255,1),0_0_16px_#00D2FF] leading-tight text-2xl sm:text-3xl sm:text-4xl text-left">
-                  {PERSONAL_INFO.name}
-                </h1>
+                <div className="flex flex-col justify-between py-0.5 text-left">
+                  <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_32px_rgba(255,255,255,1),0_0_16px_#00D2FF] leading-none text-2xl sm:text-3xl">
+                    <span className="block">ASHISH</span>
+                    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-[#EDF4FF] to-[#22D3EE] mt-1">
+                      DOGRA
+                    </span>
+                  </h1>
+                </div>
               </div>
 
               {/* Role / Title & Experience */}
