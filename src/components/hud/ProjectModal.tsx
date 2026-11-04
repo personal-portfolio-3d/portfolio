@@ -68,8 +68,8 @@ export function ProjectModal({ project, onClose, onPlayClick }: ProjectModalProp
           isExiting ? "modal-content-out" : "modal-content-in"
         }`}
       >
-        {/* Shiny Neon Border Segments */}
-        <NeonCardBorders color="cyan" />
+        {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
+        <NeonCardBorders rounded="3xl" />
         {/* Floating Close Cross Icon: Docked at top-right corner, always 100% visible */}
         <button
           onClick={handleClose}

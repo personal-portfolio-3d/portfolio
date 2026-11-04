@@ -417,8 +417,8 @@ function ElectricCircleNode({
                 : "bg-[#04091A]/20 border border-[#00F0FF]/35 shadow-[0_0_20px_rgba(0,240,255,0.2)]"
             }`}
           >
-            {/* Shiny Neon Border Segments */}
-            <NeonCardBorders color="cyan" />
+            {/* Shiny Neon Blue Corner Edges */}
+            <NeonCardBorders rounded="3xl" />
             {/* Period Badge */}
             <div className="flex items-center justify-center gap-1.5 mb-1">
               <span className="text-[10px] font-mono font-bold px-3 py-0.5 rounded-full bg-[#00F0FF]/15 border border-[#00F0FF]/50 text-[#00F0FF] shadow-[0_0_10px_rgba(0,240,255,0.3)]">

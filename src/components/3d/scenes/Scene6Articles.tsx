@@ -349,8 +349,8 @@ export function Scene6Articles({ currentZ, isModalOpen }: Scene6ArticlesProps) {
                           isMobile ? "w-[85vw] max-w-[325px]" : "w-full"
                         } ${borderClasses}`}
                       >
-                        {/* Shiny Neon Border Segments */}
-                        <NeonCardBorders color={accent === "pink" ? "pink" : accent === "blue" ? "blue" : "cyan"} />
+                        {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
+                        <NeonCardBorders rounded="2xl" />
                         {/* Top Metadata: Date & Read Time */}
                         <div className="flex items-center justify-between text-[11px] font-mono text-[#C4D2E8]/80 mb-3">
                           <div className="flex items-center gap-1.5">

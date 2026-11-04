@@ -147,14 +147,8 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
                   : "bg-[#060F22]/45 border border-[#22D3EE]/45 shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_20px_rgba(34,211,238,0.25)]"
               }`}
             >
-              {/* Shiny Neon Border Accents */}
-              <NeonCardBorders color="cyan" />
-
-              {/* Internal Tech Corner Accents (Placed inside so outer rounded border is fully visible) */}
-              <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t-2 border-l-2 border-[#22D3EE]/80 pointer-events-none" />
-              <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t-2 border-r-2 border-[#22D3EE]/80 pointer-events-none" />
-              <div className="absolute bottom-3 left-3 w-2.5 h-2.5 border-b-2 border-l-2 border-[#22D3EE]/80 pointer-events-none" />
-              <div className="absolute bottom-3 right-3 w-2.5 h-2.5 border-b-2 border-r-2 border-[#22D3EE]/80 pointer-events-none" />
+              {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
+              <NeonCardBorders rounded="2xl" />
 
               <div className="flex items-center gap-2 mb-3">
                 <Terminal className="w-5 h-5 text-[#22D3EE] animate-pulse" />
@@ -224,14 +218,8 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
                   : "bg-[#060F22]/45 border border-[#168BFF]/45 shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_20px_rgba(22,139,255,0.25)]"
               }`}
             >
-              {/* Shiny Neon Border Accents */}
-              <NeonCardBorders color="blue" />
-
-              {/* Internal Tech Corner Accents (Placed inside so outer rounded border is fully visible) */}
-              <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t-2 border-l-2 border-[#168BFF]/80 pointer-events-none" />
-              <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t-2 border-r-2 border-[#168BFF]/80 pointer-events-none" />
-              <div className="absolute bottom-3 left-3 w-2.5 h-2.5 border-b-2 border-l-2 border-[#168BFF]/80 pointer-events-none" />
-              <div className="absolute bottom-3 right-3 w-2.5 h-2.5 border-b-2 border-r-2 border-[#168BFF]/80 pointer-events-none" />
+              {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
+              <NeonCardBorders rounded="2xl" />
 
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles className="w-5 h-5 text-[#22D3EE] animate-pulse" />

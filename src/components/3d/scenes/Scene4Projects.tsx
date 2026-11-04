@@ -120,14 +120,8 @@ function ProjectRoadsideCard({
               : "bg-[#040817]/40 border border-[#22D3EE]/35 shadow-[0_0_20px_rgba(22,139,255,0.2)]"
           }`}
         >
-          {/* Shiny Neon Border Segments */}
-          <NeonCardBorders color={project.featured ? "pink" : "cyan"} />
-
-          {/* Neon Corner Tech Accents (Inside rounded boundary) */}
-          <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t-2 border-l-2 border-[#22D3EE]/80 pointer-events-none" />
-          <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t-2 border-r-2 border-[#22D3EE]/80 pointer-events-none" />
-          <div className="absolute bottom-3 left-3 w-2.5 h-2.5 border-b-2 border-l-2 border-[#22D3EE]/80 pointer-events-none" />
-          <div className="absolute bottom-3 right-3 w-2.5 h-2.5 border-b-2 border-r-2 border-[#22D3EE]/80 pointer-events-none" />
+          {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
+          <NeonCardBorders rounded="3xl" />
 
           {/* Project Image Thumbnail */}
           <div className="relative w-full h-[142px] rounded-xl overflow-hidden border border-[#22D3EE]/40 mb-3 bg-[#03060D]/60">

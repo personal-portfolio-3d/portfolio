@@ -286,60 +286,61 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
           }}
         >
           {isMobile ? (
-            /* Mobile: Hero Intro Section centered inside the Portal Ring */
-            <div className="flex flex-col items-center select-none text-center w-[90vw] max-w-[325px] px-4 py-4 sm:py-5 rounded-2xl bg-[#040817]/80 border-2 border-[#00D2FF]/60 backdrop-blur-2xl shadow-[0_0_35px_rgba(0,210,255,0.35)] relative">
-              <NeonCardBorders color="cyan" />
+            /* Mobile: Pure Holographic Text inside the Portal Ring (No Card Box) */
+            <div className="flex flex-col items-center select-none text-center max-w-[320px] px-2 bg-transparent pointer-events-auto">
               {/* Category Kicker */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#081836]/90 border border-[#00D2FF]/50 text-[10px] font-mono font-bold tracking-widest text-[#00D2FF] uppercase mb-1.5 shadow-[0_0_10px_rgba(0,210,255,0.4)]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_8px_#00D2FF] animate-pulse" />
-                <span>IDENTITY MATRIX • LEAD ENGINEER</span>
+              <div className="inline-flex items-center gap-1.5 mb-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#00D2FF] shadow-[0_0_8px_#00D2FF] animate-pulse" />
+                <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-widest text-[#00D2FF] uppercase drop-shadow-[0_0_8px_rgba(0,210,255,0.85)]">
+                  // IDENTITY MATRIX • LEAD ENGINEER
+                </span>
               </div>
 
               {/* Name: Ashish Dogra */}
-              <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.95)] leading-tight text-2xl sm:text-3xl my-0.5">
+              <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_24px_rgba(255,255,255,0.95),0_0_12px_#00D2FF] leading-tight text-3xl sm:text-4xl my-0.5">
                 {PERSONAL_INFO.name}
               </h1>
 
-              {/* Role / Title & Experience Pill */}
-              <div className="flex flex-wrap items-center justify-center gap-1.5 my-1">
-                <span className="font-bold font-orbitron text-[#00D2FF] drop-shadow-[0_0_12px_rgba(0,210,255,0.85)] tracking-wide text-xs sm:text-sm">
+              {/* Role / Title & Experience */}
+              <div className="flex flex-wrap items-center justify-center gap-2 my-1">
+                <span className="font-bold font-orbitron text-[#00D2FF] drop-shadow-[0_0_14px_rgba(0,210,255,0.9)] tracking-wide text-xs sm:text-sm">
                   {PERSONAL_INFO.title}
                 </span>
-                <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[#00D2FF]/15 border border-[#00D2FF]/50 text-[#00D2FF] font-bold shadow-[0_0_8px_rgba(0,210,255,0.3)]">
-                  5+ YRS XP
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded-full border border-[#00D2FF]/60 text-[#00D2FF] font-bold shadow-[0_0_8px_rgba(0,210,255,0.4)]">
+                  5+ YRS PROD XP
                 </span>
               </div>
 
               {/* Tagline */}
-              <p className="mt-1 font-inter text-[11px] text-[#EDF4FF] leading-relaxed drop-shadow-[0_0_4px_rgba(255,255,255,0.3)] max-w-[285px]">
+              <p className="mt-1 font-inter text-xs text-[#EDF4FF] leading-relaxed drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] max-w-[290px]">
                 {PERSONAL_INFO.tagline}
               </p>
 
               {/* Info Highlights */}
-              <div className="mt-2 space-y-1 text-[10px] font-mono text-left w-full px-1">
-                <div className="flex items-center gap-1.5 text-[#EDF4FF]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF007F] shadow-[0_0_6px_#FF007F] shrink-0" />
-                  <span className="truncate">Microservices, Event-Driven &amp; Cloud</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-[#EDF4FF]">
+              <div className="mt-2.5 space-y-1 text-[11px] font-mono text-left w-full px-2">
+                <div className="flex items-center gap-2 text-[#EDF4FF]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_6px_#00D2FF] shrink-0" />
-                  <span className="truncate">Production AI Pipelines &amp; AWS Bedrock</span>
+                  <span className="truncate drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]">Microservices, Event-Driven &amp; Cloud</span>
+                </div>
+                <div className="flex items-center gap-2 text-[#EDF4FF]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_6px_#00D2FF] shrink-0" />
+                  <span className="truncate drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]">Production AI Pipelines &amp; AWS Bedrock</span>
                 </div>
               </div>
 
               {/* Action Cue Button */}
               <div
                 onClick={onExploreClick}
-                className="mt-3 w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#00D2FF]/30 via-[#168BFF]/45 to-[#FF007F]/30 hover:from-[#00D2FF]/45 hover:to-[#FF007F]/45 border-2 border-[#00D2FF] text-white text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,210,255,0.5)] cursor-pointer group"
+                className="mt-3.5 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border-2 border-[#00D2FF] hover:border-white text-xs font-mono text-white font-bold bg-[#00D2FF]/20 hover:bg-[#00D2FF]/35 backdrop-blur-md shadow-[0_0_20px_rgba(0,210,255,0.6)] hover:shadow-[0_0_30px_#00D2FF] transition-all cursor-pointer group"
               >
                 <span>ENTER HIGHWAY EXPERIENCE</span>
                 <span className="text-[#00D2FF] group-hover:translate-x-1 transition-transform">→</span>
               </div>
 
-              {/* Swipe / Scroll Cue */}
-              <span className="mt-2 text-[9px] font-mono text-[#00D2FF] tracking-wider uppercase opacity-85 flex items-center gap-1 justify-center">
+              {/* Subtle Swipe / Scroll Cue */}
+              <span className="mt-2 text-[10px] font-mono text-[#00D2FF] tracking-wider uppercase opacity-85 flex items-center gap-1 justify-center drop-shadow-[0_0_6px_rgba(0,210,255,0.6)]">
                 <span>SWIPE OR SCROLL FORWARD</span>
-                <ChevronDown className="w-3 h-3 text-[#FF007F] animate-bounce" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#00D2FF] animate-bounce" />
               </span>
             </div>
           ) : (

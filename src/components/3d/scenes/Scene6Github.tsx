@@ -105,8 +105,8 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
         }}
       >
         <div className="w-[92vw] max-w-[340px] md:max-w-[670px] p-4 sm:p-6 rounded-2xl bg-[#060F22]/45 border border-[#22D3EE]/45 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_20px_rgba(34,211,238,0.25)] relative overflow-visible select-none">
-          {/* Shiny Neon Border Segments */}
-          <NeonCardBorders color="cyan" />
+          {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
+          <NeonCardBorders rounded="2xl" />
           {/* Header */}
           <div className="flex flex-wrap items-center justify-between gap-2 pb-3 sm:pb-4 border-b border-[#22D3EE]/30">
             <div className="flex items-center gap-2.5">

@@ -1,63 +1,89 @@
 "use client";
 
 interface NeonCardBordersProps {
-  color?: "cyan" | "pink" | "blue";
+  rounded?: "xl" | "2xl" | "3xl" | "full";
   className?: string;
+  size?: "sm" | "md" | "lg";
 }
 
-export function NeonCardBorders({ color = "cyan", className = "" }: NeonCardBordersProps) {
-  const colorMap = {
-    cyan: {
-      horiz: "via-[#22D3EE] shadow-[0_0_12px_#22D3EE,0_0_4px_#ffffff]",
-      vert: "via-[#00D2FF] shadow-[0_0_12px_#00D2FF,0_0_4px_#ffffff]",
-      dot: "bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#22D3EE]",
-    },
-    pink: {
-      horiz: "via-[#FF007F] shadow-[0_0_12px_#FF007F,0_0_4px_#ffffff]",
-      vert: "via-[#FF007F] shadow-[0_0_12px_#FF007F,0_0_4px_#ffffff]",
-      dot: "bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#FF007F]",
-    },
-    blue: {
-      horiz: "via-[#168BFF] shadow-[0_0_12px_#168BFF,0_0_4px_#ffffff]",
-      vert: "via-[#168BFF] shadow-[0_0_12px_#168BFF,0_0_4px_#ffffff]",
-      dot: "bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#168BFF]",
-    },
-  };
+/**
+ * Cyber Edge Brackets:
+ * Shiny electric blue neon borders placed on all 4 corner edges (not in the middle).
+ * Each corner edge wraps both the horizontal and vertical border portions.
+ */
+export function NeonCardBorders({
+  rounded = "2xl",
+  className = "",
+  size = "md",
+}: NeonCardBordersProps) {
+  // Dimension scale for horizontal & vertical coverage
+  const sizeClasses = {
+    sm: "w-6 h-6 sm:w-8 sm:h-8",
+    md: "w-8 h-8 sm:w-11 sm:h-11",
+    lg: "w-10 h-10 sm:w-14 sm:h-14",
+  }[size];
 
-  const scheme = colorMap[color] || colorMap.cyan;
+  // Matching radius curves to fit seamlessly against the card's outer border
+  const tlRadius = {
+    xl: "rounded-tl-xl",
+    "2xl": "rounded-tl-2xl",
+    "3xl": "rounded-tl-3xl",
+    full: "rounded-tl-full",
+  }[rounded];
+
+  const trRadius = {
+    xl: "rounded-tr-xl",
+    "2xl": "rounded-tr-2xl",
+    "3xl": "rounded-tr-3xl",
+    full: "rounded-tr-full",
+  }[rounded];
+
+  const blRadius = {
+    xl: "rounded-bl-xl",
+    "2xl": "rounded-bl-2xl",
+    "3xl": "rounded-bl-3xl",
+    full: "rounded-bl-full",
+  }[rounded];
+
+  const brRadius = {
+    xl: "rounded-br-xl",
+    "2xl": "rounded-br-2xl",
+    "3xl": "rounded-br-3xl",
+    full: "rounded-br-full",
+  }[rounded];
+
+  // Radiant shiny electric blue neon border styling
+  const neonGlow =
+    "border-[#00D2FF] shadow-[0_0_12px_#00D2FF,0_0_24px_rgba(0,210,255,0.75),inset_0_0_8px_rgba(0,210,255,0.4)]";
 
   return (
-    <div className={`pointer-events-none ${className}`}>
-      {/* Top Edge Neon Segment */}
-      <div className="absolute -top-[1px] left-8 sm:left-12 flex items-center justify-center">
-        <span
-          className={`w-16 sm:w-24 h-[2px] bg-gradient-to-r from-transparent ${scheme.horiz} to-transparent rounded-full`}
-        />
-        <span className={`absolute w-1 h-1 rounded-full ${scheme.dot}`} />
+    <div className={`pointer-events-none absolute inset-0 ${className}`}>
+      {/* 1. TOP-LEFT EDGE: covers horizontal top & vertical left */}
+      <div
+        className={`absolute -top-[1.5px] -left-[1.5px] ${sizeClasses} ${tlRadius} border-t-2 border-l-2 ${neonGlow}`}
+      >
+        <span className="absolute -top-[2px] -left-[2px] w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#00D2FF]" />
       </div>
 
-      {/* Bottom Edge Neon Segment */}
-      <div className="absolute -bottom-[1px] right-8 sm:right-12 flex items-center justify-center">
-        <span
-          className={`w-16 sm:w-24 h-[2px] bg-gradient-to-r from-transparent ${scheme.horiz} to-transparent rounded-full`}
-        />
-        <span className={`absolute w-1 h-1 rounded-full ${scheme.dot}`} />
+      {/* 2. TOP-RIGHT EDGE: covers horizontal top & vertical right */}
+      <div
+        className={`absolute -top-[1.5px] -right-[1.5px] ${sizeClasses} ${trRadius} border-t-2 border-r-2 ${neonGlow}`}
+      >
+        <span className="absolute -top-[2px] -right-[2px] w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#00D2FF]" />
       </div>
 
-      {/* Left Edge Neon Segment */}
-      <div className="absolute -left-[1px] top-8 sm:top-10 flex items-center justify-center">
-        <span
-          className={`h-10 sm:h-14 w-[2px] bg-gradient-to-b from-transparent ${scheme.vert} to-transparent rounded-full`}
-        />
-        <span className={`absolute w-1 h-1 rounded-full ${scheme.dot}`} />
+      {/* 3. BOTTOM-LEFT EDGE: covers horizontal bottom & vertical left */}
+      <div
+        className={`absolute -bottom-[1.5px] -left-[1.5px] ${sizeClasses} ${blRadius} border-b-2 border-l-2 ${neonGlow}`}
+      >
+        <span className="absolute -bottom-[2px] -left-[2px] w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#00D2FF]" />
       </div>
 
-      {/* Right Edge Neon Segment */}
-      <div className="absolute -right-[1px] bottom-8 sm:bottom-10 flex items-center justify-center">
-        <span
-          className={`h-10 sm:h-14 w-[2px] bg-gradient-to-b from-transparent ${scheme.vert} to-transparent rounded-full`}
-        />
-        <span className={`absolute w-1 h-1 rounded-full ${scheme.dot}`} />
+      {/* 4. BOTTOM-RIGHT EDGE: covers horizontal bottom & vertical right */}
+      <div
+        className={`absolute -bottom-[1.5px] -right-[1.5px] ${sizeClasses} ${brRadius} border-b-2 border-r-2 ${neonGlow}`}
+      >
+        <span className="absolute -bottom-[2px] -right-[2px] w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#00D2FF]" />
       </div>
     </div>
   );
