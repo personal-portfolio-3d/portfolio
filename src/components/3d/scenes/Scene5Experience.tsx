@@ -22,11 +22,13 @@ function ElectricWavySegment({
   end,
   arch = 0.2,
   pulseOffset = 0,
+  opacity = 1.0,
 }: {
   start: [number, number, number];
   end: [number, number, number];
   arch?: number;
   pulseOffset?: number;
+  opacity?: number;
 }) {
   const numPoints = 36;
   const ribbon1GeomRef = useRef<THREE.BufferGeometry>(null);
@@ -156,12 +158,12 @@ function ElectricWavySegment({
         <meshStandardMaterial
           color="#00F0FF"
           emissive="#00F0FF"
-          emissiveIntensity={3.6}
+          emissiveIntensity={opacity * 3.6}
           roughness={0.15}
           metalness={0.9}
           side={THREE.DoubleSide}
           transparent
-          opacity={0.92}
+          opacity={opacity * 0.92}
         />
       </mesh>
 
@@ -179,12 +181,12 @@ function ElectricWavySegment({
         <meshStandardMaterial
           color="#00F0FF"
           emissive="#00F0FF"
-          emissiveIntensity={3.6}
+          emissiveIntensity={opacity * 3.6}
           roughness={0.15}
           metalness={0.9}
           side={THREE.DoubleSide}
           transparent
-          opacity={0.92}
+          opacity={opacity * 0.92}
         />
       </mesh>
 
@@ -201,7 +203,7 @@ function ElectricWavySegment({
         <lineBasicMaterial
           color="#FFFFFF"
           transparent
-          opacity={0.95}
+          opacity={opacity * 0.95}
           blending={THREE.AdditiveBlending}
         />
       </line>
@@ -209,17 +211,17 @@ function ElectricWavySegment({
       {/* Connection Joint Anchors located strictly at the circle borders */}
       <mesh position={start}>
         <sphereGeometry args={[0.05, 16, 16]} />
-        <meshBasicMaterial color="#00F0FF" />
+        <meshBasicMaterial color="#00F0FF" transparent opacity={opacity} />
       </mesh>
       <mesh position={end}>
         <sphereGeometry args={[0.05, 16, 16]} />
-        <meshBasicMaterial color="#00F0FF" />
+        <meshBasicMaterial color="#00F0FF" transparent opacity={opacity} />
       </mesh>
 
       {/* High-Energy Traveling Electric Spark */}
       <mesh ref={pulseRef}>
         <sphereGeometry args={[0.075, 12, 12]} />
-        <meshBasicMaterial color="#FFFFFF" />
+        <meshBasicMaterial color="#FFFFFF" transparent opacity={opacity} />
       </mesh>
     </group>
   );
@@ -234,6 +236,7 @@ function ElectricCircleNode({
   tubeRadius,
   isSelected,
   isModalOpen,
+  nodeOpacity = 1.0,
   onClick,
   index,
 }: {
@@ -244,6 +247,7 @@ function ElectricCircleNode({
   tubeRadius: number;
   isSelected: boolean;
   isModalOpen?: boolean;
+  nodeOpacity?: number;
   onClick: () => void;
   index: number;
 }) {
@@ -312,9 +316,11 @@ function ElectricCircleNode({
           <meshStandardMaterial
             color="#00F0FF"
             emissive="#00F0FF"
-            emissiveIntensity={isSelected ? 4.2 : isHovered ? 3.6 : 2.8}
+            emissiveIntensity={(isSelected ? 4.2 : isHovered ? 3.6 : 2.8) * nodeOpacity}
             roughness={0.15}
             metalness={0.88}
+            transparent
+            opacity={nodeOpacity}
           />
         </mesh>
 
@@ -324,7 +330,7 @@ function ElectricCircleNode({
           <meshBasicMaterial
             color="#00F0FF"
             transparent
-            opacity={isHovered || isSelected ? 0.35 : 0.18}
+            opacity={(isHovered || isSelected ? 0.35 : 0.18) * nodeOpacity}
             blending={THREE.AdditiveBlending}
           />
         </mesh>
@@ -335,22 +341,24 @@ function ElectricCircleNode({
           <meshStandardMaterial
             color="#00F0FF"
             emissive="#00F0FF"
-            emissiveIntensity={isSelected ? 4.6 : isHovered ? 3.8 : 3.0}
+            emissiveIntensity={(isSelected ? 4.6 : isHovered ? 3.8 : 3.0) * nodeOpacity}
             roughness={0.1}
             metalness={0.9}
+            transparent
+            opacity={nodeOpacity}
           />
         </mesh>
 
         {/* Inner High-Energy White Core in Center Dot */}
         <mesh>
           <sphereGeometry args={[dotRadius * 0.45, 16, 16]} />
-          <meshBasicMaterial color="#FFFFFF" />
+          <meshBasicMaterial color="#FFFFFF" transparent opacity={nodeOpacity} />
         </mesh>
 
         {/* Local Neon Blue Point Light */}
         <pointLight
           color="#00F0FF"
-          intensity={isSelected ? 4.2 : isHovered ? 3.4 : 2.2}
+          intensity={(isSelected ? 4.2 : isHovered ? 3.4 : 2.2) * nodeOpacity}
           distance={5.5}
         />
       </group>
@@ -363,38 +371,40 @@ function ElectricCircleNode({
           <meshStandardMaterial
             color="#00F0FF"
             emissive="#00F0FF"
-            emissiveIntensity={isSelected ? 3.4 : 2.5}
+            emissiveIntensity={(isSelected ? 3.4 : 2.5) * nodeOpacity}
+            transparent
+            opacity={nodeOpacity}
           />
         </mesh>
 
         {/* Bottom Joint Sphere (at top of circle border) */}
         <mesh position={[0, radius, 0]}>
           <sphereGeometry args={[0.045, 16, 16]} />
-          <meshBasicMaterial color="#00F0FF" />
+          <meshBasicMaterial color="#00F0FF" transparent opacity={nodeOpacity} />
         </mesh>
 
         {/* Top Joint Sphere (at bottom of title card) */}
         <mesh position={[0, radius + stemHeight, 0]}>
           <sphereGeometry args={[0.045, 16, 16]} />
-          <meshBasicMaterial color="#FFFFFF" />
+          <meshBasicMaterial color="#FFFFFF" transparent opacity={nodeOpacity} />
         </mesh>
 
         {/* Animated energy pulse travelling up the vertical line */}
         <mesh ref={pulseRef} position={[0, radius, 0]}>
           <sphereGeometry args={[0.055, 16, 16]} />
-          <meshBasicMaterial color="#FFFFFF" />
+          <meshBasicMaterial color="#FFFFFF" transparent opacity={nodeOpacity} />
         </mesh>
       </group>
 
-      {/* --- 3. FLOATING HOLOGRAPHIC TITLE BADGE (Ultra-Transparent & Expanded) --- */}
+      {/* --- 3. FLOATING HOLOGRAPHIC TITLE BADGE (Ultra-Transparent & Circular) --- */}
       <Html
         transform
         distanceFactor={5.5}
-        position={[0, radius + stemHeight + 0.45, 0]}
+        position={[0, radius + stemHeight + 0.32, 0]}
         center
         style={{
-          opacity: isModalOpen ? 0 : 1,
-          pointerEvents: isModalOpen ? "none" : "auto",
+          opacity: isModalOpen ? 0 : nodeOpacity,
+          pointerEvents: isModalOpen || nodeOpacity <= 0.3 ? "none" : "auto",
           transition: "opacity 0.25s ease-out",
         }}
       >
@@ -407,62 +417,40 @@ function ElectricCircleNode({
           onMouseLeave={() => setIsHovered(false)}
           className="cursor-pointer group flex flex-col items-center select-none transform transition-transform duration-300 hover:scale-105"
         >
-          {/* Ultra-Transparent Expanded Card */}
+          {/* Ultra-Transparent Circular / Pill Card */}
           <div
-            className={`w-[88vw] max-w-[330px] sm:max-w-none sm:w-[300px] p-4 sm:p-5 rounded-3xl border backdrop-blur-md transition-all duration-300 text-center relative overflow-visible ${
+            className={`px-5 sm:px-6 py-3 sm:py-3.5 rounded-3xl border backdrop-blur-md transition-all duration-300 text-center max-w-[85vw] sm:max-w-none sm:min-w-[220px] relative overflow-visible ${
               isSelected
-                ? "bg-[#0A224D]/55 border-2 border-[#00F0FF] shadow-[0_0_35px_rgba(0,240,255,0.6)]"
+                ? "bg-[#0A224D]/45 border-2 border-[#00F0FF] shadow-[0_0_35px_rgba(0,240,255,0.6)]"
                 : isHovered
-                ? "bg-[#06142E]/45 border border-[#00F0FF]/70 shadow-[0_0_25px_rgba(0,240,255,0.45)]"
-                : "bg-[#04091A]/30 border border-[#00F0FF]/35 shadow-[0_0_20px_rgba(0,240,255,0.2)]"
+                ? "bg-[#06142E]/35 border border-[#00F0FF]/70 shadow-[0_0_25px_rgba(0,240,255,0.45)]"
+                : "bg-[#04091A]/20 border border-[#00F0FF]/35 shadow-[0_0_20px_rgba(0,240,255,0.2)]"
             }`}
           >
             {/* Shiny Neon Blue Corner Edges */}
             <NeonCardBorders rounded="3xl" />
 
-            {/* Header row: Period & Location */}
-            <div className="flex items-center justify-between gap-2 mb-2 pb-1.5 border-b border-[#00F0FF]/25">
-              <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#00F0FF]/15 border border-[#00F0FF]/50 text-[#00F0FF] shadow-[0_0_10px_rgba(0,240,255,0.3)]">
+            {/* Period Badge */}
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <span className="text-[10px] font-mono font-bold px-3 py-0.5 rounded-full bg-[#00F0FF]/15 border border-[#00F0FF]/50 text-[#00F0FF] shadow-[0_0_10px_rgba(0,240,255,0.3)]">
                 {exp.period}
-              </span>
-              <span className="text-[10px] font-mono text-[#94A3B8] font-medium">
-                {exp.location || "Remote"}
               </span>
             </div>
 
             {/* Role Title */}
-            <h4 className="text-sm sm:text-base font-bold font-orbitron text-white group-hover:text-[#00F0FF] transition-colors drop-shadow-[0_0_10px_rgba(255,255,255,0.9)] tracking-wide">
+            <h4 className="text-xs sm:text-sm font-bold font-orbitron text-white group-hover:text-[#00F0FF] transition-colors drop-shadow-[0_0_10px_rgba(255,255,255,0.9)] tracking-wide sm:whitespace-nowrap">
               {exp.role}
             </h4>
 
             {/* Company / Institution */}
-            <p className="text-xs sm:text-[13px] font-semibold mt-0.5 text-[#00F0FF] drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">
+            <p className="text-[11px] sm:text-xs font-semibold mt-0.5 sm:whitespace-nowrap text-[#00F0FF] drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">
               {exp.company}
             </p>
 
-            {/* Short highlight / description snippet */}
-            <p className="text-[11.5px] text-[#E2E8F0] font-inter mt-2 line-clamp-2 leading-relaxed drop-shadow-[0_0_4px_rgba(255,255,255,0.2)] text-center">
-              {exp.description}
-            </p>
-
-            {/* Key Skill Tags */}
-            {exp.skills && exp.skills.length > 0 && (
-              <div className="mt-2.5 flex flex-wrap justify-center gap-1.5">
-                {exp.skills.slice(0, 3).map((skill) => (
-                  <span
-                    key={skill}
-                    className="text-[9.5px] font-mono font-semibold px-2 py-0.5 rounded bg-[#081836]/70 border border-[#00F0FF]/40 text-[#00F0FF]"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            )}
-
             {/* Prompt */}
-            <div className="mt-3 pt-2 border-t border-[#00F0FF]/20 flex items-center justify-center gap-1.5 text-[10px] font-mono text-[#EDF4FF] group-hover:text-white transition-colors">
+            <div className="mt-1.5 flex items-center justify-center gap-1 text-[9px] font-mono text-[#EDF4FF] group-hover:text-white transition-colors">
               <span className="w-1.5 h-1.5 rounded-full bg-[#00F0FF] animate-ping" />
-              <span className="tracking-wider uppercase font-semibold">Click for full details</span>
+              <span>Click node for details</span>
             </div>
           </div>
         </div>
@@ -481,9 +469,10 @@ export function Scene5Experience({
   const dist = Math.abs(currentZ - zPos);
   const ringRef = useRef<THREE.Mesh>(null);
 
+  // Smooth continuous opacity for the whole scene (arch, banner, electric arcs)
   const opacity = useMemo(() => {
-    if (dist > 45) return 0;
-    return Math.max(0, 1 - dist / 38);
+    if (dist > 52) return 0;
+    return Math.max(0, 1 - dist / 46);
   }, [dist]);
 
   // Chronological Milestones: Left -> Center -> Right
@@ -501,9 +490,9 @@ export function Scene5Experience({
   const nodePositions: [number, number, number][] = useMemo(() => {
     if (isMobile) {
       return [
-        [0.0, 0.0, 9],    // Node 0 (MCA): Front
-        [0.0, 0.5, 0],    // Node 1 (Freelance): Center
-        [0.0, 0.0, -9],   // Node 2 (Gadget): Far
+        [0.0, -0.2, 9],    // Node 0 (MCA): Front
+        [0.0, 0.4, 0],     // Node 1 (Freelance): Center
+        [0.0, 1.0, -9],    // Node 2 (Gadget): Far
       ];
     }
     return [
@@ -522,6 +511,14 @@ export function Scene5Experience({
     ],
     []
   );
+
+  // Per-node smooth opacity calculation for seamless proximity fade
+  const getNodeOpacity = (idx: number) => {
+    if (!isMobile) return opacity;
+    const nodeZ = zPos + nodePositions[idx][2];
+    const nodeDist = Math.abs(currentZ - nodeZ);
+    return nodeDist > 22 ? 0 : Math.max(0, 1 - nodeDist / 16);
+  };
 
   // BORDER-ONLY CONNECTION COORDINATES (Lines connect at borders - NEVER pass through circles!)
   const segments = useMemo(() => {
@@ -562,7 +559,7 @@ export function Scene5Experience({
     }
   });
 
-  if (opacity <= 0.01) return null;
+  if (opacity <= 0.005) return null;
 
   return (
     <group position={[0, 2.0, zPos]}>
@@ -572,7 +569,9 @@ export function Scene5Experience({
         <meshStandardMaterial
           color="#00F0FF"
           emissive="#00F0FF"
-          emissiveIntensity={2.5}
+          emissiveIntensity={opacity * 2.5}
+          transparent
+          opacity={opacity}
         />
       </mesh>
 
@@ -613,6 +612,7 @@ export function Scene5Experience({
             end={seg.end}
             arch={seg.arch}
             pulseOffset={seg.pulseOffset}
+            opacity={opacity}
           />
         ))}
       </group>
@@ -629,6 +629,7 @@ export function Scene5Experience({
           exp={exp}
           isSelected={selectedExperienceId === exp.id}
           isModalOpen={isModalOpen}
+          nodeOpacity={getNodeOpacity(idx)}
           onClick={() => {
             if (onSelectExperience) {
               onSelectExperience(exp);
