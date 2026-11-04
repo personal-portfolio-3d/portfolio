@@ -106,6 +106,8 @@ export function ProjectModal({ project, onClose, onPlayClick }: ProjectModalProp
               <img
                 src={mountedProject.image}
                 alt={mountedProject.title}
+                loading="eager"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#060F22]/90 via-transparent to-transparent opacity-85" />

@@ -95,7 +95,7 @@ export const PROJECTS: Project[] = [
     title: "AI CHATBOTS & CLOUD PLATFORMS",
     category: "Enterprise Cloud AI & Multi-Model",
     subtitle: "Enterprise Chatbot Solutions (AWS • Azure • GCP)",
-    image: asset("/assets/projects/ai-chatbots.svg"),
+    image: asset("/assets/projects/Neon AI Chatbots and Cloud Platforms.webp"),
     description:
       "Designed and built end-to-end AI chatbot solutions for multiple clients using cloud platforms including AWS, Azure, and Google Cloud. Leveraged services such as AWS Bedrock, Azure AI Foundry, and Google Cloud AI for model training, deployment, and orchestration. Developed custom data pipelines and knowledge structures to optimize chatbot performance and accuracy.",
     highlights: [
@@ -125,7 +125,7 @@ export const PROJECTS: Project[] = [
     title: "CUSTOMER MANAGEMENT SYSTEM",
     category: "Microservices & Distributed Security",
     subtitle: "Python Microservices Backend & Hierarchical RBAC",
-    image: asset("/assets/projects/customer-management.svg"),
+    image: asset("/assets/projects/Neon Customer Management Architecture.webp"),
     description:
       "Designed and implemented a scalable backend system using microservices architecture (Python-based). Built API Gateway layer for authentication, authorization, and secure API exposure with complex hierarchical RBAC supporting platform admins, client admins, and end-users with multi-level role assignments.",
     highlights: [
@@ -154,7 +154,7 @@ export const PROJECTS: Project[] = [
     title: "EVENT-DRIVEN DATA & AI PIPELINE",
     category: "High-Scale Data & AI Orchestration",
     subtitle: "High-Scale Asynchronous Multi-Format AI Pipeline",
-    image: asset("/assets/projects/event-processing-pipeline.svg"),
+    image: asset("/assets/projects/Neon Event-Driven AI Pipeline.webp"),
     description:
       "Architected and developed a high-scale event-driven data processing pipeline for refining large volumes of unstructured data. Designed system to handle multi-format inputs (PDF, text, images, videos, spreadsheets) and process them efficiently with parallel data chunking and distributed AI processing.",
     highlights: [
@@ -184,7 +184,7 @@ export const PROJECTS: Project[] = [
     title: "INSIGHTS DASHBOARD & DATA PLATFORM",
     category: "Analytics Platform & Multi-Tenant RBAC",
     subtitle: "Data Analytics, User Management & Subscriptions",
-    image: asset("/assets/projects/insights-dashboard.svg"),
+    image: asset("/assets/projects/Neon Insights Dashboard Platform.webp"),
     description:
       "Led development of a data analytics and user management platform, spanning both frontend and backend systems. Designed and implemented multi-tenant user management supporting administrators, employees, and hierarchical access with role-based access control (RBAC), data refinement pipelines for large datasets, and subscription billing.",
     highlights: [
@@ -215,7 +215,7 @@ export const PROJECTS: Project[] = [
     title: "EMR / ADVANCED MEDICS",
     category: "Healthcare & AI Platform",
     subtitle: "US Healthcare Platform — Oncologist Surgeon",
-    image: asset("/assets/projects/emr-system.svg"),
+    image: asset("/assets/projects/emr-project.webp"),
     description:
       "Enterprise healthcare platform engineered from scratch supporting clinical workflows, patient scheduling, encounters, and AI-powered document processing.",
     highlights: [
@@ -234,7 +234,7 @@ export const PROJECTS: Project[] = [
     title: "GADGET SOFTWARE ENTERPRISE PWA",
     category: "Cross-Platform PWA & Data Platform",
     subtitle: "Enterprise Digital Manuals & Insights System",
-    image: asset("/assets/projects/gadget-software.svg"),
+    image: asset("/assets/projects/Neon Cross-Platform Documentation Ecosystem.webp"),
     description:
       "Spearheaded end-to-end development of a cross-platform PWA managing digital manuals across 10+ enterprise clients, combined with a multi-tenant analytics dashboard.",
     highlights: [
@@ -252,7 +252,7 @@ export const PROJECTS: Project[] = [
     title: "EASYBIZNUS",
     category: "B2B E-Commerce Marketplace",
     subtitle: "Scalable Multi-Vendor B2B Commerce Engine",
-    image: asset("/assets/projects/easybiznus.svg"),
+    image: asset("/assets/projects/Eazybiznus-project.webp"),
     description:
       "Architected and scaled the backend system from scratch for a high-volume B2B marketplace facilitating smooth vendor-buyer bulk transactions.",
     highlights: [
@@ -271,7 +271,7 @@ export const PROJECTS: Project[] = [
     title: "POLICY DISTRICT",
     category: "Automated Data & AI Platform",
     subtitle: "Government Document Ingestion & AI Insights",
-    image: asset("/assets/projects/policy-district.svg"),
+    image: asset("/assets/projects/Policy-district-image.webp"),
     description:
       "Fully automated data ingestion and processing system for government rules, presidential documents, and legal regulations using AWS Lambda and AI pipelines.",
     highlights: [
@@ -287,7 +287,7 @@ export const PROJECTS: Project[] = [
     title: "FEDERAL REGISTER EXPLORER",
     category: "Client-Side AI & Data Analytics",
     subtitle: "In-Browser DuckDB-WASM & Local Gemma on WebGPU",
-    image: asset("/assets/projects/federal-register-explorer.svg"),
+    image: asset("/assets/projects/federal-register-explorer.webp"),
     description:
       "A browser-based application for searching and exploring Federal Register documents from a prepared snapshot of the GadgetSoftware dataset. Features in-browser analytical SQL searches with DuckDB-WASM and private local document chat powered by Google Gemma running locally on your device via WebGPU.",
     highlights: [
@@ -306,7 +306,7 @@ export const PROJECTS: Project[] = [
     title: "SPECFORGE API",
     category: "Open Source Developer Tooling",
     subtitle: "Modern, High-Performance OpenAPI & Swagger Alternative",
-    image: asset("/assets/projects/specforge-api.svg"),
+    image: asset("/assets/projects/specforge-api.jpg"),
     description:
       "An open source Python package engineered and published on PyPI to replace legacy Swagger with high-performance, developer-first interactive API documentation, automated schema generation, and clean dark-mode ergonomics.",
     highlights: [
@@ -454,7 +454,7 @@ export const OPEN_SOURCE_ACHIEVEMENTS: OpenSourceProject[] = [
     tagline: "In-Browser DuckDB-WASM & Client-Side Gemma LLM on WebGPU",
     badge: "HUGGING FACE SPACES • LIVE APP",
     badgeColor: "#F59E0B",
-    image: asset("/assets/projects/federal-register-explorer.svg"),
+    image: asset("/assets/projects/federal-register-explorer.webp"),
     description:
       "A browser-based application for searching and exploring Federal Register documents from a prepared snapshot of the GadgetSoftware dataset. Features in-browser analytical SQL searches with DuckDB-WASM and private local document chat powered by Google Gemma running locally on your device via WebGPU.",
     highlights: [
@@ -481,7 +481,7 @@ export const OPEN_SOURCE_ACHIEVEMENTS: OpenSourceProject[] = [
     tagline: "Modern, High-Performance OpenAPI & Swagger Alternative",
     badge: "PUBLISHED ON PyPI • PYTHON PACKAGE",
     badgeColor: "#38BDF8",
-    image: asset("/assets/projects/specforge-api.svg"),
+    image: asset("/assets/projects/specforge-api.jpg"),
     description:
       "An open source Python package engineered and published on PyPI to replace legacy Swagger with high-performance, developer-first interactive API documentation, automated schema generation, and clean dark-mode ergonomics.",
     highlights: [
@@ -509,7 +509,7 @@ export const OPEN_SOURCE_ACHIEVEMENTS: OpenSourceProject[] = [
     tagline: "Open-Source AWS LocalStack Alternative Web UI",
     badge: "OPEN SOURCE CONTRIBUTIONS • LOCAL CLOUD",
     badgeColor: "#10B981",
-    image: asset("/assets/projects/floci-ui.svg"),
+    image: asset("/assets/projects/floci-pr-image.webp"),
     description:
       "Core open source contributions to Floci UI, enabling developers to mock and manage local AWS cloud services. Engineered frontend interfaces, resource monitoring, and developer workflows for cloud simulation.",
     highlights: [
