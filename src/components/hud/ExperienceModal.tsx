@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { ExperienceItem } from "@/types/portfolio";
 import { EXPERIENCES } from "@/data/portfolioData";
-import { X, Calendar, MapPin, Award, ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
+import { X, Calendar, MapPin, Award, ArrowLeft, ArrowRight, CheckCircle2, FolderGit2, ExternalLink } from "lucide-react";
 import { NeonCardBorders } from "@/components/ui/NeonCardBorders";
 
 interface ExperienceModalProps {
@@ -191,6 +191,63 @@ export function ExperienceModal({
                 ))}
               </div>
             </div>
+
+            {/* Key Projects Section if available */}
+            {mountedExperience.keyProjects && mountedExperience.keyProjects.length > 0 && (
+              <div className="mb-6">
+                <h4 className="text-xs font-mono font-bold tracking-widest text-[#22D3EE] uppercase mb-3 flex items-center gap-1.5">
+                  <FolderGit2 className="w-4 h-4 text-[#22D3EE]" />
+                  Key Systems &amp; Projects Engineered at {mountedExperience.company}
+                </h4>
+                <div className="grid grid-cols-1 gap-3">
+                  {mountedExperience.keyProjects.map((proj, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3.5 sm:p-4 rounded-2xl bg-[#081836]/60 border border-[#22D3EE]/30 hover:border-[#22D3EE] transition-all group"
+                    >
+                      <div className="flex flex-wrap items-start justify-between gap-2 mb-1.5">
+                        <div>
+                          <h5 className="text-sm sm:text-base font-bold font-orbitron text-white group-hover:text-[#22D3EE] transition-colors">
+                            {proj.title}
+                          </h5>
+                          {proj.subtitle && (
+                            <span className="text-[11px] font-mono text-[#00D2FF] font-semibold block mt-0.5">
+                              {proj.subtitle}
+                            </span>
+                          )}
+                        </div>
+                        {proj.link && (
+                          <a
+                            href={proj.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#168BFF]/20 border border-[#168BFF] text-[#22D3EE] hover:bg-[#168BFF] hover:text-white transition-all"
+                          >
+                            <span>LinkedIn Ref</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
+
+                      <p className="text-xs text-[#EDF4FF] leading-relaxed mb-2.5 drop-shadow-[0_0_2px_rgba(255,255,255,0.2)]">
+                        {proj.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-1.5">
+                        {proj.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="text-[9.5px] font-mono font-semibold px-2 py-0.5 rounded-md bg-[#03060D]/80 border border-[#22D3EE]/40 text-[#22D3EE]"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Core Skills & Tech */}
             <div className="mb-6">

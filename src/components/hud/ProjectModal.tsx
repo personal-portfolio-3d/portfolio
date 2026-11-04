@@ -171,7 +171,11 @@ export function ProjectModal({ project, onClose, onPlayClick }: ProjectModalProp
                   rel="noopener noreferrer"
                   className="py-2.5 px-5 rounded-xl bg-[#168BFF] hover:bg-[#007BFF] text-white text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 flex items-center gap-2 shadow-[0_0_20px_rgba(22,139,255,0.7)] cursor-pointer"
                 >
-                  <span>Visit Live Platform</span>
+                  <span>
+                    {mountedProject.liveUrl.includes("linkedin.com")
+                      ? "View Project On LinkedIn"
+                      : "Visit Live Platform"}
+                  </span>
                   <ExternalLink className="w-4 h-4" />
                 </a>
               )}

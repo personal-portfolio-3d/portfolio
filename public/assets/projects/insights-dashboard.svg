@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgID" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#03060D" />
+      <stop offset="100%" stop-color="#081426" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#bgID)" rx="16" />
+
+  <!-- Top Bar -->
+  <rect x="24" y="24" width="752" height="48" rx="8" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="50" y="53" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="14" font-weight="bold">INSIGHTS DASHBOARD &amp; DATA PLATFORM // GADGET SOFTWARE</text>
+  <rect x="600" y="34" width="160" height="28" rx="6" fill="#101F38" stroke="#00D2FF" stroke-width="1" />
+  <text x="612" y="52" fill="#00D2FF" font-family="monospace" font-size="11" font-weight="bold">ANALYTICS &amp; BILLING</text>
+
+  <!-- Left: Multi-Tenant Architecture & Data Refinement -->
+  <rect x="24" y="86" width="360" height="370" rx="10" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="44" y="116" fill="#00D2FF" font-family="'Orbitron', sans-serif" font-size="12" font-weight="bold">USER MANAGEMENT &amp; DATA ACCESS</text>
+
+  <!-- User Management -->
+  <rect x="44" y="136" width="320" height="74" rx="6" fill="#101F38" stroke="#168BFF" stroke-width="1" />
+  <text x="60" y="160" fill="#22D3EE" font-family="sans-serif" font-size="12" font-weight="bold">Hierarchical User Management</text>
+  <text x="60" y="180" fill="#EDF4FF" font-family="monospace" font-size="11">Multi-tenant accounts, employee role scopes, social logins</text>
+  <text x="60" y="198" fill="#71839F" font-family="monospace" font-size="10">Google, Microsoft, &amp; SAML Enterprise Single Sign-On</text>
+
+  <!-- Data Refinement Pipelines -->
+  <rect x="44" y="222" width="320" height="74" rx="6" fill="#081426" stroke="#1B2A40" stroke-width="1" />
+  <text x="60" y="246" fill="#168BFF" font-family="sans-serif" font-size="12" font-weight="bold">Government Dataset Refinement</text>
+  <text x="60" y="266" fill="#EDF4FF" font-family="monospace" font-size="11">Fast elastic querying, faceted filters &amp; geo-filtering</text>
+  <text x="60" y="284" fill="#71839F" font-family="monospace" font-size="10">High-throughput indexing of millions of regulatory records</text>
+
+  <!-- Subscriptions & Payments -->
+  <rect x="44" y="308" width="320" height="74" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="60" y="332" fill="#00D2FF" font-family="sans-serif" font-size="12" font-weight="bold">Tiered Subscriptions &amp; Billing</text>
+  <text x="60" y="352" fill="#EDF4FF" font-family="monospace" font-size="11">Automated recurring billing, license keys, and quotas</text>
+  <text x="60" y="370" fill="#71839F" font-family="monospace" font-size="10">Stripe Integration with webhook state machine</text>
+
+  <!-- Tech Bar -->
+  <rect x="44" y="394" width="320" height="50" rx="6" fill="#101F38" stroke="#00D2FF" stroke-width="1" />
+  <text x="60" y="416" fill="#00D2FF" font-family="monospace" font-size="10" font-weight="bold">Next.js • React • Node.js • RBAC • PostgreSQL</text>
+  <text x="60" y="432" fill="#71839F" font-family="monospace" font-size="9">Sub-second interactive query responsiveness</text>
+
+  <!-- Right: Dynamic Analytics Dashboard Mockup -->
+  <rect x="404" y="86" width="372" height="370" rx="10" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="424" y="116" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="13" font-weight="bold">DYNAMIC ANALYTICS VISUALIZATION</text>
+
+  <!-- Metric Badges Row -->
+  <rect x="424" y="136" width="104" height="60" rx="6" fill="#101F38" stroke="#00D2FF" stroke-width="1" />
+  <text x="434" y="156" fill="#00D2FF" font-family="monospace" font-size="10">ACTIVE USERS</text>
+  <text x="434" y="180" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="15" font-weight="bold">12,450</text>
+
+  <rect x="538" y="136" width="104" height="60" rx="6" fill="#081426" stroke="#168BFF" stroke-width="1" />
+  <text x="548" y="156" fill="#168BFF" font-family="monospace" font-size="10">DATA QUERIES</text>
+  <text x="548" y="180" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="15" font-weight="bold">1.4M /mo</text>
+
+  <rect x="652" y="136" width="104" height="60" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="662" y="156" fill="#B58AFF" font-family="monospace" font-size="10">UPTIME SLA</text>
+  <text x="662" y="180" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="15" font-weight="bold">99.98%</text>
+
+  <!-- Chart Visualization Mockup -->
+  <rect x="424" y="210" width="332" height="135" rx="6" fill="#081426" stroke="#168BFF" stroke-width="1" />
+  <text x="440" y="232" fill="#EDF4FF" font-family="sans-serif" font-size="11" font-weight="bold">Data Consumption &amp; Document Refinement Velocity</text>
+  <!-- Chart bars / polyline -->
+  <polyline points="440,315 480,290 520,300 560,265 600,275 640,240 680,250 720,230" fill="none" stroke="#00D2FF" stroke-width="2.5" />
+  <circle cx="720" cy="230" r="4" fill="#00D2FF" />
+  <text x="660" y="222" fill="#00D2FF" font-family="monospace" font-size="10" font-weight="bold">+44% MoM</text>
+
+  <line x1="440" y1="325" x2="736" y2="325" stroke="#24466E" stroke-width="1" />
+  <text x="440" y="338" fill="#71839F" font-family="monospace" font-size="9">Jan</text>
+  <text x="495" y="338" fill="#71839F" font-family="monospace" font-size="9">Mar</text>
+  <text x="555" y="338" fill="#71839F" font-family="monospace" font-size="9">May</text>
+  <text x="615" y="338" fill="#71839F" font-family="monospace" font-size="9">Jul</text>
+  <text x="675" y="338" fill="#71839F" font-family="monospace" font-size="9">Sep</text>
+  <text x="720" y="338" fill="#71839F" font-family="monospace" font-size="9">Nov</text>
+
+  <!-- Feature bullets -->
+  <rect x="424" y="358" width="332" height="86" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="440" y="380" fill="#EDF4FF" font-family="sans-serif" font-size="10" font-weight="bold">ENTERPRISE DASHBOARD CAPABILITIES</text>
+  <text x="440" y="400" fill="#00D2FF" font-family="monospace" font-size="10">● Dynamic role-aware widget rendering &amp; saved custom views</text>
+  <text x="440" y="418" fill="#22D3EE" font-family="monospace" font-size="10">● Export to CSV, PDF, and automated executive weekly reports</text>
+  <text x="440" y="434" fill="#168BFF" font-family="monospace" font-size="10">● Low-latency client caching and optimistic UI updates</text>
+</svg>

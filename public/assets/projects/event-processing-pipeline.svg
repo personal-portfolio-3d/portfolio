@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgEP" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#03060D" />
+      <stop offset="100%" stop-color="#0A162B" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#bgEP)" rx="16" />
+
+  <!-- Top Bar -->
+  <rect x="24" y="24" width="752" height="48" rx="8" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="50" y="53" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="14" font-weight="bold">HIGH-SCALE EVENT-DRIVEN DATA &amp; AI PIPELINE</text>
+  <rect x="610" y="34" width="150" height="28" rx="6" fill="#101F38" stroke="#00D2FF" stroke-width="1" />
+  <text x="622" y="52" fill="#00D2FF" font-family="monospace" font-size="11" font-weight="bold">DISTRIBUTED AI ENGINE</text>
+
+  <!-- Left: Multi-Format Ingestion & Parallel Chunking -->
+  <rect x="24" y="86" width="360" height="370" rx="10" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="44" y="116" fill="#00D2FF" font-family="'Orbitron', sans-serif" font-size="12" font-weight="bold">INGESTION &amp; DATA REFINEMENT</text>
+
+  <!-- Step 1: Multi-Format Inputs -->
+  <rect x="44" y="136" width="320" height="68" rx="6" fill="#101F38" stroke="#168BFF" stroke-width="1" />
+  <text x="60" y="160" fill="#22D3EE" font-family="sans-serif" font-size="12" font-weight="bold">Multi-Format Input Gateway</text>
+  <text x="60" y="180" fill="#EDF4FF" font-family="monospace" font-size="11">PDFs • Raw Text • Images • Audio/Video • Spreadsheets</text>
+  <text x="60" y="196" fill="#71839F" font-family="monospace" font-size="10">Automated mime-type validation &amp; streaming uploads</text>
+
+  <!-- Step 2: Chunking & Splitting -->
+  <rect x="44" y="216" width="320" height="74" rx="6" fill="#081426" stroke="#1B2A40" stroke-width="1" />
+  <text x="60" y="240" fill="#168BFF" font-family="sans-serif" font-size="12" font-weight="bold">Distributed Data Chunking Service</text>
+  <text x="60" y="260" fill="#EDF4FF" font-family="monospace" font-size="11">Parallel worker pools for massive document splitting</text>
+  <text x="60" y="278" fill="#71839F" font-family="monospace" font-size="10">Smart boundary detection (semantic paragraphs &amp; tables)</text>
+
+  <!-- Step 3: Event Tracking & Orchestration -->
+  <rect x="44" y="302" width="320" height="74" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="60" y="326" fill="#00D2FF" font-family="sans-serif" font-size="12" font-weight="bold">Async Event Tracking &amp; State Machine</text>
+  <text x="60" y="346" fill="#EDF4FF" font-family="monospace" font-size="11">Ordered workflow orchestration across worker queues</text>
+  <text x="60" y="364" fill="#71839F" font-family="monospace" font-size="10">Guaranteed exactly-once processing with dead-letter queue</text>
+
+  <!-- Metric -->
+  <rect x="44" y="388" width="320" height="56" rx="6" fill="#101F38" stroke="#00D2FF" stroke-width="1" />
+  <text x="60" y="410" fill="#00D2FF" font-family="monospace" font-size="11" font-weight="bold">SCALE: 10,000+ Pages / Hr Throughput</text>
+  <text x="60" y="430" fill="#CBD5E1" font-family="monospace" font-size="10">Horizontal auto-scaling worker nodes</text>
+
+  <!-- Right: Distributed AI Processing Engine -->
+  <rect x="404" y="86" width="372" height="370" rx="10" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="424" y="116" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="13" font-weight="bold">DISTRIBUTED AI PROCESSING ENGINE</text>
+
+  <!-- AI Model Router -->
+  <rect x="424" y="136" width="332" height="74" rx="6" fill="#101F38" stroke="#00D2FF" stroke-width="1" />
+  <text x="440" y="160" fill="#00D2FF" font-family="sans-serif" font-size="11" font-weight="bold">Dynamic Multi-Model Dispatcher</text>
+  <text x="440" y="180" fill="#EDF4FF" font-family="monospace" font-size="10">Routes tasks to best model based on cost, latency &amp; format</text>
+  <text x="440" y="198" fill="#71839F" font-family="monospace" font-size="10">Supports Claude, GPT-4o, Gemini &amp; Custom Vision</text>
+
+  <!-- Transformation & Insight Gen -->
+  <rect x="424" y="222" width="332" height="74" rx="6" fill="#081426" stroke="#168BFF" stroke-width="1" />
+  <text x="440" y="246" fill="#168BFF" font-family="sans-serif" font-size="11" font-weight="bold">Transformation &amp; Insight Synthesis</text>
+  <text x="440" y="266" fill="#EDF4FF" font-family="monospace" font-size="10">Client-specific schema mapping, sanitization &amp; summarization</text>
+  <text x="440" y="284" fill="#71839F" font-family="monospace" font-size="10">Structured JSON / Graph output extraction</text>
+
+  <!-- Production Capabilities -->
+  <rect x="424" y="308" width="332" height="136" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="440" y="332" fill="#EDF4FF" font-family="sans-serif" font-size="10" font-weight="bold">PRODUCTION WORKFLOW HIGHLIGHTS</text>
+  <text x="440" y="354" fill="#00D2FF" font-family="monospace" font-size="10">● Refines unstructured documents into actionable business intelligence</text>
+  <text x="440" y="374" fill="#22D3EE" font-family="monospace" font-size="10">● Fault-tolerant architecture with automated retry &amp; state recovery</text>
+  <text x="440" y="394" fill="#168BFF" font-family="monospace" font-size="10">● Dynamic rate-limiting protecting provider token rate allowances</text>
+  <text x="440" y="414" fill="#B58AFF" font-family="monospace" font-size="10">● Production verified on large enterprise government &amp; client documents</text>
+</svg>

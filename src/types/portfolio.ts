@@ -27,6 +27,14 @@ export interface ExperienceItem {
   description: string;
   achievements: string[];
   skills: string[];
+  keyProjects?: {
+    id?: string;
+    title: string;
+    subtitle?: string;
+    description: string;
+    skills: string[];
+    link?: string;
+  }[];
 }
 
 export interface SectionCoord {

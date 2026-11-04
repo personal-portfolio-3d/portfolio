@@ -42,7 +42,9 @@ function ProjectRoadsideCard({
   const [isHovered, setIsHovered] = useState(false);
 
   const dist = Math.abs(currentZ - z);
-  const opacity = dist > (isMobile ? 36 : 45) ? 0 : Math.max(0, 1 - dist / (isMobile ? 28 : 38));
+  const maxDist = isMobile ? 18 : 38;
+  const fadeDist = isMobile ? 13 : 28;
+  const opacity = dist > maxDist ? 0 : Math.max(0, 1 - dist / fadeDist);
 
   const isLeft = side === "left";
   // On mobile: cards face screen directly along highway centerline (rotY = 0)
@@ -209,18 +211,26 @@ export function Scene4Projects({ currentZ, onSelectProject, isModalOpen }: Scene
     if (isMobile) {
       // On mobile: Sequential drive-through layout directly along highway center (X = 0)
       return [
-        { project: PROJECTS[0], x: 0, y: 1.8, z: -205, side: "left" as const },
-        { project: PROJECTS[1], x: 0, y: 1.8, z: -225, side: "right" as const },
-        { project: PROJECTS[2], x: 0, y: 1.8, z: -245, side: "left" as const },
-        { project: PROJECTS[3], x: 0, y: 1.8, z: -265, side: "right" as const },
-      ];
+        { project: PROJECTS[0], x: 0, y: 1.8, z: -195, side: "left" as const },
+        { project: PROJECTS[1], x: 0, y: 1.8, z: -207, side: "right" as const },
+        { project: PROJECTS[2], x: 0, y: 1.8, z: -219, side: "left" as const },
+        { project: PROJECTS[3], x: 0, y: 1.8, z: -231, side: "right" as const },
+        { project: PROJECTS[4], x: 0, y: 1.8, z: -243, side: "left" as const },
+        { project: PROJECTS[5], x: 0, y: 1.8, z: -255, side: "right" as const },
+        { project: PROJECTS[6], x: 0, y: 1.8, z: -267, side: "left" as const },
+        { project: PROJECTS[7], x: 0, y: 1.8, z: -279, side: "right" as const },
+      ].filter((item) => Boolean(item.project));
     }
     return [
-      { project: PROJECTS[0], x: -5.1, y: 1.8, z: -205, side: "left" as const },
-      { project: PROJECTS[1], x: 5.1, y: 1.8, z: -225, side: "right" as const },
-      { project: PROJECTS[2], x: -5.1, y: 1.8, z: -245, side: "left" as const },
-      { project: PROJECTS[3], x: 5.1, y: 1.8, z: -265, side: "right" as const },
-    ];
+      { project: PROJECTS[0], x: -5.1, y: 1.8, z: -195, side: "left" as const },
+      { project: PROJECTS[1], x: 5.1, y: 1.8, z: -207, side: "right" as const },
+      { project: PROJECTS[2], x: -5.1, y: 1.8, z: -219, side: "left" as const },
+      { project: PROJECTS[3], x: 5.1, y: 1.8, z: -231, side: "right" as const },
+      { project: PROJECTS[4], x: -5.1, y: 1.8, z: -243, side: "left" as const },
+      { project: PROJECTS[5], x: 5.1, y: 1.8, z: -255, side: "right" as const },
+      { project: PROJECTS[6], x: -5.1, y: 1.8, z: -267, side: "left" as const },
+      { project: PROJECTS[7], x: 5.1, y: 1.8, z: -279, side: "right" as const },
+    ].filter((item) => Boolean(item.project));
   }, [isMobile]);
 
   return (

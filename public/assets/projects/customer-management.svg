@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgCM" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#03060D" />
+      <stop offset="100%" stop-color="#081426" />
+    </linearGradient>
+    <linearGradient id="cyanLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00D2FF" />
+      <stop offset="100%" stop-color="#168BFF" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#bgCM)" rx="16" />
+
+  <!-- Top Bar -->
+  <rect x="24" y="24" width="752" height="48" rx="8" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="50" y="53" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="14" font-weight="bold">CUSTOMER MANAGEMENT SYSTEM // PYTHON MICROSERVICES</text>
+  <rect x="610" y="34" width="150" height="28" rx="6" fill="#101F38" stroke="#00D2FF" stroke-width="1" />
+  <text x="622" y="52" fill="#00D2FF" font-family="monospace" font-size="11" font-weight="bold">API GATEWAY + RBAC</text>
+
+  <!-- Left: API Gateway & Service Mesh -->
+  <rect x="24" y="86" width="360" height="370" rx="10" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="44" y="116" fill="#00D2FF" font-family="'Orbitron', sans-serif" font-size="12" font-weight="bold">API GATEWAY &amp; SERVICE MESH</text>
+
+  <!-- Gateway Component -->
+  <rect x="44" y="136" width="320" height="75" rx="6" fill="#101F38" stroke="#168BFF" stroke-width="1" />
+  <text x="60" y="160" fill="#22D3EE" font-family="sans-serif" font-size="12" font-weight="bold">Unified API Gateway Layer</text>
+  <text x="60" y="180" fill="#EDF4FF" font-family="monospace" font-size="11">Auth verification, rate limiting, route proxy</text>
+  <text x="60" y="198" fill="#71839F" font-family="monospace" font-size="10">Sub-10ms Token Verification • JWT / RSA256</text>
+
+  <!-- Microservice 1: Onboarding -->
+  <rect x="44" y="222" width="320" height="68" rx="6" fill="#081426" stroke="#1B2A40" stroke-width="1" />
+  <text x="60" y="246" fill="#168BFF" font-family="sans-serif" font-size="12" font-weight="bold">Client Onboarding Service</text>
+  <text x="60" y="266" fill="#EDF4FF" font-family="monospace" font-size="11">Automated tenant provisioning &amp; domain setup</text>
+  <text x="60" y="280" fill="#71839F" font-family="monospace" font-size="10">PostgreSQL Isolated Schemas</text>
+
+  <!-- Microservice 2: Account Mgmt -->
+  <rect x="44" y="302" width="320" height="68" rx="6" fill="#081426" stroke="#1B2A40" stroke-width="1" />
+  <text x="60" y="326" fill="#00D2FF" font-family="sans-serif" font-size="12" font-weight="bold">Account &amp; Entity Lifecycle</text>
+  <text x="60" y="346" fill="#EDF4FF" font-family="monospace" font-size="11">Multi-tenant profile, metadata, audit trails</text>
+
+  <!-- Microservice 3: Audit Engine -->
+  <rect x="44" y="380" width="320" height="64" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="60" y="404" fill="#B58AFF" font-family="sans-serif" font-size="12" font-weight="bold">Audit &amp; Compliance Logger</text>
+  <text x="60" y="424" fill="#71839F" font-family="monospace" font-size="10">Immutable activity logs for compliance tracking</text>
+
+  <!-- Right: Hierarchical RBAC Architecture -->
+  <rect x="404" y="86" width="372" height="370" rx="10" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="424" y="116" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="13" font-weight="bold">HIERARCHICAL MULTI-TIER RBAC</text>
+
+  <!-- Tier 1: Platform Admin -->
+  <rect x="424" y="136" width="332" height="62" rx="6" fill="#101F38" stroke="#00D2FF" stroke-width="1" />
+  <text x="440" y="158" fill="#00D2FF" font-family="sans-serif" font-size="11" font-weight="bold">TIER 1: Platform Administrators</text>
+  <text x="440" y="176" fill="#EDF4FF" font-family="monospace" font-size="10">Global platform scope • Cross-tenant analytics • System policy</text>
+
+  <!-- Tier 2: Client Admins -->
+  <rect x="424" y="210" width="332" height="62" rx="6" fill="#081426" stroke="#168BFF" stroke-width="1" />
+  <text x="440" y="232" fill="#168BFF" font-family="sans-serif" font-size="11" font-weight="bold">TIER 2: Client Organization Admins</text>
+  <text x="440" y="250" fill="#EDF4FF" font-family="monospace" font-size="10">Organization-level controls • Member management • Billing scopes</text>
+
+  <!-- Tier 3: Granular End Users -->
+  <rect x="424" y="284" width="332" height="62" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="440" y="306" fill="#B58AFF" font-family="sans-serif" font-size="11" font-weight="bold">TIER 3: Department Managers &amp; End Users</text>
+  <text x="440" y="324" fill="#EDF4FF" font-family="monospace" font-size="10">Contextual permissions • Resource-specific action grants</text>
+
+  <!-- Security Specs -->
+  <rect x="424" y="358" width="332" height="86" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="440" y="380" fill="#EDF4FF" font-family="sans-serif" font-size="10" font-weight="bold">SECURITY &amp; MULTI-TENANCY HIGHLIGHTS</text>
+  <text x="440" y="400" fill="#00D2FF" font-family="monospace" font-size="10">● Users can hold multiple roles across distinct organizations</text>
+  <text x="440" y="418" fill="#22D3EE" font-family="monospace" font-size="10">● Fine-grained permission trees with dynamic policy evaluation</text>
+  <text x="440" y="434" fill="#168BFF" font-family="monospace" font-size="10">● Enterprise onboarding workflows with single-tenant isolation options</text>
+</svg>
