@@ -471,7 +471,7 @@ export const OPEN_SOURCE_ACHIEVEMENTS: OpenSourceProject[] = [
       "TypeScript",
       "Data Analytics",
     ],
-    liveUrl: "https://ashish50514561-fr-data-analysis.static.hf.space/",
+    liveUrl: "https://ashish50514561-fr-data-analysis.static.hf.space/index.html",
     datasetUrl: "https://huggingface.co/datasets/GadgetSoftware/federal-register",
   },
   {
@@ -500,6 +500,32 @@ export const OPEN_SOURCE_ACHIEVEMENTS: OpenSourceProject[] = [
     pypiUrl: "https://pypi.org/project/specforge-api/",
     docsUrl: "https://specforge-api.github.io/specforge/",
     installCommand: "pip install specforge-api",
+  },
+  {
+    id: "floci",
+    name: "Floci (floci-ui)",
+    tagline: "Open-Source AWS LocalStack Alternative Web UI",
+    badge: "OPEN SOURCE CONTRIBUTIONS • LOCAL CLOUD",
+    badgeColor: "#10B981",
+    description:
+      "Core open source contributions to Floci UI, enabling developers to mock and manage local AWS cloud services. Engineered frontend interfaces, resource monitoring, and developer workflows for cloud simulation.",
+    highlights: [
+      "Open Source Contributions: Authored and merged key pull requests into upstream floci-ui repository",
+      "Local Cloud Management: Web interface for managing simulated S3, SQS, SNS, DynamoDB, and Lambda instances",
+      "Developer Productivity: Interactive UI eliminating manual AWS CLI boilerplate during local testing",
+      "API & Service Parity: Engineered components matching AWS dashboard paradigms for rapid testing",
+    ],
+    technologies: [
+      "Open Source PRs",
+      "AWS LocalStack",
+      "React",
+      "TypeScript",
+      "Cloud Simulation",
+      "Developer Tooling",
+    ],
+    liveUrl: "https://github.com/floci-io/floci-ui/pulls?q=author%3AAshish50514561",
+    prUrl: "https://github.com/floci-io/floci-ui/pulls?q=author%3AAshish50514561",
+    githubUrl: "https://github.com/floci-io/floci-ui",
   },
 ];
 

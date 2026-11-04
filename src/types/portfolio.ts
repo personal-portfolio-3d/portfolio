@@ -59,6 +59,7 @@ export interface OpenSourceProject {
   docsUrl?: string;
   datasetUrl?: string;
   githubUrl?: string;
+  prUrl?: string;
   pypiUrl?: string;
   installCommand?: string;
 }
