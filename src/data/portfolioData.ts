@@ -1,4 +1,4 @@
-import { Project, SkillCategory, ExperienceItem, SectionCoord } from "@/types/portfolio";
+import { Project, SkillCategory, ExperienceItem, SectionCoord, OpenSourceProject } from "@/types/portfolio";
 
 export const SECTIONS: SectionCoord[] = [
   { id: "intro", name: "INTRO", number: "01", zPos: 0 },
@@ -7,7 +7,7 @@ export const SECTIONS: SectionCoord[] = [
   { id: "projects", name: "PROJECTS", number: "04", zPos: -215 },
   { id: "experience", name: "EXPERIENCE", number: "05", zPos: -295 },
   { id: "articles", name: "ARTICLES", number: "06", zPos: -375 },
-  { id: "github", name: "GITHUB", number: "07", zPos: -455 },
+  { id: "achievements", name: "ACHIEVEMENTS", number: "07", zPos: -455 },
   { id: "contact", name: "CONTACT", number: "08", zPos: -535 },
 ];
 
@@ -282,6 +282,44 @@ export const PROJECTS: Project[] = [
     technologies: ["AWS Lambda", "Python", "React", "AI Document Processing", "FastAPI"],
     liveUrl: "https://www.policydistrict.com/",
   },
+  {
+    id: "federal-register-explorer",
+    title: "FEDERAL REGISTER EXPLORER",
+    category: "Client-Side AI & Data Analytics",
+    subtitle: "In-Browser DuckDB-WASM & Local Gemma on WebGPU",
+    image: asset("/assets/projects/federal-register-explorer.svg"),
+    description:
+      "A browser-based application for searching and exploring Federal Register documents from a prepared snapshot of the GadgetSoftware dataset. Features in-browser analytical SQL searches with DuckDB-WASM and private local document chat powered by Google Gemma running locally on your device via WebGPU.",
+    highlights: [
+      "In-Browser DuckDB-WASM: Sub-second analytical SQL searches executed directly in the client against prepared monthly snapshots",
+      "Local WebGPU LLM Chat: Private on-device document chat using Google Gemma via WebGPU with zero server cost or data leakage",
+      "Multi-Factor Filtering: Narrow by date range, agency, document type, and dataset significance flag (true/false/unknown)",
+      "Document Intelligence Graph: Inspect extracted regulatory topics, entities, briefs, and official Federal Register source links",
+      "Live deployment on Hugging Face Spaces with public GadgetSoftware dataset integration",
+    ],
+    technologies: ["Hugging Face Spaces", "DuckDB-WASM", "WebGPU", "Google Gemma", "Client-Side AI", "TypeScript"],
+    liveUrl: "https://ashish50514561-fr-data-analysis.static.hf.space/",
+    featured: true,
+  },
+  {
+    id: "specforge-api",
+    title: "SPECFORGE API",
+    category: "Open Source Developer Tooling",
+    subtitle: "Modern, High-Performance OpenAPI & Swagger Alternative",
+    image: asset("/assets/projects/specforge-api.svg"),
+    description:
+      "An open source Python package engineered and published on PyPI to replace legacy Swagger with high-performance, developer-first interactive API documentation, automated schema generation, and clean dark-mode ergonomics.",
+    highlights: [
+      "Published on PyPI: pip install specforge-api ready for immediate production adoption across Python web frameworks",
+      "Modern Swagger Replacement: Replaces bulky OpenAPI/Swagger UIs with blazing-fast, responsive, accessible exploration",
+      "Automated Schema Generation: Zero-overhead contract parsing and live interactive endpoint testing",
+      "Comprehensive Documentation: Full documentation site and guides published for developer community adoption",
+      "Engineered for FastAPI, Flask, Django Ninja, and asynchronous Python microservices",
+    ],
+    technologies: ["Python", "PyPI Package", "OpenAPI / Swagger", "API Specification", "FastAPI / Flask", "Developer Tooling"],
+    liveUrl: "https://pypi.org/project/specforge-api/",
+    featured: true,
+  },
 ];
 
 export const EXPERIENCES: ExperienceItem[] = [
@@ -409,21 +447,70 @@ export const EXPERIENCES: ExperienceItem[] = [
   },
 ];
 
+export const OPEN_SOURCE_ACHIEVEMENTS: OpenSourceProject[] = [
+  {
+    id: "federal-register-explorer",
+    name: "Federal Register Explorer",
+    tagline: "In-Browser DuckDB-WASM & Client-Side Gemma LLM on WebGPU",
+    badge: "HUGGING FACE SPACES • LIVE APP",
+    badgeColor: "#F59E0B",
+    description:
+      "A browser-based application for searching and exploring Federal Register documents from a prepared snapshot of the GadgetSoftware dataset. Features in-browser analytical SQL searches with DuckDB-WASM and private local document chat powered by Google Gemma running locally on your device via WebGPU.",
+    highlights: [
+      "In-Browser DuckDB-WASM: Sub-second analytical SQL searches executed directly in the client against prepared monthly snapshots",
+      "Local WebGPU LLM Chat: Private on-device document chat using Google Gemma via WebGPU with zero server cost or data leakage",
+      "Multi-Factor Filtering: Narrow by date range, agency, document type, and dataset significance flag (true/false/unknown)",
+      "Document Intelligence Graph: Inspect extracted regulatory topics, entities, briefs, and official Federal Register source links",
+    ],
+    technologies: [
+      "Hugging Face Spaces",
+      "DuckDB-WASM",
+      "WebGPU",
+      "Google Gemma LLM",
+      "Client-Side AI",
+      "TypeScript",
+      "Data Analytics",
+    ],
+    liveUrl: "https://ashish50514561-fr-data-analysis.static.hf.space/",
+    datasetUrl: "https://huggingface.co/datasets/GadgetSoftware/federal-register",
+  },
+  {
+    id: "specforge-api",
+    name: "SpecForge API",
+    tagline: "Modern, High-Performance OpenAPI & Swagger Alternative",
+    badge: "PUBLISHED ON PyPI • PYTHON PACKAGE",
+    badgeColor: "#38BDF8",
+    description:
+      "An open source Python package engineered and published on PyPI to replace legacy Swagger with high-performance, developer-first interactive API documentation, automated schema generation, and clean dark-mode ergonomics.",
+    highlights: [
+      "Published on PyPI: pip install specforge-api ready for immediate production adoption across Python web frameworks",
+      "Modern Swagger Replacement: Replaces bulky OpenAPI/Swagger UIs with blazing-fast, responsive, accessible exploration",
+      "Automated Schema Generation: Zero-overhead contract parsing and live interactive endpoint testing",
+      "Comprehensive Documentation: Full documentation site and guides published for developer community adoption",
+    ],
+    technologies: [
+      "Python",
+      "PyPI Package",
+      "OpenAPI / Swagger",
+      "API Specification",
+      "FastAPI / Flask",
+      "Developer Tooling",
+    ],
+    liveUrl: "https://pypi.org/project/specforge-api/",
+    pypiUrl: "https://pypi.org/project/specforge-api/",
+    docsUrl: "https://specforge-api.github.io/specforge/",
+    installCommand: "pip install specforge-api",
+  },
+];
+
 export const GITHUB_DATA = {
   profileUrl: "https://github.com/Ashish50514561",
   username: "Ashish50514561",
-  highlightedProject: {
-    name: "Floci",
-    description: "High-performance open-source cloud utility and event-driven tooling ecosystem.",
-    role: "Core Contributor",
-    stars: 120,
-    forks: 34,
-  },
   stats: [
-    { label: "Public Repositories", value: "25+" },
-    { label: "Open Source PRs", value: "40+" },
-    { label: "Production Deployments", value: "15+" },
-    { label: "Commits & Contributions", value: "1,500+" },
+    { label: "Public Repositories", value: "25+", sublabel: "Full-Stack & AI" },
+    { label: "Published Packages", value: "2", sublabel: "PyPI & Hugging Face" },
+    { label: "Open Source PRs", value: "40+", sublabel: "Accepted Upstream" },
+    { label: "Commits & Contributions", value: "1,500+", sublabel: "Across Repositories" },
   ],
 };
 

@@ -46,6 +46,23 @@ export interface SectionCoord {
   cameraOffset?: [number, number, number];
 }
 
+export interface OpenSourceProject {
+  id: string;
+  name: string;
+  tagline: string;
+  badge: string;
+  badgeColor?: string;
+  description: string;
+  highlights: string[];
+  technologies: string[];
+  liveUrl?: string;
+  docsUrl?: string;
+  datasetUrl?: string;
+  githubUrl?: string;
+  pypiUrl?: string;
+  installCommand?: string;
+}
+
 export interface MediumArticle {
   id: string;
   title: string;

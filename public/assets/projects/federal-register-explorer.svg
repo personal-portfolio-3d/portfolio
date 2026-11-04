@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgFRE" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#03060D" />
+      <stop offset="100%" stop-color="#140F05" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#bgFRE)" rx="16" />
+
+  <!-- Top Bar -->
+  <rect x="24" y="24" width="752" height="48" rx="8" fill="#0A1425" stroke="#F59E0B" stroke-width="1.2" />
+  <text x="50" y="53" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="14" font-weight="bold">FEDERAL REGISTER EXPLORER // HUGGING FACE SPACES</text>
+  <rect x="580" y="34" width="180" height="28" rx="6" fill="#1C1405" stroke="#F59E0B" stroke-width="1" />
+  <text x="592" y="52" fill="#F59E0B" font-family="monospace" font-size="11" font-weight="bold">DuckDB-WASM + WebGPU</text>
+
+  <!-- Left: In-Browser DuckDB-WASM Search -->
+  <rect x="24" y="86" width="360" height="370" rx="10" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="44" y="116" fill="#F59E0B" font-family="'Orbitron', sans-serif" font-size="12" font-weight="bold">IN-BROWSER DUCKDB-WASM ENGINE</text>
+
+  <rect x="44" y="136" width="320" height="74" rx="6" fill="#101F38" stroke="#F59E0B" stroke-width="1" />
+  <text x="60" y="160" fill="#FBBF24" font-family="sans-serif" font-size="12" font-weight="bold">Zero-Server Client SQL Queries</text>
+  <text x="60" y="180" fill="#EDF4FF" font-family="monospace" font-size="11">Fast analytical queries against prepared snapshots</text>
+  <text x="60" y="198" fill="#71839F" font-family="monospace" font-size="10">Sub-100ms queries over thousands of records</text>
+
+  <rect x="44" y="222" width="320" height="74" rx="6" fill="#081426" stroke="#1B2A40" stroke-width="1" />
+  <text x="60" y="246" fill="#22D3EE" font-family="sans-serif" font-size="12" font-weight="bold">Multi-Factor Faceted Filtering</text>
+  <text x="60" y="266" fill="#EDF4FF" font-family="monospace" font-size="11">Filter by agency, date scopes, significance flags</text>
+  <text x="60" y="284" fill="#71839F" font-family="monospace" font-size="10">Distinguishes true, false, and unknown values</text>
+
+  <rect x="44" y="308" width="320" height="136" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="60" y="332" fill="#EDF4FF" font-family="sans-serif" font-size="10" font-weight="bold">GADGETSOFTWARE DATASET SNAPSHOT</text>
+  <text x="60" y="354" fill="#F59E0B" font-family="monospace" font-size="10">● Published dataset on Hugging Face</text>
+  <text x="60" y="374" fill="#22D3EE" font-family="monospace" font-size="10">● Extracted topics, keywords, entities &amp; briefs</text>
+  <text x="60" y="394" fill="#168BFF" font-family="monospace" font-size="10">● Links to official Federal Register documents</text>
+  <text x="60" y="414" fill="#EDF4FF" font-family="monospace" font-size="10">● Prepared monthly data files loaded on demand</text>
+
+  <!-- Right: Client-Side WebGPU Gemma Chat -->
+  <rect x="404" y="86" width="372" height="370" rx="10" fill="#0A1425" stroke="#24466E" stroke-width="1.5" />
+  <text x="424" y="116" fill="#EDF4FF" font-family="'Orbitron', sans-serif" font-size="13" font-weight="bold">EXPERIMENTAL LOCAL WebGPU GEMMA CHAT</text>
+
+  <rect x="424" y="136" width="332" height="74" rx="6" fill="#1C1405" stroke="#F59E0B" stroke-width="1" />
+  <text x="440" y="160" fill="#F59E0B" font-family="sans-serif" font-size="11" font-weight="bold">Client-Side Google Gemma LLM</text>
+  <text x="440" y="180" fill="#EDF4FF" font-family="monospace" font-size="10">Runs private on-device inference via WebGPU</text>
+  <text x="440" y="198" fill="#71839F" font-family="monospace" font-size="10">Zero hosted inference endpoint • Complete data privacy</text>
+
+  <rect x="424" y="222" width="332" height="120" rx="6" fill="#081426" stroke="#168BFF" stroke-width="1" />
+  <text x="440" y="244" fill="#22D3EE" font-family="sans-serif" font-size="11" font-weight="bold">Document Q&amp;A Chat Interface</text>
+  <text x="440" y="266" fill="#EDF4FF" font-family="sans-serif" font-size="10">User: "What does this proposed rule alter for clean air emissions?"</text>
+  <text x="440" y="292" fill="#FBBF24" font-family="sans-serif" font-size="10">Gemma (Local WebGPU): "The rule updates EPA particulate matter caps for regional industrial sources under Section 110..."</text>
+  <text x="440" y="326" fill="#71839F" font-family="monospace" font-size="9">Inference: 24 tokens/sec on browser WebGPU</text>
+
+  <rect x="424" y="354" width="332" height="90" rx="6" fill="#081426" stroke="#24466E" stroke-width="1" />
+  <text x="440" y="376" fill="#EDF4FF" font-family="sans-serif" font-size="10" font-weight="bold">LIVE DEPLOYMENT STATUS</text>
+  <text x="440" y="398" fill="#F59E0B" font-family="monospace" font-size="10">● Deployed on Hugging Face Spaces (Static App)</text>
+  <text x="440" y="416" fill="#22D3EE" font-family="monospace" font-size="10">● Open for public exploration and research</text>
+  <text x="440" y="432" fill="#168BFF" font-family="monospace" font-size="10">● Open source code &amp; dataset documentation</text>
+</svg>
