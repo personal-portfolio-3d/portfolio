@@ -31,14 +31,16 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
     const right = [];
     const distant = [];
 
-    // Foreground & Midground Towers flanking both sides of the highway
+    // Foreground & Midground Towers flanking both sides of the highway with guaranteed clearance
     for (let i = 0; i < buildingCount; i++) {
       const z = 30 - i * 6.8 + (random() - 0.5) * 4;
       const height = 24 + random() * 85; // Tall skyscrapers
       const width = 8 + random() * 14;
       const depth = 8 + random() * 16;
-      const xLeft = -(12 + random() * 45); // Flanking highway
-      const rotY = (random() - 0.5) * 0.25;
+      const rotY = (random() - 0.5) * 0.2;
+      // Guaranteed clearance from highway center (rings outer radius is ~8.0m, buildings stay beyond 10.5m)
+      const leftHalfDiag = (width / 2) * Math.cos(Math.abs(rotY)) + (depth / 2) * Math.sin(Math.abs(rotY));
+      const xLeft = -(10.5 + leftHalfDiag + random() * 42);
 
       left.push({
         x: xLeft,
@@ -56,8 +58,9 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
       const rightHeight = 22 + random() * 90;
       const rightWidth = 8 + random() * 14;
       const rightDepth = 8 + random() * 16;
-      const xRight = 12 + random() * 45;
-      const rightRotY = (random() - 0.5) * 0.25;
+      const rightRotY = (random() - 0.5) * 0.2;
+      const rightHalfDiag = (rightWidth / 2) * Math.cos(Math.abs(rightRotY)) + (rightDepth / 2) * Math.sin(Math.abs(rightRotY));
+      const xRight = 10.5 + rightHalfDiag + random() * 42;
 
       right.push({
         x: xRight,
@@ -103,7 +106,7 @@ export function CitySkyline({ currentZ }: CitySkylineProps) {
     for (let i = 0; i < winCount; i++) {
       const isLeft = i % 2 === 0;
       const sideSign = isLeft ? -1 : 1;
-      winPos[i * 3] = sideSign * (10 + random() * 45); // X
+      winPos[i * 3] = sideSign * (11.0 + random() * 45); // X starting outside highway corridor
       winPos[i * 3 + 1] = 2 + random() * 70; // Y
       winPos[i * 3 + 2] = 30 - random() * 1450; // Z spanning +30 to -1420
 

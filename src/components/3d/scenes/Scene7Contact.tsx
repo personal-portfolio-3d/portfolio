@@ -57,17 +57,19 @@ export function Scene7Contact({ currentZ, onRestartExperience }: Scene7ContactPr
           <meshStandardMaterial
             color="#22D3EE"
             emissive="#22D3EE"
-            emissiveIntensity={4}
+            emissiveIntensity={4.2}
             side={THREE.DoubleSide}
+            toneMapped={false}
           />
         </mesh>
         <mesh position={[0, 0, -1]}>
           <ringGeometry args={[6.8, 7.1, 48]} />
           <meshStandardMaterial
-            color="#168BFF"
-            emissive="#168BFF"
-            emissiveIntensity={3.5}
+            color="#00D2FF"
+            emissive="#00D2FF"
+            emissiveIntensity={3.8}
             side={THREE.DoubleSide}
+            toneMapped={false}
           />
         </mesh>
         <mesh position={[0, 0, -2]}>
@@ -75,7 +77,8 @@ export function Scene7Contact({ currentZ, onRestartExperience }: Scene7ContactPr
           <meshBasicMaterial
             color="#081426"
             transparent
-            opacity={0.4}
+            opacity={0.35}
+            depthWrite={false}
             side={THREE.DoubleSide}
           />
         </mesh>

@@ -32,29 +32,25 @@ export function Highway({ velocity = 0 }: HighwayProps) {
       {/* Realistic Black Shiny Highway Tiles */}
       <HighwayTiles roadLength={roadLength} roadCenterZ={roadCenterZ} />
 
-      {/* Shoulder Lane Guide Stripes (Left & Right - elevated to Y = 0.052 above tiles) */}
-      <mesh
-        position={[-3.2, 0.052, roadCenterZ]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      >
-        <planeGeometry args={[0.08, roadLength]} />
+      {/* Shoulder Lane Guide Stripes (Left & Right - 3D Box elevated above tiles with electric cyan bloom) */}
+      <mesh position={[-3.2, 0.055, roadCenterZ]}>
+        <boxGeometry args={[0.14, 0.02, roadLength]} />
         <meshStandardMaterial
-          color="#168BFF"
-          emissive="#168BFF"
-          emissiveIntensity={2.4}
-          side={THREE.DoubleSide}
+          color="#00D2FF"
+          emissive="#00D2FF"
+          emissiveIntensity={3.6}
+          roughness={0.15}
+          toneMapped={false}
         />
       </mesh>
-      <mesh
-        position={[3.2, 0.052, roadCenterZ]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      >
-        <planeGeometry args={[0.08, roadLength]} />
+      <mesh position={[3.2, 0.055, roadCenterZ]}>
+        <boxGeometry args={[0.14, 0.02, roadLength]} />
         <meshStandardMaterial
-          color="#168BFF"
-          emissive="#168BFF"
-          emissiveIntensity={2.4}
-          side={THREE.DoubleSide}
+          color="#00D2FF"
+          emissive="#00D2FF"
+          emissiveIntensity={3.6}
+          roughness={0.15}
+          toneMapped={false}
         />
       </mesh>
 
@@ -64,8 +60,9 @@ export function Highway({ velocity = 0 }: HighwayProps) {
         <meshStandardMaterial
           color="#168BFF"
           emissive="#168BFF"
-          emissiveIntensity={3}
+          emissiveIntensity={3.2}
           roughness={0.1}
+          toneMapped={false}
         />
       </mesh>
       {/* Outer Cyan Accent Glow Strip (Left) */}
@@ -74,8 +71,9 @@ export function Highway({ velocity = 0 }: HighwayProps) {
         <meshStandardMaterial
           color="#22D3EE"
           emissive="#22D3EE"
-          emissiveIntensity={2.5}
+          emissiveIntensity={2.8}
           roughness={0.2}
+          toneMapped={false}
         />
       </mesh>
 
@@ -85,8 +83,9 @@ export function Highway({ velocity = 0 }: HighwayProps) {
         <meshStandardMaterial
           color="#168BFF"
           emissive="#168BFF"
-          emissiveIntensity={3}
+          emissiveIntensity={3.2}
           roughness={0.1}
+          toneMapped={false}
         />
       </mesh>
       {/* Outer Cyan Accent Glow Strip (Right) */}
@@ -95,8 +94,9 @@ export function Highway({ velocity = 0 }: HighwayProps) {
         <meshStandardMaterial
           color="#22D3EE"
           emissive="#22D3EE"
-          emissiveIntensity={2.5}
+          emissiveIntensity={2.8}
           roughness={0.2}
+          toneMapped={false}
         />
       </mesh>
 
