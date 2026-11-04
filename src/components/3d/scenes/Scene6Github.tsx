@@ -394,35 +394,76 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
         </lineSegments>
       </group>
 
-      {/* 2. OVERHEAD SECTION HEADER BANNER (At Y = 3.6, with ample headroom above cards) */}
+      {/* 2. OVERHEAD SECTION HEADER & TOP ACTION BUTTON CARDS (Placed high at Y = 4.25 with generous clearance above cards) */}
       <Html
         transform
-        distanceFactor={6}
-        position={[0, 3.6, 0]}
+        distanceFactor={6.2}
+        position={[0, 4.25, 0]}
         center
         style={{
           opacity,
-          pointerEvents: "none",
+          pointerEvents: opacity > 0.3 ? "auto" : "none",
           transition: "opacity 0.25s ease-out",
         }}
       >
         <div className="flex flex-col items-center select-none text-center">
-          <div className="flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#040D1F]/70 border border-[#00D2FF]/45 backdrop-blur-md shadow-[0_0_24px_rgba(0,210,255,0.3)] max-w-[92vw]">
-            <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00D2FF] drop-shadow-[0_0_8px_#00D2FF]" />
-            <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)] uppercase">
-              Open Source Contributions &amp; Launched Products
-            </span>
-            <span className="text-[9px] sm:text-[10px] font-mono text-[#00D2FF] font-bold px-2 py-0.5 rounded bg-[#0A224D] border border-[#00D2FF]/60">
-              07
-            </span>
+          {/* Top Row: Left Metric Buttons | Center Section Banner | Right Metric & GitHub Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 max-w-[95vw]">
+            {/* Left Button-like Metric Cards */}
+            <div className="flex items-center gap-2">
+              <div className="px-3 py-1.5 rounded-2xl bg-[#040D1F]/80 border border-[#00D2FF]/40 backdrop-blur-md shadow-[0_0_14px_rgba(0,210,255,0.2)] flex items-center gap-2 hover:border-[#00D2FF] transition-all">
+                <Code2 className="w-3.5 h-3.5 text-[#00D2FF]" />
+                <span className="text-xs font-bold font-orbitron text-white">25+</span>
+                <span className="text-[10px] font-mono text-[#94A3B8]">Repos</span>
+              </div>
+
+              <div className="px-3 py-1.5 rounded-2xl bg-[#040D1F]/80 border border-[#00D2FF]/40 backdrop-blur-md shadow-[0_0_14px_rgba(0,210,255,0.2)] flex items-center gap-2 hover:border-[#00D2FF] transition-all">
+                <GitPullRequest className="w-3.5 h-3.5 text-[#10B981]" />
+                <span className="text-xs font-bold font-orbitron text-white">40+</span>
+                <span className="text-[10px] font-mono text-[#94A3B8]">PRs</span>
+              </div>
+            </div>
+
+            {/* Center Main Heading Banner */}
+            <div className="flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-[#040D1F]/90 border border-[#00D2FF]/60 backdrop-blur-md shadow-[0_0_24px_rgba(0,210,255,0.35)]">
+              <Trophy className="w-4 h-4 text-[#00D2FF] drop-shadow-[0_0_8px_#00D2FF]" />
+              <span className="text-xs sm:text-sm font-mono font-bold tracking-widest text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)] uppercase">
+                Open Source Achievements
+              </span>
+              <span className="text-[9px] sm:text-[10px] font-mono text-[#00D2FF] font-bold px-2 py-0.5 rounded bg-[#0A224D] border border-[#00D2FF]/60">
+                07
+              </span>
+            </div>
+
+            {/* Right Button-like Metric & Profile Cards */}
+            <div className="flex items-center gap-2">
+              <div className="px-3 py-1.5 rounded-2xl bg-[#040D1F]/80 border border-[#00D2FF]/40 backdrop-blur-md shadow-[0_0_14px_rgba(0,210,255,0.2)] flex items-center gap-2 hover:border-[#00D2FF] transition-all">
+                <GitBranch className="w-3.5 h-3.5 text-[#38BDF8]" />
+                <span className="text-xs font-bold font-orbitron text-white">1.5K+</span>
+                <span className="text-[10px] font-mono text-[#94A3B8]">Commits</span>
+              </div>
+
+              {/* GitHub Profile Action Button */}
+              <a
+                href={GITHUB_DATA.profileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3.5 py-1.5 rounded-2xl bg-[#168BFF] hover:bg-[#007BFF] border border-[#00D2FF]/60 text-white text-[11px] font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-2 shadow-[0_0_16px_rgba(22,139,255,0.6)] group cursor-pointer"
+              >
+                <Github className="w-3.5 h-3.5 text-white" />
+                <span>@{GITHUB_DATA.username}</span>
+                <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+            </div>
           </div>
-          <span className="text-[10px] sm:text-[11px] font-mono text-[#BAE6FD] mt-1.5 drop-shadow-[0_0_4px_rgba(0,210,255,0.6)] px-2">
+
+          <span className="text-[10.5px] sm:text-[11.5px] font-mono text-[#BAE6FD] mt-2 drop-shadow-[0_0_4px_rgba(0,210,255,0.6)] px-2">
             In-Browser WebGPU AI · Published PyPI Packages · Upstream Cloud UI Contributions
           </span>
         </div>
       </Html>
 
-      {/* 3. THREE CARDS (Left tilted, Middle straight, Right tilted) */}
+      {/* 3. THREE CARDS (Left tilted, Middle straight, Right tilted - lowered to Y = 0.25 for ample breathing space) */}
       {!isMobile ? (
         /* --- DESKTOP 3-CARD ARRAY (Spacious separation: x = -5.5, 0, +5.5; Left tilted +29 deg, Right tilted -29 deg) --- */
         <group>
@@ -430,7 +471,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
           <Achievement3DCard
             project={frProject}
             x={-5.5}
-            y={0.65}
+            y={0.25}
             z={0.2}
             side="left"
             opacity={opacity}
@@ -443,7 +484,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
           <Achievement3DCard
             project={specforgeProject}
             x={0.0}
-            y={0.65}
+            y={0.25}
             z={0.0}
             side="middle"
             opacity={opacity}
@@ -456,7 +497,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
           <Achievement3DCard
             project={flociProject}
             x={5.5}
-            y={0.65}
+            y={0.25}
             z={0.2}
             side="right"
             opacity={opacity}
@@ -467,7 +508,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
         </group>
       ) : (
         /* --- MOBILE SCREEN (Centered Card with Sleek Tab Selector) --- */
-        <group position={[0, 0.5, 0]}>
+        <group position={[0, 0.25, 0]}>
           <Html
             transform
             distanceFactor={5.6}
@@ -529,61 +570,6 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
           </Html>
         </group>
       )}
-
-      {/* 4. HOLOGRAPHIC GITHUB ECOSYSTEM HEADING & FOOTER BAR (Placed at Y = -1.9, Z = 0.5 - Completely visible below cards) */}
-      <Html
-        transform
-        distanceFactor={6}
-        position={[0, -1.9, 0.5]}
-        center
-        style={{
-          opacity,
-          pointerEvents: opacity > 0.4 ? "auto" : "none",
-          transition: "opacity 0.25s ease-out",
-        }}
-      >
-        <div className="w-[94vw] max-w-[1140px] px-5 py-3.5 rounded-2xl bg-[#030917]/85 border border-[#22D3EE]/40 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.7),0_0_20px_rgba(34,211,238,0.2)] flex flex-col md:flex-row items-center justify-between gap-3 select-none">
-          {/* Prominent Bottom Heading & Metrics */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-center sm:text-left">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#00D2FF] drop-shadow-[0_0_6px_#00D2FF]" />
-              <span className="text-xs sm:text-sm font-orbitron font-bold tracking-widest text-white uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]">
-                GITHUB TELEMETRY
-              </span>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
-              {GITHUB_DATA.stats.map((stat, idx) => {
-                const icons = [Code2, Package, GitPullRequest, GitBranch];
-                const IconComp = icons[idx % icons.length];
-                return (
-                  <div key={idx} className="flex items-center gap-1.5">
-                    <IconComp className="w-3.5 h-3.5 text-[#00D2FF]" />
-                    <span className="text-xs sm:text-sm font-bold font-orbitron text-white">
-                      {stat.value}
-                    </span>
-                    <span className="text-[10px] font-mono text-[#94A3B8]">
-                      {stat.label}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* GitHub Profile Action Link */}
-          <a
-            href={GITHUB_DATA.profileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="py-1.5 px-4 rounded-xl bg-[#168BFF] hover:bg-[#007BFF] border border-[#00D2FF]/60 text-white text-[11px] font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-2 shadow-[0_0_14px_rgba(22,139,255,0.6)] group"
-          >
-            <Github className="w-3.5 h-3.5 text-white" />
-            <span>GitHub (@{GITHUB_DATA.username})</span>
-            <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
-        </div>
-      </Html>
     </group>
   );
 }
