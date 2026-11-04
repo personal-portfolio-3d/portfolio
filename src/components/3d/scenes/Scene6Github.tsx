@@ -128,13 +128,13 @@ function Achievement3DCard({
 
           {/* Mobile Tab Selector (Only displayed on small screens inside the card) */}
           {isMobile && onSelectMobileTab && (
-            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-[#020612]/95 border border-[#00D2FF]/50 mb-3 shadow-[0_0_14px_rgba(0,210,255,0.25)] w-full justify-between">
+            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-[#020612]/95 border border-[#00D2FF]/50 mb-2 shadow-[0_0_14px_rgba(0,210,255,0.25)] w-full justify-between">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   onSelectMobileTab(0);
                 }}
-                className={`flex-1 py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold tracking-tight transition-all text-center ${
+                className={`flex-1 py-1 px-1.5 rounded-xl text-[9.5px] font-mono font-bold tracking-tight transition-all text-center ${
                   mobileActiveIndex === 0
                     ? "bg-[#168BFF] text-white shadow-[0_0_10px_#168BFF]"
                     : "text-[#94A3B8] hover:text-white"
@@ -147,7 +147,7 @@ function Achievement3DCard({
                   e.stopPropagation();
                   onSelectMobileTab(1);
                 }}
-                className={`flex-1 py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold tracking-tight transition-all text-center ${
+                className={`flex-1 py-1 px-1.5 rounded-xl text-[9.5px] font-mono font-bold tracking-tight transition-all text-center ${
                   mobileActiveIndex === 1
                     ? "bg-[#168BFF] text-white shadow-[0_0_10px_#168BFF]"
                     : "text-[#94A3B8] hover:text-white"
@@ -160,7 +160,7 @@ function Achievement3DCard({
                   e.stopPropagation();
                   onSelectMobileTab(2);
                 }}
-                className={`flex-1 py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold tracking-tight transition-all text-center ${
+                className={`flex-1 py-1 px-1.5 rounded-xl text-[9.5px] font-mono font-bold tracking-tight transition-all text-center ${
                   mobileActiveIndex === 2
                     ? "bg-[#168BFF] text-white shadow-[0_0_10px_#168BFF]"
                     : "text-[#94A3B8] hover:text-white"
@@ -173,7 +173,7 @@ function Achievement3DCard({
 
           <div>
             {/* Top Header Badge */}
-            <div className="flex items-center justify-between gap-2 mb-2">
+            <div className="flex items-center justify-between gap-2 mb-1.5">
               <span
                 className="px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase border shadow-sm flex items-center gap-1.5"
                 style={{
@@ -195,7 +195,7 @@ function Achievement3DCard({
 
             {/* Project Image Banner with Solid Opaque Background */}
             {project.image && (
-              <div className="relative w-full h-[120px] sm:h-[130px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-2.5 bg-[#040A18] shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
+              <div className="relative w-full h-[105px] sm:h-[125px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-2 bg-[#040A18] shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
                 <img
                   src={project.image}
                   alt={project.name}
@@ -213,28 +213,28 @@ function Achievement3DCard({
             </h3>
 
             {/* Subtitle / Tagline */}
-            <span className="text-[10.5px] font-mono text-[#22D3EE] font-semibold block mt-0.5 leading-snug drop-shadow-[0_0_6px_rgba(34,211,238,0.7)]">
+            <span className="text-[10px] sm:text-[10.5px] font-mono text-[#22D3EE] font-semibold block mt-0.5 leading-snug drop-shadow-[0_0_6px_rgba(34,211,238,0.7)]">
               {project.tagline}
             </span>
 
             {/* Description */}
-            <p className="text-[11.5px] text-[#E2E8F0] font-inter mt-2 leading-relaxed drop-shadow-[0_0_2px_rgba(255,255,255,0.2)] line-clamp-2">
+            <p className="text-[11px] sm:text-[11.5px] text-[#E2E8F0] font-inter mt-1 leading-relaxed drop-shadow-[0_0_2px_rgba(255,255,255,0.2)] line-clamp-2">
               {project.description}
             </p>
 
             {/* Terminal Install Snippet for SpecForge */}
             {project.installCommand && (
-              <div className="mt-2.5 p-1.5 px-2.5 rounded-xl bg-[#020612]/90 border border-[#22D3EE]/35 flex items-center justify-between font-mono text-xs">
-                <div className="flex items-center gap-2 overflow-x-auto text-[#38BDF8]">
+              <div className="mt-1.5 p-1 px-2 rounded-xl bg-[#020612]/90 border border-[#22D3EE]/35 flex items-center justify-between font-mono text-xs">
+                <div className="flex items-center gap-1.5 overflow-x-auto text-[#38BDF8]">
                   <Terminal className="w-3 h-3 text-[#38BDF8] flex-shrink-0" />
-                  <span className="text-[10.5px] select-all font-semibold">{project.installCommand}</span>
+                  <span className="text-[10px] select-all font-semibold">{project.installCommand}</span>
                 </div>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onCopy(project.installCommand!);
                   }}
-                  className="p-1 rounded hover:bg-[#081836] text-[#22D3EE] transition-colors ml-2 flex-shrink-0"
+                  className="p-1 rounded hover:bg-[#081836] text-[#22D3EE] transition-colors ml-1.5 flex-shrink-0"
                   title="Copy command"
                 >
                   {copiedCommand ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
@@ -243,9 +243,9 @@ function Achievement3DCard({
             )}
 
             {/* Feature Highlights */}
-            <div className="mt-2 space-y-1">
+            <div className="mt-1.5 space-y-0.5 sm:space-y-1">
               {project.highlights.slice(0, 2).map((item, idx) => (
-                <div key={idx} className="flex items-start gap-1.5 text-[10.5px] text-[#CBD5E1] font-inter leading-tight">
+                <div key={idx} className="flex items-start gap-1.5 text-[10px] sm:text-[10.5px] text-[#CBD5E1] font-inter leading-tight">
                   <CheckCircle2 className="w-3 h-3 text-[#00D2FF] mt-0.5 flex-shrink-0 drop-shadow-[0_0_4px_#00D2FF]" />
                   <span className="line-clamp-2">{item}</span>
                 </div>
@@ -253,7 +253,7 @@ function Achievement3DCard({
             </div>
 
             {/* Tech Stack Tags */}
-            <div className="mt-2.5 flex flex-wrap gap-1">
+            <div className="mt-1.5 flex flex-wrap gap-1">
               {project.technologies.slice(0, 4).map((tech) => (
                 <span
                   key={tech}
@@ -266,7 +266,7 @@ function Achievement3DCard({
           </div>
 
           {/* Action Buttons Row */}
-          <div className="mt-3.5 pt-2.5 border-t border-[#22D3EE]/25 flex flex-wrap items-center gap-1.5">
+          <div className="mt-2.5 pt-2 border-t border-[#22D3EE]/25 flex flex-wrap items-center gap-1.5">
             {/* Card 1: Federal Register Explorer */}
             {project.id === "federal-register-explorer" && (
               <>
@@ -470,10 +470,10 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
         }}
       >
         <div className="flex flex-col items-center select-none text-center">
-          {/* Top Row: Left Metric Buttons | Center Section Banner | Right Metric & GitHub Buttons */}
+          {/* Top Row: Left Metric Buttons (Desktop) | Center Section Banner | Right Metric & GitHub Buttons (Desktop) */}
           <div className="flex flex-wrap items-center justify-center gap-2.5 max-w-[95vw]">
-            {/* Left Button-like Metric Cards */}
-            <div className="flex items-center gap-2">
+            {/* Left Button-like Metric Cards (Desktop only) */}
+            <div className="hidden lg:flex items-center gap-2">
               <div className="px-3 py-1.5 rounded-2xl bg-[#040D1F]/80 border border-[#00D2FF]/40 backdrop-blur-md shadow-[0_0_14px_rgba(0,210,255,0.2)] flex items-center gap-2 hover:border-[#00D2FF] transition-all">
                 <Code2 className="w-3.5 h-3.5 text-[#00D2FF]" />
                 <span className="text-xs font-bold font-orbitron text-white">25+</span>
@@ -488,18 +488,18 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
             </div>
 
             {/* Center Main Heading Banner */}
-            <div className="flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-[#040D1F]/90 border border-[#00D2FF]/60 backdrop-blur-md shadow-[0_0_24px_rgba(0,210,255,0.35)]">
-              <Trophy className="w-4 h-4 text-[#00D2FF] drop-shadow-[0_0_8px_#00D2FF]" />
-              <span className="text-xs sm:text-sm font-mono font-bold tracking-widest text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)] uppercase">
+            <div className="flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-[#040D1F]/90 border border-[#00D2FF]/60 backdrop-blur-md shadow-[0_0_24px_rgba(0,210,255,0.35)]">
+              <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00D2FF] drop-shadow-[0_0_8px_#00D2FF]" />
+              <span className="text-[11px] sm:text-sm font-mono font-bold tracking-widest text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)] uppercase">
                 Open Source Achievements
               </span>
-              <span className="text-[9px] sm:text-[10px] font-mono text-[#00D2FF] font-bold px-2 py-0.5 rounded bg-[#0A224D] border border-[#00D2FF]/60">
+              <span className="text-[8.5px] sm:text-[10px] font-mono text-[#00D2FF] font-bold px-1.5 sm:px-2 py-0.5 rounded bg-[#0A224D] border border-[#00D2FF]/60">
                 07
               </span>
             </div>
 
-            {/* Right Button-like Metric & Profile Cards */}
-            <div className="flex items-center gap-2">
+            {/* Right Button-like Metric & Profile Cards (Desktop only) */}
+            <div className="hidden lg:flex items-center gap-2">
               <div className="px-3 py-1.5 rounded-2xl bg-[#040D1F]/80 border border-[#00D2FF]/40 backdrop-blur-md shadow-[0_0_14px_rgba(0,210,255,0.2)] flex items-center gap-2 hover:border-[#00D2FF] transition-all">
                 <GitBranch className="w-3.5 h-3.5 text-[#38BDF8]" />
                 <span className="text-xs font-bold font-orbitron text-white">1.5K+</span>
@@ -520,7 +520,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
             </div>
           </div>
 
-          <span className="text-[10.5px] sm:text-[11.5px] font-mono text-[#BAE6FD] mt-2 drop-shadow-[0_0_4px_rgba(0,210,255,0.6)] px-2">
+          <span className="text-[9.5px] sm:text-[11.5px] font-mono text-[#BAE6FD] mt-1.5 drop-shadow-[0_0_4px_rgba(0,210,255,0.6)] px-2">
             In-Browser WebGPU AI · Published PyPI Packages · Upstream Cloud UI Contributions
           </span>
         </div>
@@ -570,12 +570,12 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
           />
         </group>
       ) : (
-        /* --- MOBILE SCREEN: Single Interactive Achievement Card (directly in Canvas tree, NO nested Html!) --- */
+        /* --- MOBILE SCREEN: Single Interactive Achievement Card (lowered to y = -0.18 for ample clearance) --- */
         <Achievement3DCard
           key={mobileActiveIndex}
           project={threeProjects[mobileActiveIndex]}
           x={0}
-          y={0.05}
+          y={-0.18}
           z={0}
           side="middle"
           opacity={opacity}
