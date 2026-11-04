@@ -94,10 +94,30 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
                 </span>
               </div>
 
-              {/* Name */}
-              <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.95)] leading-tight text-4xl sm:text-5xl lg:text-6xl">
-                {PERSONAL_INFO.name}
-              </h1>
+              {/* Name & Avatar */}
+              <div className="flex items-center gap-4 sm:gap-5 my-1">
+                <div className="relative shrink-0">
+                  <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-[#00D2FF] via-[#168BFF] to-[#22D3EE] opacity-75 blur-sm" />
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl p-[2px] bg-gradient-to-br from-[#00D2FF] via-[#007BFF] to-[#22D3EE] shadow-[0_0_20px_rgba(0,210,255,0.6)]">
+                    <div className="w-full h-full rounded-[14px] overflow-hidden bg-[#040816]">
+                      <img
+                        src={PERSONAL_INFO.avatar}
+                        alt={PERSONAL_INFO.name}
+                        className="w-full h-full object-cover object-top"
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#00D2FF] border-2 border-[#03060D] shadow-[0_0_8px_#00D2FF] flex items-center justify-center">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                  </div>
+                </div>
+
+                <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.95)] leading-tight text-4xl sm:text-5xl lg:text-6xl">
+                  {PERSONAL_INFO.name}
+                </h1>
+              </div>
 
               {/* Role / Title */}
               <div className="mt-2 flex items-center gap-2">
@@ -296,10 +316,28 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
                 </span>
               </div>
 
-              {/* Name: Ashish Dogra - Scaled up */}
-              <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_32px_rgba(255,255,255,1),0_0_16px_#00D2FF] leading-tight text-4xl sm:text-5xl my-1">
-                {PERSONAL_INFO.name}
-              </h1>
+              {/* Name & Avatar: Ashish Dogra */}
+              <div className="flex items-center justify-center gap-3 my-1">
+                <div className="relative shrink-0">
+                  <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-[#00D2FF] via-[#168BFF] to-[#22D3EE] opacity-80 blur-xs" />
+                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl p-[1.5px] bg-gradient-to-br from-[#00D2FF] via-[#007BFF] to-[#22D3EE] shadow-[0_0_16px_rgba(0,210,255,0.6)]">
+                    <div className="w-full h-full rounded-[10px] overflow-hidden bg-[#040816]">
+                      <img
+                        src={PERSONAL_INFO.avatar}
+                        alt={PERSONAL_INFO.name}
+                        className="w-full h-full object-cover object-top"
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#00D2FF] border-2 border-[#03060D] shadow-[0_0_6px_#00D2FF]" />
+                </div>
+
+                <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_32px_rgba(255,255,255,1),0_0_16px_#00D2FF] leading-tight text-2xl sm:text-3xl sm:text-4xl text-left">
+                  {PERSONAL_INFO.name}
+                </h1>
+              </div>
 
               {/* Role / Title & Experience */}
               <div className="flex flex-wrap items-center justify-center gap-2.5 my-1.5">

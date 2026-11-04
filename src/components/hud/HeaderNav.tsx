@@ -20,7 +20,7 @@ export function HeaderNav({
 }: HeaderNavProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between pointer-events-auto backdrop-blur-2xl bg-[#03060D]/40 border-b border-[#22D3EE]/20 shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
-      {/* Brand Logo AD */}
+      {/* Brand Logo Avatar */}
       <div
         onClick={() => {
           onPlayClick();
@@ -28,11 +28,15 @@ export function HeaderNav({
         }}
         className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group select-none"
       >
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#168BFF] via-[#007BFF] to-[#22D3EE] p-[1.5px] shadow-[0_0_15px_rgba(34,211,238,0.5)] group-hover:scale-105 transition-transform flex items-center justify-center">
-          <div className="w-full h-full bg-[#081426] rounded-[10px] flex items-center justify-center px-2 py-1.5">
-            <span className="font-orbitron font-black text-transparent bg-clip-text bg-gradient-to-r from-[#22D3EE] to-white text-xs sm:text-sm tracking-widest drop-shadow-[0_0_8px_#22D3EE] pl-0.5">
-              {PERSONAL_INFO.shortName}
-            </span>
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#168BFF] via-[#007BFF] to-[#22D3EE] p-[1.5px] shadow-[0_0_15px_rgba(34,211,238,0.5)] group-hover:scale-105 transition-transform flex items-center justify-center overflow-hidden">
+          <div className="w-full h-full bg-[#081426] rounded-[10px] overflow-hidden flex items-center justify-center">
+            <img
+              src={PERSONAL_INFO.avatar}
+              alt={PERSONAL_INFO.name}
+              className="w-full h-full object-cover object-top"
+              loading="eager"
+              decoding="async"
+            />
           </div>
         </div>
         <div className="hidden sm:block">

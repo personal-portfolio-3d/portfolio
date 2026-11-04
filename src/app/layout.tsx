@@ -19,6 +19,14 @@ export const metadata: Metadata = {
     "Three.js",
   ],
   authors: [{ name: "Ashish Dogra" }],
+  icons: {
+    icon: [
+      { url: "/assets/my-image/my-image-logo.webp", type: "image/webp" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/assets/my-image/my-image-logo.webp",
+    apple: "/assets/my-image/my-image-logo.webp",
+  },
 };
 
 export default function RootLayout({
@@ -32,7 +40,8 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="icon" href={`${basePath}/favicon.ico`} />
+        <link rel="icon" type="image/webp" href={`${basePath}/assets/my-image/my-image-logo.webp`} />
+        <link rel="apple-touch-icon" href={`${basePath}/assets/my-image/my-image-logo.webp`} />
       </head>
       <body className="bg-[#03060D] text-[#EDF4FF] overflow-hidden antialiased selection:bg-[#168BFF] selection:text-[#03060D]">
         {children}

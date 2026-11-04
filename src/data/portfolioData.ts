@@ -1,5 +1,8 @@
 import { Project, SkillCategory, ExperienceItem, SectionCoord, OpenSourceProject } from "@/types/portfolio";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+export const asset = (path: string) => `${basePath}${path}`;
+
 export const SECTIONS: SectionCoord[] = [
   { id: "intro", name: "INTRO", number: "01", zPos: 0 },
   { id: "about", name: "ABOUT", number: "02", zPos: -60 },
@@ -14,6 +17,7 @@ export const SECTIONS: SectionCoord[] = [
 export const PERSONAL_INFO = {
   name: "ASHISH DOGRA",
   shortName: "AD",
+  avatar: asset("/assets/my-image/my-image-logo.webp"),
   title: "SENIOR SOFTWARE ENGINEER",
   tagline: "Building scalable applications, intelligent systems, and immersive digital experiences.",
   location: "Uttarakhand, India",
@@ -85,9 +89,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     ],
   },
 ];
-
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-const asset = (path: string) => `${basePath}${path}`;
 
 export const PROJECTS: Project[] = [
   {
