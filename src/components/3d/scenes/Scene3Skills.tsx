@@ -258,12 +258,12 @@ export function Scene3Skills({ currentZ, isModalOpen }: Scene3SkillsProps) {
               <div
                 onMouseEnter={() => setHoveredSkillId(card.id)}
                 onMouseLeave={() => setHoveredSkillId(null)}
-                className={`px-4.5 py-3 rounded-2xl transition-all duration-300 backdrop-blur-2xl relative cursor-pointer select-none whitespace-nowrap flex items-center gap-3.5 ${
+                className={`px-5 py-3.5 rounded-2xl transition-all duration-300 backdrop-blur-2xl relative cursor-pointer select-none whitespace-nowrap flex items-center gap-3.5 ${
                   isHovered
-                    ? "bg-[#081836]/65 border-2 shadow-[0_0_28px_rgba(34,211,238,0.7)]"
+                    ? "bg-[#081836]/75 border-2 shadow-[0_0_28px_rgba(34,211,238,0.7)]"
                     : card.isPrimary
-                    ? "bg-[#060F22]/45 border border-[#22D3EE]/50 shadow-[0_8px_25px_rgba(0,0,0,0.6),0_0_14px_rgba(34,211,238,0.35)]"
-                    : "bg-[#060F22]/40 border border-[#168BFF]/35 shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
+                    ? "bg-[#060F22]/55 border border-[#22D3EE]/55 shadow-[0_8px_25px_rgba(0,0,0,0.6),0_0_14px_rgba(34,211,238,0.35)]"
+                    : "bg-[#060F22]/45 border border-[#168BFF]/40 shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
                 }`}
                 style={{
                   borderColor: isHovered ? card.iconColor : undefined,
@@ -272,7 +272,7 @@ export function Scene3Skills({ currentZ, isModalOpen }: Scene3SkillsProps) {
               >
                 {/* Individualized Distinct Color Icon Container */}
                 <div
-                  className="w-8 h-8 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 flex-shrink-0"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 flex-shrink-0"
                   style={{
                     backgroundColor: `${card.iconColor}22`,
                     border: `1px solid ${card.iconColor}66`,
@@ -283,9 +283,9 @@ export function Scene3Skills({ currentZ, isModalOpen }: Scene3SkillsProps) {
                   {renderIcon(card.iconName)}
                 </div>
 
-                <div>
+                <div className="pr-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-[13px] font-bold font-orbitron text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]">
+                    <span className="text-[13.5px] font-bold font-orbitron text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]">
                       {card.name}
                     </span>
                     {card.isPrimary && (
@@ -299,7 +299,7 @@ export function Scene3Skills({ currentZ, isModalOpen }: Scene3SkillsProps) {
                     )}
                   </div>
                   <span
-                    className="text-[10.5px] font-mono font-semibold uppercase tracking-wider block"
+                    className="text-[10.5px] font-mono font-semibold uppercase tracking-wider block mt-0.5"
                     style={{
                       color: card.iconColor,
                       textShadow: `0 0 8px ${card.iconColor}88`,
