@@ -125,16 +125,16 @@ function ProjectRoadsideCard({
           {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
           <NeonCardBorders rounded="3xl" />
 
-          {/* Project Image Thumbnail */}
-          <div className="relative w-full h-[165px] sm:h-[185px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-3.5 bg-[#03060D]/60">
+          {/* Project Image Thumbnail with Solid Opaque Background */}
+          <div className="relative w-full h-[165px] sm:h-[185px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-3.5 bg-[#040A18] shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
             <img
               src={project.image}
               alt={project.title}
               loading="lazy"
               decoding="async"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-[#040A18]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#060F22]/95 via-[#060F22]/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#040A18]/60 via-transparent to-transparent pointer-events-none" />
 
             {/* Top Category Badge */}
             <div className="absolute top-2.5 left-2.5 px-3 py-1 rounded-full bg-[#03060D]/85 border border-[#22D3EE]/70 text-[10.5px] font-mono text-[#22D3EE] font-bold shadow-[0_0_10px_rgba(34,211,238,0.5)]">

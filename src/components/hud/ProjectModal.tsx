@@ -101,16 +101,16 @@ export function ProjectModal({ project, onClose, onPlayClick }: ProjectModalProp
 
           {/* Scrollable Body Content */}
           <div className="overflow-y-auto p-5 sm:p-7 scrollbar-thin scrollbar-thumb-[#22D3EE]">
-            {/* Large Project Preview Image (Below header, never overlaps buttons) */}
-            <div className="relative w-full h-[220px] sm:h-[260px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-6 bg-[#03060D]/70">
+            {/* Large Project Preview Image (Solid background for maximum visibility) */}
+            <div className="relative w-full h-[220px] sm:h-[260px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-6 bg-[#040A18] shadow-[0_4px_20px_rgba(0,0,0,0.7)]">
               <img
                 src={mountedProject.image}
                 alt={mountedProject.title}
                 loading="eager"
                 decoding="async"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover bg-[#040A18]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#060F22]/90 via-transparent to-transparent opacity-85" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#040A18]/50 via-transparent to-transparent opacity-80 pointer-events-none" />
             </div>
 
             {/* Title & Subtitle */}

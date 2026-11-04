@@ -40,6 +40,8 @@ function Achievement3DCard({
   copiedCommand,
   onCopy,
   isMobile,
+  mobileActiveIndex,
+  onSelectMobileTab,
 }: {
   project: OpenSourceProject;
   x: number;
@@ -50,6 +52,8 @@ function Achievement3DCard({
   copiedCommand: boolean;
   onCopy: (cmd: string) => void;
   isMobile: boolean;
+  mobileActiveIndex?: number;
+  onSelectMobileTab?: (index: number) => void;
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -122,6 +126,51 @@ function Achievement3DCard({
           {/* Shiny Neon Blue Corner Edges */}
           <NeonCardBorders rounded="3xl" />
 
+          {/* Mobile Tab Selector (Only displayed on small screens inside the card) */}
+          {isMobile && onSelectMobileTab && (
+            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-[#020612]/95 border border-[#00D2FF]/50 mb-3 shadow-[0_0_14px_rgba(0,210,255,0.25)] w-full justify-between">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSelectMobileTab(0);
+                }}
+                className={`flex-1 py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold tracking-tight transition-all text-center ${
+                  mobileActiveIndex === 0
+                    ? "bg-[#168BFF] text-white shadow-[0_0_10px_#168BFF]"
+                    : "text-[#94A3B8] hover:text-white"
+                }`}
+              >
+                FR Explorer
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSelectMobileTab(1);
+                }}
+                className={`flex-1 py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold tracking-tight transition-all text-center ${
+                  mobileActiveIndex === 1
+                    ? "bg-[#168BFF] text-white shadow-[0_0_10px_#168BFF]"
+                    : "text-[#94A3B8] hover:text-white"
+                }`}
+              >
+                SpecForge
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSelectMobileTab(2);
+                }}
+                className={`flex-1 py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold tracking-tight transition-all text-center ${
+                  mobileActiveIndex === 2
+                    ? "bg-[#168BFF] text-white shadow-[0_0_10px_#168BFF]"
+                    : "text-[#94A3B8] hover:text-white"
+                }`}
+              >
+                Floci PRs
+              </button>
+            </div>
+          )}
+
           <div>
             {/* Top Header Badge */}
             <div className="flex items-center justify-between gap-2 mb-2">
@@ -140,21 +189,21 @@ function Achievement3DCard({
               </span>
 
               <span className="text-[10px] font-mono text-[#94A3B8] font-semibold">
-                {side === "left" ? "01 / 03" : side === "middle" ? "02 / 03" : "03 / 03"}
+                {isMobile ? `0${(mobileActiveIndex ?? 0) + 1} / 03` : side === "left" ? "01 / 03" : side === "middle" ? "02 / 03" : "03 / 03"}
               </span>
             </div>
 
-            {/* Project Image Banner */}
+            {/* Project Image Banner with Solid Opaque Background */}
             {project.image && (
-              <div className="relative w-full h-[120px] sm:h-[130px] rounded-2xl overflow-hidden border border-[#22D3EE]/35 mb-2.5 bg-[#03060D]/80 shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
+              <div className="relative w-full h-[120px] sm:h-[130px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-2.5 bg-[#040A18] shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
                 <img
                   src={project.image}
                   alt={project.name}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-[#040A18]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#040D1E]/95 via-[#040D1E]/15 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#040A18]/50 via-transparent to-transparent pointer-events-none" />
               </div>
             )}
 
@@ -521,68 +570,21 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
           />
         </group>
       ) : (
-        /* --- MOBILE SCREEN (Centered Card with Sleek Tab Selector) --- */
-        <group position={[0, 0.05, 0]}>
-          <Html
-            transform
-            distanceFactor={5.6}
-            center
-            style={{
-              opacity,
-              transition: "opacity 0.25s ease-out",
-              pointerEvents: opacity > 0.3 ? "auto" : "none",
-            }}
-          >
-            <div className="flex flex-col items-center select-none w-[92vw] max-w-[370px]">
-              {/* Mobile Tab Selector */}
-              <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-[#040D1E]/90 border border-[#00D2FF]/40 mb-3 shadow-[0_0_15px_rgba(0,210,255,0.25)] w-full justify-between">
-                <button
-                  onClick={() => setMobileActiveIndex(0)}
-                  className={`flex-1 py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold tracking-tight transition-all text-center ${
-                    mobileActiveIndex === 0
-                      ? "bg-[#168BFF] text-white shadow-[0_0_10px_#168BFF]"
-                      : "text-[#94A3B8] hover:text-white"
-                  }`}
-                >
-                  FR Explorer
-                </button>
-                <button
-                  onClick={() => setMobileActiveIndex(1)}
-                  className={`flex-1 py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold tracking-tight transition-all text-center ${
-                    mobileActiveIndex === 1
-                      ? "bg-[#168BFF] text-white shadow-[0_0_10px_#168BFF]"
-                      : "text-[#94A3B8] hover:text-white"
-                  }`}
-                >
-                  SpecForge API
-                </button>
-                <button
-                  onClick={() => setMobileActiveIndex(2)}
-                  className={`flex-1 py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold tracking-tight transition-all text-center ${
-                    mobileActiveIndex === 2
-                      ? "bg-[#168BFF] text-white shadow-[0_0_10px_#168BFF]"
-                      : "text-[#94A3B8] hover:text-white"
-                  }`}
-                >
-                  Floci PRs
-                </button>
-              </div>
-
-              {/* Active Mobile Card */}
-              <Achievement3DCard
-                project={threeProjects[mobileActiveIndex]}
-                x={0}
-                y={0}
-                z={0}
-                side="middle"
-                opacity={1}
-                copiedCommand={copiedCommand}
-                onCopy={handleCopy}
-                isMobile={true}
-              />
-            </div>
-          </Html>
-        </group>
+        /* --- MOBILE SCREEN: Single Interactive Achievement Card (directly in Canvas tree, NO nested Html!) --- */
+        <Achievement3DCard
+          key={mobileActiveIndex}
+          project={threeProjects[mobileActiveIndex]}
+          x={0}
+          y={0.05}
+          z={0}
+          side="middle"
+          opacity={opacity}
+          copiedCommand={copiedCommand}
+          onCopy={handleCopy}
+          isMobile={true}
+          mobileActiveIndex={mobileActiveIndex}
+          onSelectMobileTab={(idx) => setMobileActiveIndex(idx)}
+        />
       )}
     </group>
   );
