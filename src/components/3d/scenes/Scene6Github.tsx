@@ -103,23 +103,23 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
           pointerEvents: opacity > 0.4 ? "auto" : "none",
         }}
       >
-        <div className="w-[670px] p-6 rounded-2xl bg-[#060F22]/45 border border-[#22D3EE]/45 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_20px_rgba(34,211,238,0.25)] relative overflow-hidden select-none">
+        <div className="w-[92vw] max-w-[340px] md:max-w-[670px] p-4 sm:p-6 rounded-2xl bg-[#060F22]/45 border border-[#22D3EE]/45 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_20px_rgba(34,211,238,0.25)] relative overflow-hidden select-none">
           {/* Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-[#22D3EE]/30">
+          <div className="flex flex-wrap items-center justify-between gap-2 pb-3 sm:pb-4 border-b border-[#22D3EE]/30">
             <div className="flex items-center gap-2.5">
-              <Network className="w-6 h-6 text-[#22D3EE] drop-shadow-[0_0_8px_#22D3EE] animate-pulse" />
+              <Network className="w-5 h-5 sm:w-6 sm:h-6 text-[#22D3EE] drop-shadow-[0_0_8px_#22D3EE] animate-pulse" />
               <div>
-                <h3 className="text-xl font-bold font-orbitron text-white tracking-wider drop-shadow-[0_0_12px_rgba(255,255,255,0.85)]">
-                  OPEN SOURCE &amp; DEVELOPER NETWORK
+                <h3 className="text-base sm:text-xl font-bold font-orbitron text-white tracking-wider drop-shadow-[0_0_12px_rgba(255,255,255,0.85)]">
+                  OPEN SOURCE &amp; NETWORK
                 </h3>
-                <span className="text-xs font-mono text-[#22D3EE] font-bold tracking-widest uppercase drop-shadow-[0_0_6px_rgba(34,211,238,0.8)]">
-                  Community Impact &amp; GitHub Telemetry
+                <span className="text-[10px] sm:text-xs font-mono text-[#22D3EE] font-bold tracking-widest uppercase drop-shadow-[0_0_6px_rgba(34,211,238,0.8)]">
+                  Community Impact &amp; Telemetry
                 </span>
               </div>
             </div>
 
-            <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-[#081836]/80 border border-[#22D3EE] text-[#22D3EE] shadow-[0_0_10px_rgba(34,211,238,0.4)]">
-              06 • GITHUB
+            <span className="text-[10px] sm:text-xs font-mono font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-[#081836]/80 border border-[#22D3EE] text-[#22D3EE] shadow-[0_0_10px_rgba(34,211,238,0.4)]">
+              07 • GITHUB
             </span>
           </div>
 

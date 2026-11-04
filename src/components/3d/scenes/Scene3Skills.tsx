@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useRef } from "react";
 import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import {
   Code2,
@@ -43,6 +43,9 @@ interface TechCardItem {
 }
 
 export function Scene3Skills({ currentZ, isModalOpen }: Scene3SkillsProps) {
+  const { size, viewport } = useThree();
+  const isMobile = size.width < 768 || viewport.aspect < 1.0;
+
   const [hoveredSkillId, setHoveredSkillId] = useState<string | null>(null);
   const groupRef = useRef<THREE.Group>(null);
 
@@ -217,11 +220,15 @@ export function Scene3Skills({ currentZ, isModalOpen }: Scene3SkillsProps) {
 
         const isHovered = hoveredSkillId === card.id;
 
+        const posX = isMobile ? (card.x / 4.8) * 1.35 : card.x;
+        const rotY = isMobile ? card.rotY * 0.2 : card.rotY;
+        const baseScale = isMobile ? card.scale * 0.9 : card.scale;
+
         return (
           <group
             key={card.id}
-            position={[card.x, card.y, card.z]}
-            rotation={[0, card.rotY, 0]}
+            position={[posX, card.y, card.z]}
+            rotation={[0, rotY, 0]}
           >
             {/* 3D Floating Base Node in Icon Color */}
             <mesh position={[0, -0.6, 0]}>
@@ -237,15 +244,15 @@ export function Scene3Skills({ currentZ, isModalOpen }: Scene3SkillsProps) {
             {/* Ultra-Transparent Holographic Tech Pill Card */}
             <Html
               transform
-              distanceFactor={5.2}
+              distanceFactor={isMobile ? 5.5 : 5.2}
               position={[0, 0, 0]}
               style={{
                 opacity: isModalOpen ? 0 : opacity,
                 transition: "opacity 0.25s ease-out, transform 0.25s ease-out",
                 pointerEvents: isModalOpen || opacity <= 0.3 ? "none" : "auto",
                 transform: isHovered
-                  ? `scale(${card.scale * 1.12})`
-                  : `scale(${card.scale})`,
+                  ? `scale(${baseScale * 1.12})`
+                  : `scale(${baseScale})`,
               }}
             >
               <div

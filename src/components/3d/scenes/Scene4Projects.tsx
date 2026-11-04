@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useRef } from "react";
 import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { PROJECTS } from "@/data/portfolioData";
 import { Project } from "@/types/portfolio";
@@ -22,6 +22,7 @@ interface ProjectRoadsideCardProps {
   side: "left" | "right";
   currentZ: number;
   isModalOpen?: boolean;
+  isMobile?: boolean;
   onSelectProject: (project: Project) => void;
 }
 
@@ -33,20 +34,19 @@ function ProjectRoadsideCard({
   side,
   currentZ,
   isModalOpen,
+  isMobile = false,
   onSelectProject,
 }: ProjectRoadsideCardProps) {
   const groupRef = useRef<THREE.Group>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   const dist = Math.abs(currentZ - z);
-  const opacity = dist > 45 ? 0 : Math.max(0, 1 - dist / 38);
+  const opacity = dist > (isMobile ? 36 : 45) ? 0 : Math.max(0, 1 - dist / (isMobile ? 28 : 38));
 
   const isLeft = side === "left";
-  // Highway road is at X=0.
-  // Left card at X < 0 tilts inward towards highway (+Y rotation).
-  // Right card at X > 0 tilts inward towards highway (-Y rotation).
-  const baseRotY = isLeft ? 0.52 : -0.52; // ~30 deg towards highway
-  const hoverRotY = isLeft ? 0.04 : -0.04; // ~2.3 deg facing screen/camera
+  // On mobile: cards face screen directly along highway centerline (rotY = 0)
+  const baseRotY = isMobile ? 0 : isLeft ? 0.52 : -0.52; // ~30 deg towards highway
+  const hoverRotY = isMobile ? 0 : isLeft ? 0.04 : -0.04; // ~2.3 deg facing screen/camera
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
@@ -71,32 +71,36 @@ function ProjectRoadsideCard({
 
   return (
     <group ref={groupRef} position={[x, y, z]} rotation={[0, baseRotY, 0]}>
-      {/* 3D Base Pylon */}
-      <mesh position={[0, -1.9, 0]}>
-        <cylinderGeometry args={[0.5, 0.7, 0.4, 6]} />
-        <meshStandardMaterial
-          color="#168BFF"
-          emissive="#168BFF"
-          emissiveIntensity={2}
-          wireframe
-        />
-      </mesh>
+      {/* 3D Base Pylon (Desktop only) */}
+      {!isMobile && (
+        <mesh position={[0, -1.9, 0]}>
+          <cylinderGeometry args={[0.5, 0.7, 0.4, 6]} />
+          <meshStandardMaterial
+            color="#168BFF"
+            emissive="#168BFF"
+            emissiveIntensity={2}
+            wireframe
+          />
+        </mesh>
+      )}
 
-      {/* Glowing 3D Wireframe Boundary */}
-      <mesh position={[0, 0, -0.05]}>
-        <planeGeometry args={[3.8, 4.4]} />
-        <meshBasicMaterial
-          color={isHovered ? "#22D3EE" : "#168BFF"}
-          wireframe
-          transparent
-          opacity={opacity * 0.45}
-        />
-      </mesh>
+      {/* Glowing 3D Wireframe Boundary (Desktop only) */}
+      {!isMobile && (
+        <mesh position={[0, 0, -0.05]}>
+          <planeGeometry args={[3.8, 4.4]} />
+          <meshBasicMaterial
+            color={isHovered ? "#22D3EE" : "#168BFF"}
+            wireframe
+            transparent
+            opacity={opacity * 0.45}
+          />
+        </mesh>
+      )}
 
       {/* 3D Ultra-Transparent Glass Card */}
       <Html
         transform
-        distanceFactor={5.2}
+        distanceFactor={isMobile ? 5.5 : 5.2}
         position={[0, 0, 0.05]}
         style={{
           opacity: isModalOpen ? 0 : opacity,
@@ -109,10 +113,10 @@ function ProjectRoadsideCard({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onClick={() => onSelectProject(project)}
-          className={`w-[315px] p-4 rounded-3xl transition-all duration-300 backdrop-blur-md relative cursor-pointer overflow-visible select-none group ${
+          className={`w-[88vw] max-w-[325px] md:w-[315px] p-4 rounded-3xl transition-all duration-300 backdrop-blur-md relative cursor-pointer overflow-visible select-none group ${
             isHovered
-              ? "bg-[#061226]/35 border-2 border-[#22D3EE] shadow-[0_0_30px_rgba(34,211,238,0.5)]"
-              : "bg-[#040817]/20 border border-[#22D3EE]/35 shadow-[0_0_20px_rgba(22,139,255,0.2)]"
+              ? "bg-[#061226]/50 border-2 border-[#22D3EE] shadow-[0_0_30px_rgba(34,211,238,0.5)]"
+              : "bg-[#040817]/40 border border-[#22D3EE]/35 shadow-[0_0_20px_rgba(22,139,255,0.2)]"
           }`}
         >
           {/* Neon Corner Tech Accents (Inside rounded boundary) */}
@@ -179,14 +183,26 @@ function ProjectRoadsideCard({
 }
 
 export function Scene4Projects({ currentZ, onSelectProject, isModalOpen }: Scene4ProjectsProps) {
+  const { size, viewport } = useThree();
+  const isMobile = size.width < 768 || viewport.aspect < 1.0;
+
   const sideProjects = useMemo(() => {
+    if (isMobile) {
+      // On mobile: Sequential drive-through layout directly along highway center (X = 0)
+      return [
+        { project: PROJECTS[0], x: 0, y: 1.8, z: -205, side: "left" as const },
+        { project: PROJECTS[1], x: 0, y: 1.8, z: -225, side: "right" as const },
+        { project: PROJECTS[2], x: 0, y: 1.8, z: -245, side: "left" as const },
+        { project: PROJECTS[3], x: 0, y: 1.8, z: -265, side: "right" as const },
+      ];
+    }
     return [
       { project: PROJECTS[0], x: -4.9, y: 1.8, z: -205, side: "left" as const },
       { project: PROJECTS[1], x: 4.9, y: 1.8, z: -225, side: "right" as const },
       { project: PROJECTS[2], x: -4.9, y: 1.8, z: -245, side: "left" as const },
       { project: PROJECTS[3], x: 4.9, y: 1.8, z: -265, side: "right" as const },
     ];
-  }, []);
+  }, [isMobile]);
 
   return (
     <group>
@@ -200,6 +216,7 @@ export function Scene4Projects({ currentZ, onSelectProject, isModalOpen }: Scene
           side={side}
           currentZ={currentZ}
           isModalOpen={isModalOpen}
+          isMobile={isMobile}
           onSelectProject={onSelectProject}
         />
       ))}

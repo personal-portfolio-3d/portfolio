@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useRef } from "react";
 import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 import { CheckCircle2, Sparkles, Terminal, ArrowRight, MapPin } from "lucide-react";
@@ -18,6 +18,7 @@ interface AboutRoadsideCardProps {
   position: [number, number, number];
   opacity: number;
   isModalOpen?: boolean;
+  isMobile?: boolean;
   children: (isHovered: boolean, setIsHovered: (h: boolean) => void) => React.ReactNode;
 }
 
@@ -26,17 +27,16 @@ function AboutRoadsideCard({
   position,
   opacity,
   isModalOpen,
+  isMobile = false,
   children,
 }: AboutRoadsideCardProps) {
   const groupRef = useRef<THREE.Group>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   const isLeft = side === "left";
-  // Highway is at X=0.
-  // Left card (X < 0) tilts inward towards highway (+Y rotation).
-  // Right card (X > 0) tilts inward towards highway (-Y rotation).
-  const baseRotY = isLeft ? 0.50 : -0.50; // ~28.6 deg towards highway
-  const hoverRotY = isLeft ? 0.04 : -0.04; // ~2.3 deg facing screen/camera
+  // Highway is at X=0. On mobile cards face screen directly (rotY = 0).
+  const baseRotY = isMobile ? 0 : isLeft ? 0.50 : -0.50; // ~28.6 deg towards highway
+  const hoverRotY = isMobile ? 0 : isLeft ? 0.04 : -0.04; // ~2.3 deg facing screen/camera
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
@@ -65,6 +65,9 @@ function AboutRoadsideCard({
 }
 
 export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2AboutProps) {
+  const { size, viewport } = useThree();
+  const isMobile = size.width < 768 || viewport.aspect < 1.0;
+
   const zPos = -60;
   const dist = Math.abs(currentZ - zPos);
 
@@ -73,53 +76,71 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
     return Math.max(0, 1 - dist / 35);
   }, [dist]);
 
+  // Sequential card opacities on mobile as user drives forward
+  const card1MobileOpacity = useMemo(() => {
+    const d = Math.abs(currentZ - (zPos + 5));
+    if (d > 25) return 0;
+    return Math.max(0, 1 - d / 20);
+  }, [currentZ, zPos]);
+
+  const card2MobileOpacity = useMemo(() => {
+    const d = Math.abs(currentZ - (zPos - 5));
+    if (d > 25) return 0;
+    return Math.max(0, 1 - d / 20);
+  }, [currentZ, zPos]);
+
   if (opacity <= 0.01) return null;
 
   return (
     <group position={[0, 2, zPos]}>
-      {/* 3D Holographic Side Podiums */}
-      <mesh position={[-4.5, -0.8, 0]}>
-        <cylinderGeometry args={[0.6, 0.8, 0.4, 6]} />
-        <meshStandardMaterial
-          color="#168BFF"
-          emissive="#168BFF"
-          emissiveIntensity={2}
-          wireframe
-        />
-      </mesh>
-      <mesh position={[4.5, -0.8, 0]}>
-        <cylinderGeometry args={[0.6, 0.8, 0.4, 6]} />
-        <meshStandardMaterial
-          color="#22D3EE"
-          emissive="#22D3EE"
-          emissiveIntensity={2}
-          wireframe
-        />
-      </mesh>
+      {/* 3D Holographic Side Podiums (Desktop only) */}
+      {!isMobile && (
+        <>
+          <mesh position={[-4.5, -0.8, 0]}>
+            <cylinderGeometry args={[0.6, 0.8, 0.4, 6]} />
+            <meshStandardMaterial
+              color="#168BFF"
+              emissive="#168BFF"
+              emissiveIntensity={2}
+              wireframe
+            />
+          </mesh>
+          <mesh position={[4.5, -0.8, 0]}>
+            <cylinderGeometry args={[0.6, 0.8, 0.4, 6]} />
+            <meshStandardMaterial
+              color="#22D3EE"
+              emissive="#22D3EE"
+              emissiveIntensity={2}
+              wireframe
+            />
+          </mesh>
+        </>
+      )}
 
       {/* Left Glassmorphic HUD Card: ABOUT ME */}
       <AboutRoadsideCard
         side="left"
-        position={[-4.4, 0.4, 0]}
-        opacity={opacity}
+        position={isMobile ? [0, 0.4, 5] : [-4.4, 0.4, 0]}
+        opacity={isMobile ? card1MobileOpacity : opacity}
         isModalOpen={isModalOpen}
+        isMobile={isMobile}
       >
         {(isHovered, setIsHovered) => (
           <Html
             transform
-            distanceFactor={5.2}
+            distanceFactor={isMobile ? 5.5 : 5.2}
             position={[0, 0, 0.05]}
             style={{
-              opacity: isModalOpen ? 0 : opacity,
+              opacity: isModalOpen ? 0 : (isMobile ? card1MobileOpacity : opacity),
               transition: "opacity 0.25s ease-out, transform 0.3s ease-out",
-              pointerEvents: isModalOpen || opacity <= 0.4 ? "none" : "auto",
+              pointerEvents: isModalOpen || (isMobile ? card1MobileOpacity : opacity) <= 0.4 ? "none" : "auto",
               transform: isHovered ? "scale(1.03)" : "scale(1)",
             }}
           >
             <div
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className={`w-[365px] p-6 rounded-2xl transition-all duration-300 backdrop-blur-2xl relative overflow-visible select-none ${
+              className={`w-[90vw] max-w-[340px] md:w-[365px] p-5 sm:p-6 rounded-2xl transition-all duration-300 backdrop-blur-2xl relative overflow-visible select-none ${
                 isHovered
                   ? "bg-[#081836]/60 border-2 border-[#22D3EE] shadow-[0_0_30px_rgba(34,211,238,0.5)]"
                   : "bg-[#060F22]/45 border border-[#22D3EE]/45 shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_20px_rgba(34,211,238,0.25)]"
@@ -173,26 +194,27 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
       {/* Right Glassmorphic HUD Card: PHILOSOPHY */}
       <AboutRoadsideCard
         side="right"
-        position={[4.4, 0.4, 0]}
-        opacity={opacity}
+        position={isMobile ? [0, 0.4, -5] : [4.4, 0.4, 0]}
+        opacity={isMobile ? card2MobileOpacity : opacity}
         isModalOpen={isModalOpen}
+        isMobile={isMobile}
       >
         {(isHovered, setIsHovered) => (
           <Html
             transform
-            distanceFactor={5.2}
+            distanceFactor={isMobile ? 5.5 : 5.2}
             position={[0, 0, 0.05]}
             style={{
-              opacity: isModalOpen ? 0 : opacity,
+              opacity: isModalOpen ? 0 : (isMobile ? card2MobileOpacity : opacity),
               transition: "opacity 0.25s ease-out, transform 0.3s ease-out",
-              pointerEvents: isModalOpen || opacity <= 0.4 ? "none" : "auto",
+              pointerEvents: isModalOpen || (isMobile ? card2MobileOpacity : opacity) <= 0.4 ? "none" : "auto",
               transform: isHovered ? "scale(1.03)" : "scale(1)",
             }}
           >
             <div
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className={`w-[365px] p-6 rounded-2xl transition-all duration-300 backdrop-blur-2xl relative overflow-visible select-none ${
+              className={`w-[90vw] max-w-[340px] md:w-[365px] p-5 sm:p-6 rounded-2xl transition-all duration-300 backdrop-blur-2xl relative overflow-visible select-none ${
                 isHovered
                   ? "bg-[#081836]/60 border-2 border-[#168BFF] shadow-[0_0_30px_rgba(22,139,255,0.5)]"
                   : "bg-[#060F22]/45 border border-[#168BFF]/45 shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_20px_rgba(22,139,255,0.25)]"

@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { EXPERIENCES } from "@/data/portfolioData";
 import { ExperienceItem } from "@/types/portfolio";
@@ -408,7 +408,7 @@ function ElectricCircleNode({
         >
           {/* Ultra-Transparent Circular / Pill Card */}
           <div
-            className={`px-6 py-3.5 rounded-3xl border backdrop-blur-md transition-all duration-300 text-center min-w-[220px] ${
+            className={`px-5 sm:px-6 py-3 sm:py-3.5 rounded-3xl border backdrop-blur-md transition-all duration-300 text-center max-w-[85vw] sm:max-w-none sm:min-w-[220px] ${
               isSelected
                 ? "bg-[#0A224D]/45 border-2 border-[#00F0FF] shadow-[0_0_35px_rgba(0,240,255,0.6)]"
                 : isHovered
@@ -424,12 +424,12 @@ function ElectricCircleNode({
             </div>
 
             {/* Role Title */}
-            <h4 className="text-sm font-bold font-orbitron text-white group-hover:text-[#00F0FF] transition-colors drop-shadow-[0_0_10px_rgba(255,255,255,0.9)] tracking-wide whitespace-nowrap">
+            <h4 className="text-xs sm:text-sm font-bold font-orbitron text-white group-hover:text-[#00F0FF] transition-colors drop-shadow-[0_0_10px_rgba(255,255,255,0.9)] tracking-wide sm:whitespace-nowrap">
               {exp.role}
             </h4>
 
             {/* Company / Institution */}
-            <p className="text-xs font-semibold mt-0.5 whitespace-nowrap text-[#00F0FF] drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">
+            <p className="text-[11px] sm:text-xs font-semibold mt-0.5 sm:whitespace-nowrap text-[#00F0FF] drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">
               {exp.company}
             </p>
 
@@ -468,15 +468,24 @@ export function Scene5Experience({
     return [mca, freelance, gadget];
   }, []);
 
-  // Node 3D positions with LENGTHIER spacing across the highway: Left (MCA) -> Center (Freelance) -> Right (Gadget)
-  const nodePositions: [number, number, number][] = useMemo(
-    () => [
+  const { size, viewport } = useThree();
+  const isMobile = size.width < 768 || viewport.aspect < 1.0;
+
+  // Node 3D positions: Sequential Z on mobile, Left -> Center -> Right on desktop
+  const nodePositions: [number, number, number][] = useMemo(() => {
+    if (isMobile) {
+      return [
+        [0.0, 0.0, 9],    // Node 0 (MCA): Front
+        [0.0, 0.5, 0],    // Node 1 (Freelance): Center
+        [0.0, 0.0, -9],   // Node 2 (Gadget): Far
+      ];
+    }
+    return [
       [-5.6, 0.0, 0],   // Left (Wide spacing at -5.6)
       [0.0, 0.75, 0],   // Center (Elevated suspension arch at 0.0)
       [5.6, 0.0, 0],    // Right (Wide spacing at +5.6)
-    ],
-    []
-  );
+    ];
+  }, [isMobile]);
 
   // SIZES INCREASING TOWARDS RIGHT: Small -> Medium -> Large
   const nodeSizes = useMemo(
@@ -490,6 +499,13 @@ export function Scene5Experience({
 
   // BORDER-ONLY CONNECTION COORDINATES (Lines connect at borders - NEVER pass through circles!)
   const segments = useMemo(() => {
+    if (isMobile) {
+      return [
+        { start: [0, -0.42, 9] as [number, number, number], end: [0, -0.65, 0] as [number, number, number], arch: 0.2, pulseOffset: 0.0 },
+        { start: [0, 0.65, 0] as [number, number, number], end: [0, 0.92, -9] as [number, number, number], arch: 0.2, pulseOffset: 0.5 },
+      ];
+    }
+
     // Node 0 borders (center: -5.6, radius: 0.42)
     const n0Left: [number, number, number] = [-5.6 - 0.42, 0.0, 0];   // [-6.02, 0, 0]
     const n0Right: [number, number, number] = [-5.6 + 0.42, 0.0, 0];  // [-5.18, 0, 0]
@@ -511,7 +527,7 @@ export function Scene5Experience({
       { start: n1Right, end: n2Left, arch: 0.35, pulseOffset: 0.5 },
       { start: n2Right, end: farRight, arch: 0.12, pulseOffset: 0.75 },
     ];
-  }, []);
+  }, [isMobile]);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
@@ -524,9 +540,9 @@ export function Scene5Experience({
 
   return (
     <group position={[0, 2.0, zPos]}>
-      {/* --- 1. OVERHEAD RADAR ARCH (Spanning across the wider nodes) --- */}
-      <mesh ref={ringRef} position={[0, 3.4, 0]}>
-        <torusGeometry args={[8.8, 0.06, 16, 64, Math.PI]} />
+      {/* --- 1. OVERHEAD RADAR ARCH --- */}
+      <mesh ref={ringRef} position={[0, isMobile ? 3.8 : 3.4, 0]}>
+        <torusGeometry args={[isMobile ? 3.0 : 8.8, 0.06, 16, 64, Math.PI]} />
         <meshStandardMaterial
           color="#00F0FF"
           emissive="#00F0FF"
@@ -547,17 +563,17 @@ export function Scene5Experience({
         }}
       >
         <div className="flex flex-col items-center select-none text-center">
-          <div className="flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#04091A]/35 border border-[#00F0FF]/35 backdrop-blur-md shadow-[0_0_20px_rgba(0,240,255,0.25)]">
-            <Briefcase className="w-4 h-4 text-[#00F0FF] drop-shadow-[0_0_6px_#00F0FF]" />
-            <span className="text-xs font-mono font-bold tracking-widest text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]">
-              ENGINEERING TIMELINE // CHRONOLOGICAL NODES
+          <div className="flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#04091A]/35 border border-[#00F0FF]/35 backdrop-blur-md shadow-[0_0_20px_rgba(0,240,255,0.25)] max-w-[90vw]">
+            <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00F0FF] drop-shadow-[0_0_6px_#00F0FF]" />
+            <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]">
+              ENGINEERING TIMELINE // CAREER
             </span>
-            <span className="text-[10px] font-mono text-[#00F0FF] font-bold px-2 py-0.5 rounded bg-[#0A224D] border border-[#00F0FF]/50">
-              05 • CAREER
+            <span className="text-[9px] sm:text-[10px] font-mono text-[#00F0FF] font-bold px-2 py-0.5 rounded bg-[#0A224D] border border-[#00F0FF]/50">
+              05
             </span>
           </div>
-          <span className="text-[11px] font-mono text-[#EDF4FF] mt-1.5 drop-shadow-[0_0_4px_rgba(255,255,255,0.6)]">
-            Electric lightning currents connecting border nodes • Select any node or title for details
+          <span className="text-[10px] sm:text-[11px] font-mono text-[#EDF4FF] mt-1.5 drop-shadow-[0_0_4px_rgba(255,255,255,0.6)] px-2">
+            Select any node or title for full milestone details
           </span>
         </div>
       </Html>

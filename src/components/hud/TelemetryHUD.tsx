@@ -20,18 +20,18 @@ export function TelemetryHUD({
   const speedKmh = Math.round(velocity * 1.5);
 
   return (
-    <div className="fixed bottom-6 left-6 right-6 z-40 pointer-events-none flex flex-col md:flex-row items-end md:items-center justify-between gap-4 select-none">
+    <div className="fixed bottom-3 sm:bottom-6 left-3 sm:left-6 right-3 sm:right-6 z-40 pointer-events-none flex flex-col md:flex-row items-end md:items-center justify-between gap-4 select-none">
       {/* Bottom Left: Scroll Cue Box */}
-      <div className="p-3.5 rounded-xl bg-[#060F22]/45 border border-[#22D3EE]/45 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_18px_rgba(34,211,238,0.25)] flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-[#081836]/80 border border-[#22D3EE]/60 flex items-center justify-center shadow-[0_0_10px_rgba(34,211,238,0.4)]">
-          <Mouse className="w-4 h-4 text-[#22D3EE] animate-pulse drop-shadow-[0_0_6px_#22D3EE]" />
+      <div className="p-2.5 sm:p-3.5 rounded-xl bg-[#060F22]/45 border border-[#22D3EE]/45 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_18px_rgba(34,211,238,0.25)] flex items-center gap-2.5 sm:gap-3">
+        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#081836]/80 border border-[#22D3EE]/60 flex items-center justify-center shadow-[0_0_10px_rgba(34,211,238,0.4)] flex-shrink-0">
+          <Mouse className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#22D3EE] animate-pulse drop-shadow-[0_0_6px_#22D3EE]" />
         </div>
         <div>
-          <span className="text-[10px] font-mono font-bold tracking-wider text-[#22D3EE] block uppercase drop-shadow-[0_0_6px_rgba(34,211,238,0.8)]">
-            SCROLL TO TRAVEL
+          <span className="text-[9px] sm:text-[10px] font-mono font-bold tracking-wider text-[#22D3EE] block uppercase drop-shadow-[0_0_6px_rgba(34,211,238,0.8)]">
+            SWIPE OR SCROLL TO TRAVEL
           </span>
-          <span className="text-[9px] font-mono text-white font-medium block tracking-wide drop-shadow-[0_0_4px_rgba(255,255,255,0.4)]">
-            USE MOUSE WHEEL OR TRACKPAD
+          <span className="text-[8px] sm:text-[9px] font-mono text-white font-medium block tracking-wide drop-shadow-[0_0_4px_rgba(255,255,255,0.4)]">
+            TOUCH SCREEN OR MOUSE WHEEL
           </span>
         </div>
       </div>
@@ -71,7 +71,7 @@ export function TelemetryHUD({
       <div className="hidden md:flex items-center gap-2 p-3 rounded-xl bg-[#060F22]/45 border border-[#22D3EE]/45 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_18px_rgba(34,211,238,0.25)] text-xs font-mono">
         <span className="w-2 h-2 rounded-full bg-[#22D3EE] animate-ping shadow-[0_0_8px_#22D3EE]" />
         <span className="text-[#22D3EE] font-bold drop-shadow-[0_0_6px_rgba(34,211,238,0.8)]">{currentSection.number}</span>
-        <span className="text-white font-medium">/ 07</span>
+        <span className="text-white font-medium">/ 08</span>
       </div>
     </div>
   );

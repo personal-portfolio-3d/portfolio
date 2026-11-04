@@ -10,13 +10,14 @@ interface CameraControllerProps {
 }
 
 export function CameraController({ currentZ, velocity }: CameraControllerProps) {
-  const { camera, pointer } = useThree();
+  const { camera, pointer, viewport, size } = useThree();
   const targetLookAt = useRef(new THREE.Vector3(0, 1.8, currentZ - 20));
 
   useFrame((_, delta) => {
-    // Parallax mouse sway
-    const mouseX = pointer.x * 0.75;
-    const mouseY = pointer.y * 0.4;
+    // Parallax mouse sway (reduced slightly on mobile for stability)
+    const isPortrait = viewport.aspect < 1.0 || size.width < 768;
+    const mouseX = pointer.x * (isPortrait ? 0.35 : 0.75);
+    const mouseY = pointer.y * (isPortrait ? 0.2 : 0.4);
 
     // Subtle dynamic acceleration tilt & dip
     const speedDip = Math.min(velocity * 0.003, 0.2);
@@ -28,9 +29,10 @@ export function CameraController({ currentZ, velocity }: CameraControllerProps) 
     camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.08);
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, currentZ + 4, 0.15);
 
-    // Dynamic FOV when travelling at high speed
+    // Dynamic FOV: Mobile portrait gets 64-65 base FOV so highway side barriers and cards fit naturally
     if ("fov" in camera) {
-      const targetFov = 55 + Math.min(velocity * 0.15, 12);
+      const baseFov = isPortrait ? 65 : 55;
+      const targetFov = baseFov + Math.min(velocity * 0.15, 12);
       (camera as THREE.PerspectiveCamera).fov = THREE.MathUtils.lerp(
         (camera as THREE.PerspectiveCamera).fov,
         targetFov,

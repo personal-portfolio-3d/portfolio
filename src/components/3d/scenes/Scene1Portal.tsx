@@ -2,7 +2,7 @@
 
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 import { ChevronDown, Mouse } from "lucide-react";
@@ -14,6 +14,9 @@ interface Scene1PortalProps {
 }
 
 export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1PortalProps) {
+  const { size, viewport } = useThree();
+  const isMobile = size.width < 768 || viewport.aspect < 1.0;
+
   const outerSpinRef = useRef<THREE.Group>(null);
   const innerSpinRef = useRef<THREE.Group>(null);
 
@@ -61,12 +64,15 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
   return (
     <group>
       {/* ============================================================== */}
-      {/* 1. LEFT-OF-SCREEN INTRO TYPOGRAPHY INFO (NO CARD, JUST INFO)   */}
+      {/* 1. INTRO TYPOGRAPHY INFO (RESPONSIVE: CENTERED ON MOBILE, LEFT ON DESKTOP) */}
       {/* ============================================================== */}
-      <group position={[-8.2, 2.8, -7]} rotation={[0, 0.28, 0]}>
+      <group
+        position={isMobile ? [0, 2.2, -5.5] : [-8.2, 2.8, -7]}
+        rotation={isMobile ? [0, 0, 0] : [0, 0.28, 0]}
+      >
         <Html
           transform
-          distanceFactor={5.6}
+          distanceFactor={isMobile ? 5.2 : 5.6}
           position={[0, 0, 0]}
           style={{
             opacity: isModalOpen ? 0 : leftInfoOpacity,
@@ -74,56 +80,82 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
             pointerEvents: leftInfoOpacity > 0.3 && !isModalOpen ? "auto" : "none",
           }}
         >
-          <div className="w-[480px] max-w-[85vw] text-left select-none flex flex-col items-start">
+          <div
+            className={`select-none flex flex-col ${
+              isMobile
+                ? "w-[90vw] max-w-[350px] text-center items-center px-4 py-6 rounded-2xl bg-[#040817]/65 border border-[#00D2FF]/35 backdrop-blur-xl shadow-[0_0_24px_rgba(0,210,255,0.2)]"
+                : "w-[480px] max-w-[85vw] text-left items-start"
+            }`}
+          >
             {/* Category Kicker */}
-            <div className="flex items-center gap-2 mb-3">
+            <div className={`flex items-center gap-2 mb-2 ${isMobile ? "justify-center" : ""}`}>
               <span className="w-2 h-2 rounded-full bg-[#00D2FF] shadow-[0_0_8px_#00D2FF] animate-pulse" />
-              <span className="text-xs font-mono font-bold tracking-widest text-[#00D2FF] uppercase drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">
+              <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-[#00D2FF] uppercase drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">
                 // IDENTITY MATRIX • LEAD ENGINEER
               </span>
             </div>
 
             {/* Name */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.95)] leading-tight">
+            <h1
+              className={`font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.95)] leading-tight ${
+                isMobile ? "text-3xl sm:text-4xl my-1" : "text-4xl sm:text-5xl lg:text-6xl"
+              }`}
+            >
               {PERSONAL_INFO.name}
             </h1>
 
             {/* Role / Title */}
-            <div className="mt-3 flex flex-wrap items-center gap-2.5">
-              <span className="text-lg sm:text-xl font-bold font-orbitron text-[#00D2FF] drop-shadow-[0_0_16px_rgba(0,210,255,0.85)] tracking-wide">
+            <div
+              className={`mt-2 flex flex-wrap items-center gap-2 ${
+                isMobile ? "justify-center" : "items-center"
+              }`}
+            >
+              <span
+                className={`font-bold font-orbitron text-[#00D2FF] drop-shadow-[0_0_16px_rgba(0,210,255,0.85)] tracking-wide ${
+                  isMobile ? "text-sm sm:text-base" : "text-lg sm:text-xl"
+                }`}
+              >
                 {PERSONAL_INFO.title}
               </span>
-              <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-[#00D2FF]/15 border border-[#00D2FF]/40 text-[#00D2FF] font-bold shadow-[0_0_8px_rgba(0,210,255,0.3)]">
+              <span className="text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#00D2FF]/15 border border-[#00D2FF]/40 text-[#00D2FF] font-bold shadow-[0_0_8px_rgba(0,210,255,0.3)]">
                 5+ YRS PROD XP
               </span>
             </div>
 
             {/* Tagline */}
-            <p className="mt-4 text-sm sm:text-base text-[#EDF4FF] font-inter font-normal leading-relaxed drop-shadow-[0_0_6px_rgba(255,255,255,0.35)] max-w-[460px]">
+            <p
+              className={`mt-3 font-inter font-normal leading-relaxed drop-shadow-[0_0_6px_rgba(255,255,255,0.35)] ${
+                isMobile
+                  ? "text-xs text-[#EDF4FF] max-w-[320px]"
+                  : "text-sm sm:text-base text-[#EDF4FF] max-w-[460px]"
+              }`}
+            >
               {PERSONAL_INFO.tagline}
             </p>
 
-            {/* Info Highlights (No card container, pure high-tech info lines) */}
-            <div className="mt-5 space-y-2 text-xs font-mono">
-              <div className="flex items-center gap-2.5 text-[#EDF4FF]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF007F] shadow-[0_0_6px_#FF007F]" />
-                <span>Microservices Architecture, Event-Driven Systems &amp; Distributed Cloud</span>
+            {/* Info Highlights (Concise 2 bullets on mobile, 3 bullets on desktop) */}
+            <div className={`mt-3.5 space-y-1.5 text-xs font-mono ${isMobile ? "text-left w-full px-1" : "text-left"}`}>
+              <div className="flex items-center gap-2 text-[#EDF4FF] text-[11px] sm:text-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF007F] shadow-[0_0_6px_#FF007F] shrink-0" />
+                <span className="line-clamp-1 sm:line-clamp-none">Microservices, Event-Driven &amp; Distributed Cloud</span>
               </div>
-              <div className="flex items-center gap-2.5 text-[#EDF4FF]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_6px_#00D2FF]" />
-                <span>HIPAA Clinical Platforms, Enterprise PWAs &amp; High-Volume B2B Engines</span>
+              <div className="flex items-center gap-2 text-[#EDF4FF] text-[11px] sm:text-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_6px_#00D2FF] shrink-0" />
+                <span className="line-clamp-1 sm:line-clamp-none">Production AI Pipelines &amp; AWS Bedrock</span>
               </div>
-              <div className="flex items-center gap-2.5 text-[#EDF4FF]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#925CFF] shadow-[0_0_6px_#925CFF]" />
-                <span>Production AI Pipelines, AWS Bedrock &amp; Real-time Event Streaming</span>
-              </div>
+              {!isMobile && (
+                <div className="flex items-center gap-2 text-[#EDF4FF] text-xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#925CFF] shadow-[0_0_6px_#925CFF] shrink-0" />
+                  <span>HIPAA Clinical Platforms, Enterprise PWAs &amp; High-Volume B2B Engines</span>
+                </div>
+              )}
             </div>
 
             {/* Action Cue Button */}
-            <div className="mt-6 flex items-center gap-3">
+            <div className={`mt-5 flex items-center ${isMobile ? "justify-center w-full" : "gap-3"}`}>
               <div
                 onClick={onExploreClick}
-                className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-[#00D2FF]/60 hover:border-[#FF007F] text-xs font-mono text-white font-bold bg-[#00D2FF]/10 hover:bg-[#FF007F]/15 backdrop-blur-md shadow-[0_0_15px_rgba(0,210,255,0.35)] hover:shadow-[0_0_20px_rgba(255,0,127,0.5)] transition-all cursor-pointer group"
+                className="inline-flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full border border-[#00D2FF]/60 hover:border-[#FF007F] text-xs font-mono text-white font-bold bg-[#00D2FF]/15 hover:bg-[#FF007F]/20 backdrop-blur-md shadow-[0_0_15px_rgba(0,210,255,0.35)] hover:shadow-[0_0_20px_rgba(255,0,127,0.5)] transition-all cursor-pointer group"
               >
                 <span className="text-white group-hover:text-[#00D2FF] transition-colors">
                   ENTER HIGHWAY EXPERIENCE
