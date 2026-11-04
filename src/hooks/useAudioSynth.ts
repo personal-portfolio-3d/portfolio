@@ -14,6 +14,7 @@ const AUDIO_SRC = `${basePath}/assets/audio/ambient-cyber.mp3`;
  */
 export function useAudioSynth() {
   const [isMuted, setIsMuted] = useState(true);
+  const isMutedRef = useRef(true);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -24,17 +25,20 @@ export function useAudioSynth() {
       const audio = new Audio(AUDIO_SRC);
       audio.loop = true;
       audio.volume = 0;
+      audio.muted = true;
       audio.preload = "auto";
       bgAudioRef.current = audio;
     }
     return () => {
-      if (bgAudioRef.current) {
-        bgAudioRef.current.pause();
-        bgAudioRef.current.src = "";
-        bgAudioRef.current = null;
-      }
       if (fadeIntervalRef.current) {
         clearInterval(fadeIntervalRef.current);
+        fadeIntervalRef.current = null;
+      }
+      if (bgAudioRef.current) {
+        bgAudioRef.current.pause();
+        bgAudioRef.current.muted = true;
+        bgAudioRef.current.src = "";
+        bgAudioRef.current = null;
       }
     };
   }, []);
@@ -48,72 +52,89 @@ export function useAudioSynth() {
         audioCtxRef.current = new AudioCtx();
       }
     }
-    if (audioCtxRef.current?.state === "suspended") {
-      audioCtxRef.current.resume();
+    if (audioCtxRef.current?.state === "suspended" && !isMutedRef.current) {
+      audioCtxRef.current.resume().catch(() => {});
+    }
+  }, []);
+
+  // Stop background track immediately with zero leakage
+  const stopTrackImmediately = useCallback(() => {
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current);
+      fadeIntervalRef.current = null;
+    }
+    const audio = bgAudioRef.current;
+    if (audio) {
+      audio.muted = true;
+      audio.volume = 0;
+      audio.pause();
+    }
+    if (audioCtxRef.current && audioCtxRef.current.state === "running") {
+      audioCtxRef.current.suspend().catch(() => {});
     }
   }, []);
 
   // Smooth fade-in of background ambient track
   const playTrack = useCallback(() => {
     const audio = bgAudioRef.current;
-    if (!audio) return;
+    if (!audio || isMutedRef.current) return;
 
-    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current);
+      fadeIntervalRef.current = null;
+    }
 
-    audio.volume = 0.02;
+    audio.muted = false;
+    audio.volume = 0.05;
     audio.play().catch(() => {
       // Browser autoplay policy fallback
     });
 
-    const targetVolume = 0.38;
+    const targetVolume = 0.35;
     fadeIntervalRef.current = setInterval(() => {
-      if (!audio) return;
+      if (!audio || isMutedRef.current) {
+        if (fadeIntervalRef.current) {
+          clearInterval(fadeIntervalRef.current);
+          fadeIntervalRef.current = null;
+        }
+        return;
+      }
       if (audio.volume < targetVolume - 0.03) {
-        audio.volume = Math.min(targetVolume, audio.volume + 0.04);
+        audio.volume = Math.min(targetVolume, audio.volume + 0.05);
       } else {
         audio.volume = targetVolume;
-        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+        if (fadeIntervalRef.current) {
+          clearInterval(fadeIntervalRef.current);
+          fadeIntervalRef.current = null;
+        }
       }
-    }, 80);
-  }, []);
-
-  // Smooth fade-out of background ambient track
-  const pauseTrack = useCallback(() => {
-    const audio = bgAudioRef.current;
-    if (!audio) return;
-
-    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-
-    fadeIntervalRef.current = setInterval(() => {
-      if (!audio) return;
-      if (audio.volume > 0.05) {
-        audio.volume = Math.max(0, audio.volume - 0.06);
-      } else {
-        audio.volume = 0;
-        audio.pause();
-        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-      }
-    }, 60);
+    }, 70);
   }, []);
 
   const toggleSound = useCallback(() => {
     initAudio();
-    setIsMuted((prev) => {
-      const next = !prev;
-      if (!next) {
-        playTrack();
-      } else {
-        pauseTrack();
+    const nextMuted = !isMutedRef.current;
+    isMutedRef.current = nextMuted;
+    setIsMuted(nextMuted);
+
+    if (nextMuted) {
+      // Instantly kill sound
+      stopTrackImmediately();
+    } else {
+      // Unmute and start playback
+      if (audioCtxRef.current && audioCtxRef.current.state === "suspended") {
+        audioCtxRef.current.resume().catch(() => {});
       }
-      return next;
-    });
-  }, [initAudio, playTrack, pauseTrack]);
+      playTrack();
+    }
+  }, [initAudio, playTrack, stopTrackImmediately]);
 
   // UI interaction blip
   const playClick = useCallback(() => {
-    if (isMuted || !audioCtxRef.current) return;
+    if (isMutedRef.current || !audioCtxRef.current) return;
     try {
       const ctx = audioCtxRef.current;
+      if (ctx.state !== "running") return;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
@@ -132,14 +153,15 @@ export function useAudioSynth() {
     } catch {
       // Ignore audio interruptions
     }
-  }, [isMuted]);
+  }, []);
 
   // Scroll speed whoosh
   const playWhoosh = useCallback(
     (intensity: number = 0.5) => {
-      if (isMuted || !audioCtxRef.current) return;
+      if (isMutedRef.current || !audioCtxRef.current) return;
       try {
         const ctx = audioCtxRef.current;
+        if (ctx.state !== "running") return;
         const osc = ctx.createOscillator();
         const filter = ctx.createBiquadFilter();
         const gain = ctx.createGain();
@@ -165,14 +187,15 @@ export function useAudioSynth() {
         // Ignore
       }
     },
-    [isMuted]
+    []
   );
 
   // Warp portal sound
   const playWarp = useCallback(() => {
-    if (isMuted || !audioCtxRef.current) return;
+    if (isMutedRef.current || !audioCtxRef.current) return;
     try {
       const ctx = audioCtxRef.current;
+      if (ctx.state !== "running") return;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
@@ -191,16 +214,16 @@ export function useAudioSynth() {
     } catch {
       // Ignore
     }
-  }, [isMuted]);
+  }, []);
 
   useEffect(() => {
     return () => {
-      pauseTrack();
+      stopTrackImmediately();
       if (audioCtxRef.current) {
         audioCtxRef.current.close().catch(() => {});
       }
     };
-  }, [pauseTrack]);
+  }, [stopTrackImmediately]);
 
   return {
     isMuted,

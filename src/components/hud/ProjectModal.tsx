@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Project } from "@/types/portfolio";
 import { X, ExternalLink, Github, CheckCircle2, ShieldCheck, Cpu } from "lucide-react";
+import { NeonCardBorders } from "@/components/ui/NeonCardBorders";
 
 interface ProjectModalProps {
   project: Project | null;
@@ -67,6 +68,8 @@ export function ProjectModal({ project, onClose, onPlayClick }: ProjectModalProp
           isExiting ? "modal-content-out" : "modal-content-in"
         }`}
       >
+        {/* Shiny Neon Border Segments */}
+        <NeonCardBorders color="cyan" />
         {/* Floating Close Cross Icon: Docked at top-right corner, always 100% visible */}
         <button
           onClick={handleClose}

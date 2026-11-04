@@ -6,6 +6,7 @@ import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 import { Mail, Linkedin, Github, Send, RotateCcw, CheckCircle, Sparkles } from "lucide-react";
+import { NeonCardBorders } from "@/components/ui/NeonCardBorders";
 
 interface Scene7ContactProps {
   currentZ: number;
@@ -91,7 +92,9 @@ export function Scene7Contact({ currentZ, onRestartExperience }: Scene7ContactPr
           pointerEvents: opacity > 0.4 ? "auto" : "none",
         }}
       >
-        <div className="w-[92vw] max-w-[340px] md:max-w-[690px] p-4 sm:p-6 rounded-2xl bg-[#060F22]/45 border-2 border-[#22D3EE] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_28px_rgba(34,211,238,0.35)] relative overflow-hidden select-none">
+        <div className="w-[92vw] max-w-[340px] md:max-w-[690px] p-4 sm:p-6 rounded-2xl bg-[#060F22]/45 border-2 border-[#22D3EE] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_28px_rgba(34,211,238,0.35)] relative overflow-visible select-none">
+          {/* Shiny Neon Border Segments */}
+          <NeonCardBorders color="cyan" />
           {/* Top Energy Accent */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#168BFF] via-[#22D3EE] to-[#168BFF]" />
 

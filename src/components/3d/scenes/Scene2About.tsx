@@ -6,6 +6,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 import { CheckCircle2, Sparkles, Terminal, ArrowRight, MapPin } from "lucide-react";
+import { NeonCardBorders } from "@/components/ui/NeonCardBorders";
 
 interface Scene2AboutProps {
   currentZ: number;
@@ -146,6 +147,9 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
                   : "bg-[#060F22]/45 border border-[#22D3EE]/45 shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_20px_rgba(34,211,238,0.25)]"
               }`}
             >
+              {/* Shiny Neon Border Accents */}
+              <NeonCardBorders color="cyan" />
+
               {/* Internal Tech Corner Accents (Placed inside so outer rounded border is fully visible) */}
               <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t-2 border-l-2 border-[#22D3EE]/80 pointer-events-none" />
               <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t-2 border-r-2 border-[#22D3EE]/80 pointer-events-none" />
@@ -220,6 +224,9 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
                   : "bg-[#060F22]/45 border border-[#168BFF]/45 shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_20px_rgba(22,139,255,0.25)]"
               }`}
             >
+              {/* Shiny Neon Border Accents */}
+              <NeonCardBorders color="blue" />
+
               {/* Internal Tech Corner Accents (Placed inside so outer rounded border is fully visible) */}
               <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t-2 border-l-2 border-[#168BFF]/80 pointer-events-none" />
               <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t-2 border-r-2 border-[#168BFF]/80 pointer-events-none" />

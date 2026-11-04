@@ -7,6 +7,7 @@ import { Html } from "@react-three/drei";
 import { PROJECTS } from "@/data/portfolioData";
 import { Project } from "@/types/portfolio";
 import { ArrowUpRight, ChevronRight } from "lucide-react";
+import { NeonCardBorders } from "@/components/ui/NeonCardBorders";
 
 interface Scene4ProjectsProps {
   currentZ: number;
@@ -119,6 +120,9 @@ function ProjectRoadsideCard({
               : "bg-[#040817]/40 border border-[#22D3EE]/35 shadow-[0_0_20px_rgba(22,139,255,0.2)]"
           }`}
         >
+          {/* Shiny Neon Border Segments */}
+          <NeonCardBorders color={project.featured ? "pink" : "cyan"} />
+
           {/* Neon Corner Tech Accents (Inside rounded boundary) */}
           <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t-2 border-l-2 border-[#22D3EE]/80 pointer-events-none" />
           <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t-2 border-r-2 border-[#22D3EE]/80 pointer-events-none" />

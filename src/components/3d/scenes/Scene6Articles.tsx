@@ -18,6 +18,7 @@ import {
 import { mediumConfig } from "@/data/mediumConfig";
 import mediumPostsData from "@/data/medium-posts.json";
 import { MediumArticle } from "@/types/portfolio";
+import { NeonCardBorders } from "@/components/ui/NeonCardBorders";
 
 interface Scene6ArticlesProps {
   currentZ: number;
@@ -344,10 +345,12 @@ export function Scene6Articles({ currentZ, isModalOpen }: Scene6ArticlesProps) {
                         href={article.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`group relative flex flex-col justify-between rounded-2xl p-4 bg-[#071122]/65 hover:bg-[#071122]/85 border backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer select-none ${
+                        className={`group relative flex flex-col justify-between rounded-2xl p-4 bg-[#071122]/65 hover:bg-[#071122]/85 border backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer select-none overflow-visible ${
                           isMobile ? "w-[85vw] max-w-[325px]" : "w-full"
                         } ${borderClasses}`}
                       >
+                        {/* Shiny Neon Border Segments */}
+                        <NeonCardBorders color={accent === "pink" ? "pink" : accent === "blue" ? "blue" : "cyan"} />
                         {/* Top Metadata: Date & Read Time */}
                         <div className="flex items-center justify-between text-[11px] font-mono text-[#C4D2E8]/80 mb-3">
                           <div className="flex items-center gap-1.5">

@@ -6,6 +6,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 import { ChevronDown, Mouse } from "lucide-react";
+import { NeonCardBorders } from "@/components/ui/NeonCardBorders";
 
 interface Scene1PortalProps {
   currentZ: number;
@@ -286,7 +287,8 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
         >
           {isMobile ? (
             /* Mobile: Hero Intro Section centered inside the Portal Ring */
-            <div className="flex flex-col items-center select-none text-center w-[90vw] max-w-[325px] px-4 py-4 sm:py-5 rounded-2xl bg-[#040817]/80 border-2 border-[#00D2FF]/60 backdrop-blur-2xl shadow-[0_0_35px_rgba(0,210,255,0.35)]">
+            <div className="flex flex-col items-center select-none text-center w-[90vw] max-w-[325px] px-4 py-4 sm:py-5 rounded-2xl bg-[#040817]/80 border-2 border-[#00D2FF]/60 backdrop-blur-2xl shadow-[0_0_35px_rgba(0,210,255,0.35)] relative">
+              <NeonCardBorders color="cyan" />
               {/* Category Kicker */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#081836]/90 border border-[#00D2FF]/50 text-[10px] font-mono font-bold tracking-widest text-[#00D2FF] uppercase mb-1.5 shadow-[0_0_10px_rgba(0,210,255,0.4)]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_8px_#00D2FF] animate-pulse" />

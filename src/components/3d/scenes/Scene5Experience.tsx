@@ -7,6 +7,7 @@ import { Html } from "@react-three/drei";
 import { EXPERIENCES } from "@/data/portfolioData";
 import { ExperienceItem } from "@/types/portfolio";
 import { Briefcase } from "lucide-react";
+import { NeonCardBorders } from "@/components/ui/NeonCardBorders";
 
 interface Scene5ExperienceProps {
   currentZ: number;
@@ -408,7 +409,7 @@ function ElectricCircleNode({
         >
           {/* Ultra-Transparent Circular / Pill Card */}
           <div
-            className={`px-5 sm:px-6 py-3 sm:py-3.5 rounded-3xl border backdrop-blur-md transition-all duration-300 text-center max-w-[85vw] sm:max-w-none sm:min-w-[220px] ${
+            className={`px-5 sm:px-6 py-3 sm:py-3.5 rounded-3xl border backdrop-blur-md transition-all duration-300 text-center max-w-[85vw] sm:max-w-none sm:min-w-[220px] relative overflow-visible ${
               isSelected
                 ? "bg-[#0A224D]/45 border-2 border-[#00F0FF] shadow-[0_0_35px_rgba(0,240,255,0.6)]"
                 : isHovered
@@ -416,6 +417,8 @@ function ElectricCircleNode({
                 : "bg-[#04091A]/20 border border-[#00F0FF]/35 shadow-[0_0_20px_rgba(0,240,255,0.2)]"
             }`}
           >
+            {/* Shiny Neon Border Segments */}
+            <NeonCardBorders color="cyan" />
             {/* Period Badge */}
             <div className="flex items-center justify-center gap-1.5 mb-1">
               <span className="text-[10px] font-mono font-bold px-3 py-0.5 rounded-full bg-[#00F0FF]/15 border border-[#00F0FF]/50 text-[#00F0FF] shadow-[0_0_10px_rgba(0,240,255,0.3)]">

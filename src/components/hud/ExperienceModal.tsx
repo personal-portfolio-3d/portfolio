@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { ExperienceItem } from "@/types/portfolio";
 import { EXPERIENCES } from "@/data/portfolioData";
 import { X, Calendar, MapPin, Award, ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
+import { NeonCardBorders } from "@/components/ui/NeonCardBorders";
 
 interface ExperienceModalProps {
   experience: ExperienceItem | null;
@@ -104,6 +105,8 @@ export function ExperienceModal({
           isExiting ? "modal-content-out" : "modal-content-in"
         }`}
       >
+        {/* Shiny Neon Border Segments */}
+        <NeonCardBorders color="cyan" />
         {/* Floating Close Cross Icon: Docked at top-right corner, always 100% visible */}
         <button
           onClick={handleClose}
