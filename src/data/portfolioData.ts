@@ -12,8 +12,8 @@ export const SECTIONS: SectionCoord[] = [
 ];
 
 export const PERSONAL_INFO = {
-  name: "ASHISH KUMAR DOGRA",
-  shortName: "AKD",
+  name: "ASHISH DOGRA",
+  shortName: "AD",
   title: "SENIOR SOFTWARE ENGINEER",
   tagline: "Building scalable applications, intelligent systems, and immersive digital experiences.",
   location: "Uttarakhand, India",

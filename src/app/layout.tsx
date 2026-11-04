@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ashish Kumar Dogra | Senior Software Engineer | 3D Experience",
+  title: "Ashish Dogra | Senior Software Engineer | 3D Experience",
   description:
-    "Interactive 3D scroll-driven developer portfolio of Ashish Kumar Dogra. Senior Software Engineer specializing in scalable systems, microservices, and AI integrations.",
+    "Interactive 3D scroll-driven developer portfolio of Ashish Dogra. Senior Software Engineer specializing in scalable systems, microservices, and AI integrations.",
   keywords: [
-    "Ashish Kumar Dogra",
+    "Ashish Dogra",
     "Senior Software Engineer",
     "System Architecture",
     "Full Stack",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "3D Portfolio",
     "Three.js",
   ],
-  authors: [{ name: "Ashish Kumar Dogra" }],
+  authors: [{ name: "Ashish Dogra" }],
 };
 
 export default function RootLayout({

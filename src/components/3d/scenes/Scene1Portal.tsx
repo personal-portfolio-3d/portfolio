@@ -20,12 +20,15 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
   const outerSpinRef = useRef<THREE.Group>(null);
   const innerSpinRef = useRef<THREE.Group>(null);
 
-  // Portal placed further down the highway at Z = -18
-  const portalZ = -18;
+  // Portal placed further down the highway at Z = -18 on desktop, -13 on mobile so it cleanly frames the intro
+  const portalZ = isMobile ? -13 : -18;
 
   // Opacity fading as camera travels forward
   const leftInfoOpacity = Math.max(0, Math.min(1, (currentZ + 12) / 14));
-  const portalOpacity = Math.max(0, Math.min(1, (currentZ + 36) / 20));
+  const portalOpacity = useMemo(() => {
+    if (currentZ >= portalZ) return 1;
+    return Math.max(0, 1 - (portalZ - currentZ) / 12);
+  }, [currentZ, portalZ]);
 
   // 16 Alternating Neon Pink and Electric Blue Segmented Light Modules
   const segmentCount = 16;
@@ -59,118 +62,94 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
     }
   });
 
-  if (currentZ < -38) return null;
+  if (currentZ < portalZ - 15) return null;
 
   return (
     <group>
       {/* ============================================================== */}
-      {/* 1. INTRO TYPOGRAPHY INFO (RESPONSIVE: CENTERED ON MOBILE, LEFT ON DESKTOP) */}
+      {/* 1. INTRO TYPOGRAPHY INFO (DESKTOP ONLY: ON ROADSIDE LEFT)      */}
       {/* ============================================================== */}
-      <group
-        position={isMobile ? [0, 2.2, -5.5] : [-8.2, 2.8, -7]}
-        rotation={isMobile ? [0, 0, 0] : [0, 0.28, 0]}
-      >
-        <Html
-          transform
-          distanceFactor={isMobile ? 5.2 : 5.6}
-          position={[0, 0, 0]}
-          style={{
-            opacity: isModalOpen ? 0 : leftInfoOpacity,
-            transition: "opacity 0.25s ease-out",
-            pointerEvents: leftInfoOpacity > 0.3 && !isModalOpen ? "auto" : "none",
-          }}
+      {!isMobile && (
+        <group
+          position={[-8.2, 2.8, -7]}
+          rotation={[0, 0.28, 0]}
         >
-          <div
-            className={`select-none flex flex-col ${
-              isMobile
-                ? "w-[90vw] max-w-[350px] text-center items-center px-4 py-6 rounded-2xl bg-[#040817]/65 border border-[#00D2FF]/35 backdrop-blur-xl shadow-[0_0_24px_rgba(0,210,255,0.2)]"
-                : "w-[480px] max-w-[85vw] text-left items-start"
-            }`}
+          <Html
+            transform
+            distanceFactor={5.6}
+            position={[0, 0, 0]}
+            style={{
+              opacity: isModalOpen ? 0 : leftInfoOpacity,
+              transition: "opacity 0.25s ease-out",
+              pointerEvents: leftInfoOpacity > 0.3 && !isModalOpen ? "auto" : "none",
+            }}
           >
-            {/* Category Kicker */}
-            <div className={`flex items-center gap-2 mb-2 ${isMobile ? "justify-center" : ""}`}>
-              <span className="w-2 h-2 rounded-full bg-[#00D2FF] shadow-[0_0_8px_#00D2FF] animate-pulse" />
-              <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-[#00D2FF] uppercase drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">
-                // IDENTITY MATRIX • LEAD ENGINEER
-              </span>
-            </div>
-
-            {/* Name */}
-            <h1
-              className={`font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.95)] leading-tight ${
-                isMobile ? "text-3xl sm:text-4xl my-1" : "text-4xl sm:text-5xl lg:text-6xl"
-              }`}
-            >
-              {PERSONAL_INFO.name}
-            </h1>
-
-            {/* Role / Title */}
-            <div
-              className={`mt-2 flex flex-wrap items-center gap-2 ${
-                isMobile ? "justify-center" : "items-center"
-              }`}
-            >
-              <span
-                className={`font-bold font-orbitron text-[#00D2FF] drop-shadow-[0_0_16px_rgba(0,210,255,0.85)] tracking-wide ${
-                  isMobile ? "text-sm sm:text-base" : "text-lg sm:text-xl"
-                }`}
-              >
-                {PERSONAL_INFO.title}
-              </span>
-              <span className="text-[10px] sm:text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#00D2FF]/15 border border-[#00D2FF]/40 text-[#00D2FF] font-bold shadow-[0_0_8px_rgba(0,210,255,0.3)]">
-                5+ YRS PROD XP
-              </span>
-            </div>
-
-            {/* Tagline */}
-            <p
-              className={`mt-3 font-inter font-normal leading-relaxed drop-shadow-[0_0_6px_rgba(255,255,255,0.35)] ${
-                isMobile
-                  ? "text-xs text-[#EDF4FF] max-w-[320px]"
-                  : "text-sm sm:text-base text-[#EDF4FF] max-w-[460px]"
-              }`}
-            >
-              {PERSONAL_INFO.tagline}
-            </p>
-
-            {/* Info Highlights (Concise 2 bullets on mobile, 3 bullets on desktop) */}
-            <div className={`mt-3.5 space-y-1.5 text-xs font-mono ${isMobile ? "text-left w-full px-1" : "text-left"}`}>
-              <div className="flex items-center gap-2 text-[#EDF4FF] text-[11px] sm:text-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF007F] shadow-[0_0_6px_#FF007F] shrink-0" />
-                <span className="line-clamp-1 sm:line-clamp-none">Microservices, Event-Driven &amp; Distributed Cloud</span>
+            <div className="w-[480px] max-w-[85vw] text-left items-start select-none flex flex-col">
+              {/* Category Kicker */}
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 rounded-full bg-[#00D2FF] shadow-[0_0_8px_#00D2FF] animate-pulse" />
+                <span className="text-xs font-mono font-bold tracking-widest text-[#00D2FF] uppercase drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">
+                  // IDENTITY MATRIX • LEAD ENGINEER
+                </span>
               </div>
-              <div className="flex items-center gap-2 text-[#EDF4FF] text-[11px] sm:text-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_6px_#00D2FF] shrink-0" />
-                <span className="line-clamp-1 sm:line-clamp-none">Production AI Pipelines &amp; AWS Bedrock</span>
+
+              {/* Name */}
+              <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.95)] leading-tight text-4xl sm:text-5xl lg:text-6xl">
+                {PERSONAL_INFO.name}
+              </h1>
+
+              {/* Role / Title */}
+              <div className="mt-2 flex items-center gap-2">
+                <span className="font-bold font-orbitron text-[#00D2FF] drop-shadow-[0_0_16px_rgba(0,210,255,0.85)] tracking-wide text-lg sm:text-xl">
+                  {PERSONAL_INFO.title}
+                </span>
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#00D2FF]/15 border border-[#00D2FF]/40 text-[#00D2FF] font-bold shadow-[0_0_8px_rgba(0,210,255,0.3)]">
+                  5+ YRS PROD XP
+                </span>
               </div>
-              {!isMobile && (
-                <div className="flex items-center gap-2 text-[#EDF4FF] text-xs">
+
+              {/* Tagline */}
+              <p className="mt-3 font-inter font-normal leading-relaxed drop-shadow-[0_0_6px_rgba(255,255,255,0.35)] text-sm sm:text-base text-[#EDF4FF] max-w-[460px]">
+                {PERSONAL_INFO.tagline}
+              </p>
+
+              {/* Info Highlights */}
+              <div className="mt-3.5 space-y-1.5 text-xs font-mono text-left">
+                <div className="flex items-center gap-2 text-[#EDF4FF]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF007F] shadow-[0_0_6px_#FF007F] shrink-0" />
+                  <span>Microservices, Event-Driven &amp; Distributed Cloud</span>
+                </div>
+                <div className="flex items-center gap-2 text-[#EDF4FF]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_6px_#00D2FF] shrink-0" />
+                  <span>Production AI Pipelines &amp; AWS Bedrock</span>
+                </div>
+                <div className="flex items-center gap-2 text-[#EDF4FF]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#925CFF] shadow-[0_0_6px_#925CFF] shrink-0" />
                   <span>HIPAA Clinical Platforms, Enterprise PWAs &amp; High-Volume B2B Engines</span>
                 </div>
-              )}
-            </div>
+              </div>
 
-            {/* Action Cue Button */}
-            <div className={`mt-5 flex items-center ${isMobile ? "justify-center w-full" : "gap-3"}`}>
-              <div
-                onClick={onExploreClick}
-                className="inline-flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full border border-[#00D2FF]/60 hover:border-[#FF007F] text-xs font-mono text-white font-bold bg-[#00D2FF]/15 hover:bg-[#FF007F]/20 backdrop-blur-md shadow-[0_0_15px_rgba(0,210,255,0.35)] hover:shadow-[0_0_20px_rgba(255,0,127,0.5)] transition-all cursor-pointer group"
-              >
-                <span className="text-white group-hover:text-[#00D2FF] transition-colors">
-                  ENTER HIGHWAY EXPERIENCE
-                </span>
-                <span className="text-[#00D2FF] group-hover:translate-x-1 transition-transform">→</span>
+              {/* Action Cue Button */}
+              <div className="mt-5 flex items-center gap-3">
+                <div
+                  onClick={onExploreClick}
+                  className="inline-flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full border border-[#00D2FF]/60 hover:border-[#FF007F] text-xs font-mono text-white font-bold bg-[#00D2FF]/15 hover:bg-[#FF007F]/20 backdrop-blur-md shadow-[0_0_15px_rgba(0,210,255,0.35)] hover:shadow-[0_0_20px_rgba(255,0,127,0.5)] transition-all cursor-pointer group"
+                >
+                  <span className="text-white group-hover:text-[#00D2FF] transition-colors">
+                    ENTER HIGHWAY EXPERIENCE
+                  </span>
+                  <span className="text-[#00D2FF] group-hover:translate-x-1 transition-transform">→</span>
+                </div>
               </div>
             </div>
-          </div>
-        </Html>
-      </group>
+          </Html>
+        </group>
+      )}
 
       {/* ============================================================== */}
-      {/* 2. THE STARTING PORTAL UNIT (POSITIONED FURTHER AT Z = -18)    */}
+      {/* 2. THE STARTING PORTAL UNIT                                    */}
       {/* ============================================================== */}
-      <group position={[0, 4.4, portalZ]}>
+      <group position={[0, isMobile ? 3.8 : 4.4, portalZ]}>
         {/* Main Massive Heavy Obsidian/Black Outer Housing */}
         <mesh position={[0, 0, 0]}>
           <torusGeometry args={[7.2, 0.42, 32, 100]} />
@@ -290,13 +269,14 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
         </mesh>
 
         {/* ============================================================== */}
-        {/* 3. INSIDE PORTAL RING: ONLY PORTAL ONLINE CARD                 */}
-        {/*    (TRANSPARENT BACKGROUND, HIGHWAY VISIBLE THROUGH IT)       */}
+        {/* 3. INSIDE PORTAL RING:                                         */}
+        {/*    - MOBILE: Complete Hero Intro Section centered in portal    */}
+        {/*    - DESKTOP: Portal Online / Warp Gateway scroll cue          */}
         {/* ============================================================== */}
         <Html
           transform
-          distanceFactor={6.5}
-          position={[0, -0.6, 0.4]}
+          distanceFactor={isMobile ? 3.3 : 6.5}
+          position={[0, isMobile ? -0.15 : -0.6, 0.4]}
           center
           style={{
             opacity: isModalOpen ? 0 : portalOpacity,
@@ -304,36 +284,95 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
             pointerEvents: portalOpacity > 0.3 && !isModalOpen ? "auto" : "none",
           }}
         >
-          <div className="flex flex-col items-center select-none text-center">
-            {/* Dual-Tone Pink & Blue Portal Online Card with Transparent Background */}
-            <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-transparent border border-[#00D2FF]/60 text-xs font-mono tracking-widest uppercase mb-4 backdrop-blur-md shadow-[0_0_20px_rgba(0,210,255,0.35)]">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#FF007F] shadow-[0_0_10px_#FF007F] animate-ping" />
-              <span className="text-white font-bold tracking-wider drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
-                PORTAL ONLINE
-              </span>
-              <span className="text-[#FF007F] font-bold">•</span>
-              <span className="text-[#00D2FF] font-bold tracking-wider drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">
-                WARP GATEWAY
-              </span>
-            </div>
-
-            {/* Scroll Cue Button with Transparent Background */}
-            <div
-              onClick={onExploreClick}
-              className="flex flex-col items-center gap-2 text-[#00D2FF] hover:text-white transition-colors cursor-pointer group"
-            >
-              <div className="flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-transparent border-2 border-[#00D2FF]/70 group-hover:border-[#FF007F] backdrop-blur-md shadow-[0_0_20px_rgba(0,210,255,0.4)] group-hover:shadow-[0_0_25px_rgba(255,0,127,0.6)] group-hover:scale-105 transition-all">
-                <Mouse className="w-4 h-4 animate-bounce text-[#FF007F] drop-shadow-[0_0_6px_#FF007F]" />
-                <span className="text-xs font-mono tracking-wider font-bold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]">
-                  SCROLL TO ENTER PORTAL
-                </span>
-                <ChevronDown className="w-4 h-4 text-[#00D2FF] group-hover:translate-y-0.5 transition-transform" />
+          {isMobile ? (
+            /* Mobile: Hero Intro Section centered inside the Portal Ring */
+            <div className="flex flex-col items-center select-none text-center w-[90vw] max-w-[325px] px-4 py-4 sm:py-5 rounded-2xl bg-[#040817]/80 border-2 border-[#00D2FF]/60 backdrop-blur-2xl shadow-[0_0_35px_rgba(0,210,255,0.35)]">
+              {/* Category Kicker */}
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#081836]/90 border border-[#00D2FF]/50 text-[10px] font-mono font-bold tracking-widest text-[#00D2FF] uppercase mb-1.5 shadow-[0_0_10px_rgba(0,210,255,0.4)]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_8px_#00D2FF] animate-pulse" />
+                <span>IDENTITY MATRIX • LEAD ENGINEER</span>
               </div>
-              <span className="text-[10px] font-mono text-[#00D2FF] font-semibold tracking-wider drop-shadow-[0_0_6px_rgba(0,210,255,0.6)]">
-                USE MOUSE WHEEL, TRACKPAD OR DOWN ARROW
+
+              {/* Name: Ashish Dogra */}
+              <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.95)] leading-tight text-2xl sm:text-3xl my-0.5">
+                {PERSONAL_INFO.name}
+              </h1>
+
+              {/* Role / Title & Experience Pill */}
+              <div className="flex flex-wrap items-center justify-center gap-1.5 my-1">
+                <span className="font-bold font-orbitron text-[#00D2FF] drop-shadow-[0_0_12px_rgba(0,210,255,0.85)] tracking-wide text-xs sm:text-sm">
+                  {PERSONAL_INFO.title}
+                </span>
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[#00D2FF]/15 border border-[#00D2FF]/50 text-[#00D2FF] font-bold shadow-[0_0_8px_rgba(0,210,255,0.3)]">
+                  5+ YRS XP
+                </span>
+              </div>
+
+              {/* Tagline */}
+              <p className="mt-1 font-inter text-[11px] text-[#EDF4FF] leading-relaxed drop-shadow-[0_0_4px_rgba(255,255,255,0.3)] max-w-[285px]">
+                {PERSONAL_INFO.tagline}
+              </p>
+
+              {/* Info Highlights */}
+              <div className="mt-2 space-y-1 text-[10px] font-mono text-left w-full px-1">
+                <div className="flex items-center gap-1.5 text-[#EDF4FF]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF007F] shadow-[0_0_6px_#FF007F] shrink-0" />
+                  <span className="truncate">Microservices, Event-Driven &amp; Cloud</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-[#EDF4FF]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_6px_#00D2FF] shrink-0" />
+                  <span className="truncate">Production AI Pipelines &amp; AWS Bedrock</span>
+                </div>
+              </div>
+
+              {/* Action Cue Button */}
+              <div
+                onClick={onExploreClick}
+                className="mt-3 w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#00D2FF]/30 via-[#168BFF]/45 to-[#FF007F]/30 hover:from-[#00D2FF]/45 hover:to-[#FF007F]/45 border-2 border-[#00D2FF] text-white text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,210,255,0.5)] cursor-pointer group"
+              >
+                <span>ENTER HIGHWAY EXPERIENCE</span>
+                <span className="text-[#00D2FF] group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+
+              {/* Swipe / Scroll Cue */}
+              <span className="mt-2 text-[9px] font-mono text-[#00D2FF] tracking-wider uppercase opacity-85 flex items-center gap-1 justify-center">
+                <span>SWIPE OR SCROLL FORWARD</span>
+                <ChevronDown className="w-3 h-3 text-[#FF007F] animate-bounce" />
               </span>
             </div>
-          </div>
+          ) : (
+            /* Desktop: Portal Online / Warp Gateway Cue */
+            <div className="flex flex-col items-center select-none text-center">
+              {/* Dual-Tone Pink & Blue Portal Online Card with Transparent Background */}
+              <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-transparent border border-[#00D2FF]/60 text-xs font-mono tracking-widest uppercase mb-4 backdrop-blur-md shadow-[0_0_20px_rgba(0,210,255,0.35)]">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#FF007F] shadow-[0_0_10px_#FF007F] animate-ping" />
+                <span className="text-white font-bold tracking-wider drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
+                  PORTAL ONLINE
+                </span>
+                <span className="text-[#FF007F] font-bold">•</span>
+                <span className="text-[#00D2FF] font-bold tracking-wider drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]">
+                  WARP GATEWAY
+                </span>
+              </div>
+
+              {/* Scroll Cue Button with Transparent Background */}
+              <div
+                onClick={onExploreClick}
+                className="flex flex-col items-center gap-2 text-[#00D2FF] hover:text-white transition-colors cursor-pointer group"
+              >
+                <div className="flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-transparent border-2 border-[#00D2FF]/70 group-hover:border-[#FF007F] backdrop-blur-md shadow-[0_0_20px_rgba(0,210,255,0.4)] group-hover:shadow-[0_0_25px_rgba(255,0,127,0.6)] group-hover:scale-105 transition-all">
+                  <Mouse className="w-4 h-4 animate-bounce text-[#FF007F] drop-shadow-[0_0_6px_#FF007F]" />
+                  <span className="text-xs font-mono tracking-wider font-bold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]">
+                    SCROLL TO ENTER PORTAL
+                  </span>
+                  <ChevronDown className="w-4 h-4 text-[#00D2FF] group-hover:translate-y-0.5 transition-transform" />
+                </div>
+                <span className="text-[10px] font-mono text-[#00D2FF] font-semibold tracking-wider drop-shadow-[0_0_6px_rgba(0,210,255,0.6)]">
+                  USE MOUSE WHEEL, TRACKPAD OR DOWN ARROW
+                </span>
+              </div>
+            </div>
+          )}
         </Html>
       </group>
     </group>

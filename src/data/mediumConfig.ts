@@ -6,6 +6,6 @@ export const mediumConfig = {
   username: "ashish50514561",
   profileUrl: "https://medium.com/@ashish50514561",
   feedUrl: "https://medium.com/feed/@ashish50514561",
-  authorName: "Ashish Kumar Dogra",
+  authorName: "Ashish Dogra",
 };
 
