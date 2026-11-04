@@ -1,90 +1,89 @@
 "use client";
 
 interface NeonCardBordersProps {
-  rounded?: "xl" | "2xl" | "3xl" | "full";
+  rounded?: "2xl" | "3xl";
   className?: string;
-  size?: "sm" | "md" | "lg";
 }
 
 /**
- * Cyber Edge Brackets:
- * Shiny electric blue neon borders placed on all 4 corner edges (not in the middle).
- * Each corner edge wraps both the horizontal and vertical border portions.
+ * Pure SVG Stroke Neon Blue Corner Edges:
+ * Renders ONLY the 2.5px glowing electric blue neon border stroke along the card corners.
+ * Absolutely fill="none" (NO background boxes, NO dark squares).
+ * Each corner covers both the vertical and horizontal portions along the border edge.
  */
 export function NeonCardBorders({
   rounded = "2xl",
   className = "",
-  size = "md",
 }: NeonCardBordersProps) {
-  // Dimension scale for horizontal & vertical coverage
-  const sizeClasses = {
-    sm: "w-6 h-6 sm:w-8 sm:h-8",
-    md: "w-8 h-8 sm:w-11 sm:h-11",
-    lg: "w-10 h-10 sm:w-14 sm:h-14",
-  }[size];
-
-  // Matching radius curves to fit seamlessly against the card's outer border
-  const tlRadius = {
-    xl: "rounded-tl-xl",
-    "2xl": "rounded-tl-2xl",
-    "3xl": "rounded-tl-3xl",
-    full: "rounded-tl-full",
-  }[rounded];
-
-  const trRadius = {
-    xl: "rounded-tr-xl",
-    "2xl": "rounded-tr-2xl",
-    "3xl": "rounded-tr-3xl",
-    full: "rounded-tr-full",
-  }[rounded];
-
-  const blRadius = {
-    xl: "rounded-bl-xl",
-    "2xl": "rounded-bl-2xl",
-    "3xl": "rounded-bl-3xl",
-    full: "rounded-bl-full",
-  }[rounded];
-
-  const brRadius = {
-    xl: "rounded-br-xl",
-    "2xl": "rounded-br-2xl",
-    "3xl": "rounded-br-3xl",
-    full: "rounded-br-full",
-  }[rounded];
-
-  // Radiant shiny electric blue neon border styling
-  const neonGlow =
-    "border-[#00D2FF] shadow-[0_0_12px_#00D2FF,0_0_24px_rgba(0,210,255,0.75),inset_0_0_8px_rgba(0,210,255,0.4)]";
+  const is3xl = rounded === "3xl";
+  const size = is3xl ? 54 : 46;
+  const radius = is3xl ? 22 : 15;
 
   return (
     <div className={`pointer-events-none absolute inset-0 ${className}`}>
-      {/* 1. TOP-LEFT EDGE: covers horizontal top & vertical left */}
-      <div
-        className={`absolute -top-[1.5px] -left-[1.5px] ${sizeClasses} ${tlRadius} border-t-2 border-l-2 ${neonGlow}`}
+      {/* 1. TOP-LEFT CORNER: stroke along horizontal top & vertical left */}
+      <svg
+        className="absolute -top-[1.5px] -left-[1.5px] w-12 h-12 sm:w-14 sm:h-14 overflow-visible pointer-events-none"
+        viewBox={`0 0 ${size} ${size}`}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <span className="absolute -top-[2px] -left-[2px] w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#00D2FF]" />
-      </div>
+        <path
+          d={`M 1.5 ${size} L 1.5 ${radius + 1.5} A ${radius} ${radius} 0 0 1 ${radius + 1.5} 1.5 L ${size} 1.5`}
+          stroke="#00D2FF"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          className="drop-shadow-[0_0_6px_#00D2FF] drop-shadow-[0_0_14px_rgba(0,210,255,0.9)]"
+        />
+      </svg>
 
-      {/* 2. TOP-RIGHT EDGE: covers horizontal top & vertical right */}
-      <div
-        className={`absolute -top-[1.5px] -right-[1.5px] ${sizeClasses} ${trRadius} border-t-2 border-r-2 ${neonGlow}`}
+      {/* 2. TOP-RIGHT CORNER: stroke along horizontal top & vertical right */}
+      <svg
+        className="absolute -top-[1.5px] -right-[1.5px] w-12 h-12 sm:w-14 sm:h-14 overflow-visible pointer-events-none"
+        viewBox={`0 0 ${size} ${size}`}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <span className="absolute -top-[2px] -right-[2px] w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#00D2FF]" />
-      </div>
+        <path
+          d={`M ${size - 1.5} ${size} L ${size - 1.5} ${radius + 1.5} A ${radius} ${radius} 0 0 0 ${size - radius - 1.5} 1.5 L 0 1.5`}
+          stroke="#00D2FF"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          className="drop-shadow-[0_0_6px_#00D2FF] drop-shadow-[0_0_14px_rgba(0,210,255,0.9)]"
+        />
+      </svg>
 
-      {/* 3. BOTTOM-LEFT EDGE: covers horizontal bottom & vertical left */}
-      <div
-        className={`absolute -bottom-[1.5px] -left-[1.5px] ${sizeClasses} ${blRadius} border-b-2 border-l-2 ${neonGlow}`}
+      {/* 3. BOTTOM-LEFT CORNER: stroke along horizontal bottom & vertical left */}
+      <svg
+        className="absolute -bottom-[1.5px] -left-[1.5px] w-12 h-12 sm:w-14 sm:h-14 overflow-visible pointer-events-none"
+        viewBox={`0 0 ${size} ${size}`}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <span className="absolute -bottom-[2px] -left-[2px] w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#00D2FF]" />
-      </div>
+        <path
+          d={`M 1.5 0 L 1.5 ${size - radius - 1.5} A ${radius} ${radius} 0 0 0 ${radius + 1.5} ${size - 1.5} L ${size} ${size - 1.5}`}
+          stroke="#00D2FF"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          className="drop-shadow-[0_0_6px_#00D2FF] drop-shadow-[0_0_14px_rgba(0,210,255,0.9)]"
+        />
+      </svg>
 
-      {/* 4. BOTTOM-RIGHT EDGE: covers horizontal bottom & vertical right */}
-      <div
-        className={`absolute -bottom-[1.5px] -right-[1.5px] ${sizeClasses} ${brRadius} border-b-2 border-r-2 ${neonGlow}`}
+      {/* 4. BOTTOM-RIGHT CORNER: stroke along horizontal bottom & vertical right */}
+      <svg
+        className="absolute -bottom-[1.5px] -right-[1.5px] w-12 h-12 sm:w-14 sm:h-14 overflow-visible pointer-events-none"
+        viewBox={`0 0 ${size} ${size}`}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <span className="absolute -bottom-[2px] -right-[2px] w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_14px_#00D2FF]" />
-      </div>
+        <path
+          d={`M ${size - 1.5} 0 L ${size - 1.5} ${size - radius - 1.5} A ${radius} ${radius} 0 0 1 ${size - radius - 1.5} ${size - 1.5} L 0 ${size - 1.5}`}
+          stroke="#00D2FF"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          className="drop-shadow-[0_0_6px_#00D2FF] drop-shadow-[0_0_14px_rgba(0,210,255,0.9)]"
+        />
+      </svg>
     </div>
   );
 }

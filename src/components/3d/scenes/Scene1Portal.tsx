@@ -276,8 +276,8 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
         {/* ============================================================== */}
         <Html
           transform
-          distanceFactor={isMobile ? 3.3 : 6.5}
-          position={[0, isMobile ? -0.15 : -0.6, 0.4]}
+          distanceFactor={isMobile ? 4.2 : 6.5}
+          position={[0, isMobile ? -0.1 : -0.6, 0.4]}
           center
           style={{
             opacity: isModalOpen ? 0 : portalOpacity,
@@ -286,61 +286,61 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
           }}
         >
           {isMobile ? (
-            /* Mobile: Pure Holographic Text inside the Portal Ring (No Card Box) */
-            <div className="flex flex-col items-center select-none text-center max-w-[320px] px-2 bg-transparent pointer-events-auto">
+            /* Mobile: Pure Holographic Text inside the Portal Ring (Scaled up & bolder) */
+            <div className="flex flex-col items-center select-none text-center w-[92vw] max-w-[340px] px-2 bg-transparent pointer-events-auto">
               {/* Category Kicker */}
-              <div className="inline-flex items-center gap-1.5 mb-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#00D2FF] shadow-[0_0_8px_#00D2FF] animate-pulse" />
-                <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-widest text-[#00D2FF] uppercase drop-shadow-[0_0_8px_rgba(0,210,255,0.85)]">
+              <div className="inline-flex items-center gap-2 mb-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#00D2FF] shadow-[0_0_10px_#00D2FF] animate-pulse" />
+                <span className="text-xs sm:text-sm font-mono font-bold tracking-widest text-[#00D2FF] uppercase drop-shadow-[0_0_10px_rgba(0,210,255,0.9)]">
                   // IDENTITY MATRIX • LEAD ENGINEER
                 </span>
               </div>
 
-              {/* Name: Ashish Dogra */}
-              <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_24px_rgba(255,255,255,0.95),0_0_12px_#00D2FF] leading-tight text-3xl sm:text-4xl my-0.5">
+              {/* Name: Ashish Dogra - Scaled up */}
+              <h1 className="font-black font-orbitron tracking-tight text-white drop-shadow-[0_0_32px_rgba(255,255,255,1),0_0_16px_#00D2FF] leading-tight text-4xl sm:text-5xl my-1">
                 {PERSONAL_INFO.name}
               </h1>
 
               {/* Role / Title & Experience */}
-              <div className="flex flex-wrap items-center justify-center gap-2 my-1">
-                <span className="font-bold font-orbitron text-[#00D2FF] drop-shadow-[0_0_14px_rgba(0,210,255,0.9)] tracking-wide text-xs sm:text-sm">
+              <div className="flex flex-wrap items-center justify-center gap-2.5 my-1.5">
+                <span className="font-bold font-orbitron text-[#00D2FF] drop-shadow-[0_0_16px_rgba(0,210,255,0.9)] tracking-wide text-sm sm:text-base">
                   {PERSONAL_INFO.title}
                 </span>
-                <span className="text-[9px] font-mono px-2 py-0.5 rounded-full border border-[#00D2FF]/60 text-[#00D2FF] font-bold shadow-[0_0_8px_rgba(0,210,255,0.4)]">
+                <span className="text-[10px] sm:text-xs font-mono px-3 py-0.5 rounded-full border border-[#00D2FF]/70 text-[#00D2FF] font-bold shadow-[0_0_10px_rgba(0,210,255,0.5)]">
                   5+ YRS PROD XP
                 </span>
               </div>
 
               {/* Tagline */}
-              <p className="mt-1 font-inter text-xs text-[#EDF4FF] leading-relaxed drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] max-w-[290px]">
+              <p className="mt-2 font-inter text-xs sm:text-sm text-[#EDF4FF] leading-relaxed drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] max-w-[320px]">
                 {PERSONAL_INFO.tagline}
               </p>
 
               {/* Info Highlights */}
-              <div className="mt-2.5 space-y-1 text-[11px] font-mono text-left w-full px-2">
-                <div className="flex items-center gap-2 text-[#EDF4FF]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_6px_#00D2FF] shrink-0" />
-                  <span className="truncate drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]">Microservices, Event-Driven &amp; Cloud</span>
+              <div className="mt-3 space-y-1.5 text-xs sm:text-sm font-mono text-left w-full px-2">
+                <div className="flex items-center gap-2.5 text-[#EDF4FF]">
+                  <span className="w-2 h-2 rounded-full bg-[#00D2FF] shadow-[0_0_8px_#00D2FF] shrink-0" />
+                  <span className="truncate drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]">Microservices, Event-Driven &amp; Cloud</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#EDF4FF]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] shadow-[0_0_6px_#00D2FF] shrink-0" />
-                  <span className="truncate drop-shadow-[0_0_4px_rgba(255,255,255,0.3)]">Production AI Pipelines &amp; AWS Bedrock</span>
+                <div className="flex items-center gap-2.5 text-[#EDF4FF]">
+                  <span className="w-2 h-2 rounded-full bg-[#00D2FF] shadow-[0_0_8px_#00D2FF] shrink-0" />
+                  <span className="truncate drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]">Production AI Pipelines &amp; AWS Bedrock</span>
                 </div>
               </div>
 
               {/* Action Cue Button */}
               <div
                 onClick={onExploreClick}
-                className="mt-3.5 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border-2 border-[#00D2FF] hover:border-white text-xs font-mono text-white font-bold bg-[#00D2FF]/20 hover:bg-[#00D2FF]/35 backdrop-blur-md shadow-[0_0_20px_rgba(0,210,255,0.6)] hover:shadow-[0_0_30px_#00D2FF] transition-all cursor-pointer group"
+                className="mt-4 sm:mt-5 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border-2 border-[#00D2FF] hover:border-white text-xs sm:text-sm font-mono text-white font-bold bg-[#00D2FF]/20 hover:bg-[#00D2FF]/35 backdrop-blur-md shadow-[0_0_24px_rgba(0,210,255,0.7)] hover:shadow-[0_0_36px_#00D2FF] transition-all cursor-pointer group"
               >
                 <span>ENTER HIGHWAY EXPERIENCE</span>
                 <span className="text-[#00D2FF] group-hover:translate-x-1 transition-transform">→</span>
               </div>
 
               {/* Subtle Swipe / Scroll Cue */}
-              <span className="mt-2 text-[10px] font-mono text-[#00D2FF] tracking-wider uppercase opacity-85 flex items-center gap-1 justify-center drop-shadow-[0_0_6px_rgba(0,210,255,0.6)]">
+              <span className="mt-2.5 text-[11px] font-mono text-[#00D2FF] tracking-wider uppercase opacity-90 flex items-center gap-1.5 justify-center drop-shadow-[0_0_8px_rgba(0,210,255,0.7)]">
                 <span>SWIPE OR SCROLL FORWARD</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#00D2FF] animate-bounce" />
+                <ChevronDown className="w-4 h-4 text-[#00D2FF] animate-bounce" />
               </span>
             </div>
           ) : (
