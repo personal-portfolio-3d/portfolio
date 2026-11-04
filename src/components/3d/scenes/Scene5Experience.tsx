@@ -386,11 +386,11 @@ function ElectricCircleNode({
         </mesh>
       </group>
 
-      {/* --- 3. FLOATING HOLOGRAPHIC TITLE BADGE (Ultra-Transparent & Circular) --- */}
+      {/* --- 3. FLOATING HOLOGRAPHIC TITLE BADGE (Ultra-Transparent & Expanded) --- */}
       <Html
         transform
         distanceFactor={5.5}
-        position={[0, radius + stemHeight + 0.32, 0]}
+        position={[0, radius + stemHeight + 0.45, 0]}
         center
         style={{
           opacity: isModalOpen ? 0 : 1,
@@ -407,39 +407,62 @@ function ElectricCircleNode({
           onMouseLeave={() => setIsHovered(false)}
           className="cursor-pointer group flex flex-col items-center select-none transform transition-transform duration-300 hover:scale-105"
         >
-          {/* Ultra-Transparent Circular / Pill Card */}
+          {/* Ultra-Transparent Expanded Card */}
           <div
-            className={`px-5 sm:px-6 py-3 sm:py-3.5 rounded-3xl border backdrop-blur-md transition-all duration-300 text-center max-w-[85vw] sm:max-w-none sm:min-w-[220px] relative overflow-visible ${
+            className={`w-[88vw] max-w-[330px] sm:max-w-none sm:w-[300px] p-4 sm:p-5 rounded-3xl border backdrop-blur-md transition-all duration-300 text-center relative overflow-visible ${
               isSelected
-                ? "bg-[#0A224D]/45 border-2 border-[#00F0FF] shadow-[0_0_35px_rgba(0,240,255,0.6)]"
+                ? "bg-[#0A224D]/55 border-2 border-[#00F0FF] shadow-[0_0_35px_rgba(0,240,255,0.6)]"
                 : isHovered
-                ? "bg-[#06142E]/35 border border-[#00F0FF]/70 shadow-[0_0_25px_rgba(0,240,255,0.45)]"
-                : "bg-[#04091A]/20 border border-[#00F0FF]/35 shadow-[0_0_20px_rgba(0,240,255,0.2)]"
+                ? "bg-[#06142E]/45 border border-[#00F0FF]/70 shadow-[0_0_25px_rgba(0,240,255,0.45)]"
+                : "bg-[#04091A]/30 border border-[#00F0FF]/35 shadow-[0_0_20px_rgba(0,240,255,0.2)]"
             }`}
           >
             {/* Shiny Neon Blue Corner Edges */}
             <NeonCardBorders rounded="3xl" />
-            {/* Period Badge */}
-            <div className="flex items-center justify-center gap-1.5 mb-1">
-              <span className="text-[10px] font-mono font-bold px-3 py-0.5 rounded-full bg-[#00F0FF]/15 border border-[#00F0FF]/50 text-[#00F0FF] shadow-[0_0_10px_rgba(0,240,255,0.3)]">
+
+            {/* Header row: Period & Location */}
+            <div className="flex items-center justify-between gap-2 mb-2 pb-1.5 border-b border-[#00F0FF]/25">
+              <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#00F0FF]/15 border border-[#00F0FF]/50 text-[#00F0FF] shadow-[0_0_10px_rgba(0,240,255,0.3)]">
                 {exp.period}
+              </span>
+              <span className="text-[10px] font-mono text-[#94A3B8] font-medium">
+                {exp.location || "Remote"}
               </span>
             </div>
 
             {/* Role Title */}
-            <h4 className="text-xs sm:text-sm font-bold font-orbitron text-white group-hover:text-[#00F0FF] transition-colors drop-shadow-[0_0_10px_rgba(255,255,255,0.9)] tracking-wide sm:whitespace-nowrap">
+            <h4 className="text-sm sm:text-base font-bold font-orbitron text-white group-hover:text-[#00F0FF] transition-colors drop-shadow-[0_0_10px_rgba(255,255,255,0.9)] tracking-wide">
               {exp.role}
             </h4>
 
             {/* Company / Institution */}
-            <p className="text-[11px] sm:text-xs font-semibold mt-0.5 sm:whitespace-nowrap text-[#00F0FF] drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">
+            <p className="text-xs sm:text-[13px] font-semibold mt-0.5 text-[#00F0FF] drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">
               {exp.company}
             </p>
 
+            {/* Short highlight / description snippet */}
+            <p className="text-[11.5px] text-[#E2E8F0] font-inter mt-2 line-clamp-2 leading-relaxed drop-shadow-[0_0_4px_rgba(255,255,255,0.2)] text-center">
+              {exp.description}
+            </p>
+
+            {/* Key Skill Tags */}
+            {exp.skills && exp.skills.length > 0 && (
+              <div className="mt-2.5 flex flex-wrap justify-center gap-1.5">
+                {exp.skills.slice(0, 3).map((skill) => (
+                  <span
+                    key={skill}
+                    className="text-[9.5px] font-mono font-semibold px-2 py-0.5 rounded bg-[#081836]/70 border border-[#00F0FF]/40 text-[#00F0FF]"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            )}
+
             {/* Prompt */}
-            <div className="mt-1.5 flex items-center justify-center gap-1 text-[9px] font-mono text-[#EDF4FF] group-hover:text-white transition-colors">
+            <div className="mt-3 pt-2 border-t border-[#00F0FF]/20 flex items-center justify-center gap-1.5 text-[10px] font-mono text-[#EDF4FF] group-hover:text-white transition-colors">
               <span className="w-1.5 h-1.5 rounded-full bg-[#00F0FF] animate-ping" />
-              <span>Click node for details</span>
+              <span className="tracking-wider uppercase font-semibold">Click for full details</span>
             </div>
           </div>
         </div>

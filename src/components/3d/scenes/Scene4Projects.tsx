@@ -6,7 +6,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { PROJECTS } from "@/data/portfolioData";
 import { Project } from "@/types/portfolio";
-import { ArrowUpRight, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Sparkles } from "lucide-react";
 import { NeonCardBorders } from "@/components/ui/NeonCardBorders";
 
 interface Scene4ProjectsProps {
@@ -74,8 +74,8 @@ function ProjectRoadsideCard({
     <group ref={groupRef} position={[x, y, z]} rotation={[0, baseRotY, 0]}>
       {/* 3D Base Pylon (Desktop only) */}
       {!isMobile && (
-        <mesh position={[0, -1.9, 0]}>
-          <cylinderGeometry args={[0.5, 0.7, 0.4, 6]} />
+        <mesh position={[0, -2.2, 0]}>
+          <cylinderGeometry args={[0.55, 0.75, 0.45, 6]} />
           <meshStandardMaterial
             color="#168BFF"
             emissive="#168BFF"
@@ -88,7 +88,7 @@ function ProjectRoadsideCard({
       {/* Glowing 3D Wireframe Boundary (Desktop only) */}
       {!isMobile && (
         <mesh position={[0, 0, -0.05]}>
-          <planeGeometry args={[3.8, 4.4]} />
+          <planeGeometry args={[4.4, 5.5]} />
           <meshBasicMaterial
             color={isHovered ? "#22D3EE" : "#168BFF"}
             wireframe
@@ -114,47 +114,68 @@ function ProjectRoadsideCard({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onClick={() => onSelectProject(project)}
-          className={`w-[88vw] max-w-[325px] md:w-[315px] p-4 rounded-3xl transition-all duration-300 backdrop-blur-md relative cursor-pointer overflow-visible select-none group ${
+          className={`w-[90vw] max-w-[370px] md:w-[410px] p-5 sm:p-5.5 rounded-3xl transition-all duration-300 backdrop-blur-md relative cursor-pointer overflow-visible select-none group ${
             isHovered
-              ? "bg-[#061226]/50 border-2 border-[#22D3EE] shadow-[0_0_30px_rgba(34,211,238,0.5)]"
-              : "bg-[#040817]/40 border border-[#22D3EE]/35 shadow-[0_0_20px_rgba(22,139,255,0.2)]"
+              ? "bg-[#061226]/55 border-2 border-[#22D3EE] shadow-[0_0_35px_rgba(34,211,238,0.55)]"
+              : "bg-[#040817]/45 border border-[#22D3EE]/35 shadow-[0_0_22px_rgba(22,139,255,0.22)]"
           }`}
         >
           {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
           <NeonCardBorders rounded="3xl" />
 
           {/* Project Image Thumbnail */}
-          <div className="relative w-full h-[142px] rounded-xl overflow-hidden border border-[#22D3EE]/40 mb-3 bg-[#03060D]/60">
+          <div className="relative w-full h-[165px] sm:h-[185px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-3.5 bg-[#03060D]/60">
             <img
               src={project.image}
               alt={project.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#060F22]/90 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#060F22]/95 via-[#060F22]/20 to-transparent" />
 
             {/* Top Category Badge */}
-            <div className="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-[#03060D]/80 border border-[#22D3EE]/70 text-[10px] font-mono text-[#22D3EE] font-bold shadow-[0_0_10px_rgba(34,211,238,0.5)]">
-              {project.category.split(" ")[0]}
+            <div className="absolute top-2.5 left-2.5 px-3 py-1 rounded-full bg-[#03060D]/85 border border-[#22D3EE]/70 text-[10.5px] font-mono text-[#22D3EE] font-bold shadow-[0_0_10px_rgba(34,211,238,0.5)]">
+              {project.category}
             </div>
 
-            <div className="absolute bottom-2 right-2 p-1.5 rounded-full bg-[#168BFF] text-white shadow-[0_0_12px_#168BFF] group-hover:scale-110 transition-transform">
-              <ArrowUpRight className="w-3.5 h-3.5 text-white" />
+            <div className="absolute bottom-2.5 right-2.5 p-2 rounded-full bg-[#168BFF] text-white shadow-[0_0_14px_#168BFF] group-hover:scale-110 transition-transform">
+              <ArrowUpRight className="w-4 h-4 text-white" />
             </div>
           </div>
 
           {/* Project Title (Brilliant White with Neon Glow) */}
-          <h3 className="text-base font-bold font-orbitron text-white group-hover:text-[#22D3EE] transition-colors truncate drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]">
+          <h3 className="text-lg font-bold font-orbitron text-white group-hover:text-[#22D3EE] transition-colors truncate drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]">
             {project.title}
           </h3>
 
-          {/* Short Description (Luminous Bright Slate) */}
-          <p className="text-[12px] text-[#E2E8F0] font-inter font-normal line-clamp-2 mt-1.5 leading-relaxed drop-shadow-[0_0_4px_rgba(255,255,255,0.2)]">
+          {/* Project Subtitle */}
+          {project.subtitle && (
+            <div className="text-[11px] font-mono font-semibold text-[#00D2FF] truncate mt-1 flex items-center gap-1.5 drop-shadow-[0_0_6px_rgba(0,210,255,0.6)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF] animate-pulse inline-block flex-shrink-0" />
+              <span className="truncate">{project.subtitle}</span>
+            </div>
+          )}
+
+          {/* Expanded Description (Luminous Bright Slate) */}
+          <p className="text-[12.5px] text-[#E2E8F0] font-inter font-normal line-clamp-3 mt-2 leading-relaxed drop-shadow-[0_0_4px_rgba(255,255,255,0.2)]">
             {project.description}
           </p>
 
+          {/* Key Architectural Impact Highlight Box */}
+          {project.highlights && project.highlights.length > 0 && (
+            <div className="mt-3 p-2.5 rounded-xl bg-[#030B1C]/75 border border-[#00D2FF]/30 flex items-start gap-2 shadow-[0_0_12px_rgba(0,210,255,0.1)]">
+              <div className="p-1 rounded bg-[#00D2FF]/15 text-[#00D2FF] mt-0.5 flex-shrink-0">
+                <Sparkles className="w-3 h-3 text-[#00D2FF]" />
+              </div>
+              <div className="text-[11px] font-inter text-[#CBD5E1] leading-snug line-clamp-2">
+                <span className="font-mono font-bold text-[#00D2FF] uppercase mr-1 text-[10px]">Impact:</span>
+                {project.highlights[0]}
+              </div>
+            </div>
+          )}
+
           {/* Technology Tags (Neon Cyan with glowing border) */}
           <div className="mt-3.5 flex flex-wrap gap-1.5">
-            {project.technologies.slice(0, 3).map((tech) => (
+            {project.technologies.slice(0, 4).map((tech) => (
               <span
                 key={tech}
                 className="text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-md bg-[#081836]/70 border border-[#22D3EE]/50 text-[#22D3EE] shadow-[0_0_8px_rgba(34,211,238,0.25)]"
@@ -162,16 +183,16 @@ function ProjectRoadsideCard({
                 {tech}
               </span>
             ))}
-            {project.technologies.length > 3 && (
+            {project.technologies.length > 4 && (
               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-[#168BFF]/40 border border-[#168BFF] text-white shadow-[0_0_8px_rgba(22,139,255,0.5)]">
-                +{project.technologies.length - 3}
+                +{project.technologies.length - 4}
               </span>
             )}
           </div>
 
           {/* Click Cue */}
           <div className="mt-3.5 pt-2.5 border-t border-[#22D3EE]/25 flex items-center justify-between text-[11px] font-mono text-[#22D3EE] font-bold group-hover:text-white transition-colors">
-            <span className="tracking-wider">CLICK TO EXPAND DETAILS</span>
+            <span className="tracking-wider">CLICK TO VIEW FULL CASE STUDY</span>
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-[#22D3EE]" />
           </div>
         </div>
@@ -195,10 +216,10 @@ export function Scene4Projects({ currentZ, onSelectProject, isModalOpen }: Scene
       ];
     }
     return [
-      { project: PROJECTS[0], x: -4.9, y: 1.8, z: -205, side: "left" as const },
-      { project: PROJECTS[1], x: 4.9, y: 1.8, z: -225, side: "right" as const },
-      { project: PROJECTS[2], x: -4.9, y: 1.8, z: -245, side: "left" as const },
-      { project: PROJECTS[3], x: 4.9, y: 1.8, z: -265, side: "right" as const },
+      { project: PROJECTS[0], x: -5.1, y: 1.8, z: -205, side: "left" as const },
+      { project: PROJECTS[1], x: 5.1, y: 1.8, z: -225, side: "right" as const },
+      { project: PROJECTS[2], x: -5.1, y: 1.8, z: -245, side: "left" as const },
+      { project: PROJECTS[3], x: 5.1, y: 1.8, z: -265, side: "right" as const },
     ];
   }, [isMobile]);
 
