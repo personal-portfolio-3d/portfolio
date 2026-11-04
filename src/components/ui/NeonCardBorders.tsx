@@ -3,16 +3,18 @@
 interface NeonCardBordersProps {
   rounded?: "2xl" | "3xl";
   className?: string;
+  color?: "blue" | "pink";
 }
 
 /**
- * Pure SVG Stroke Neon Blue Corner Edges:
+ * Pure SVG Stroke Neon Corner Edges:
  * Compact, subtle neon laser accents that hug just the corners of the card.
  * Tight coverage along horizontal and vertical edges without sprawling into the middle.
  */
 export function NeonCardBorders({
   rounded = "2xl",
   className = "",
+  color = "blue",
 }: NeonCardBordersProps) {
   const is3xl = rounded === "3xl";
   const size = is3xl ? 36 : 28;
@@ -20,6 +22,12 @@ export function NeonCardBorders({
   const svgClass = is3xl
     ? "w-7 h-7 sm:w-8 sm:h-8"
     : "w-6 h-6 sm:w-7 sm:h-7";
+
+  const strokeColor = color === "pink" ? "#FF2E93" : "#00D2FF";
+  const shadowClass =
+    color === "pink"
+      ? "drop-shadow-[0_0_4px_#FF2E93] drop-shadow-[0_0_8px_rgba(255,46,147,0.8)]"
+      : "drop-shadow-[0_0_4px_#00D2FF] drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]";
 
   return (
     <div className={`pointer-events-none absolute inset-0 overflow-visible ${className}`}>
@@ -32,10 +40,10 @@ export function NeonCardBorders({
       >
         <path
           d={`M 1.5 ${size} L 1.5 ${radius + 1.5} A ${radius} ${radius} 0 0 1 ${radius + 1.5} 1.5 L ${size} 1.5`}
-          stroke="#00D2FF"
+          stroke={strokeColor}
           strokeWidth="2"
           strokeLinecap="round"
-          className="drop-shadow-[0_0_4px_#00D2FF] drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]"
+          className={shadowClass}
         />
       </svg>
 
@@ -48,10 +56,10 @@ export function NeonCardBorders({
       >
         <path
           d={`M ${size - 1.5} ${size} L ${size - 1.5} ${radius + 1.5} A ${radius} ${radius} 0 0 0 ${size - radius - 1.5} 1.5 L 0 1.5`}
-          stroke="#00D2FF"
+          stroke={strokeColor}
           strokeWidth="2"
           strokeLinecap="round"
-          className="drop-shadow-[0_0_4px_#00D2FF] drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]"
+          className={shadowClass}
         />
       </svg>
 
@@ -64,10 +72,10 @@ export function NeonCardBorders({
       >
         <path
           d={`M 1.5 0 L 1.5 ${size - radius - 1.5} A ${radius} ${radius} 0 0 0 ${radius + 1.5} ${size - 1.5} L ${size} ${size - 1.5}`}
-          stroke="#00D2FF"
+          stroke={strokeColor}
           strokeWidth="2"
           strokeLinecap="round"
-          className="drop-shadow-[0_0_4px_#00D2FF] drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]"
+          className={shadowClass}
         />
       </svg>
 
@@ -80,10 +88,10 @@ export function NeonCardBorders({
       >
         <path
           d={`M ${size - 1.5} 0 L ${size - 1.5} ${size - radius - 1.5} A ${radius} ${radius} 0 0 1 ${size - radius - 1.5} ${size - 1.5} L 0 ${size - 1.5}`}
-          stroke="#00D2FF"
+          stroke={strokeColor}
           strokeWidth="2"
           strokeLinecap="round"
-          className="drop-shadow-[0_0_4px_#00D2FF] drop-shadow-[0_0_8px_rgba(0,210,255,0.8)]"
+          className={shadowClass}
         />
       </svg>
     </div>
