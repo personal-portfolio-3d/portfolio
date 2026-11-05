@@ -1,7 +1,8 @@
 "use client";
 
-import { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Suspense, useRef, useMemo } from "react";
+import * as THREE from "three";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { Highway } from "./Highway";
 import { TunnelRings } from "./TunnelRings";
@@ -28,6 +29,44 @@ interface ExperienceCanvasProps {
   onSelectExperience?: (exp: ExperienceItem) => void;
   selectedExperienceId?: string;
   onRestartExperience: () => void;
+}
+
+function HighwayLighting({ currentZ }: { currentZ: number }) {
+  const spotRef = useRef<THREE.SpotLight>(null);
+  const targetRef = useRef<THREE.Object3D>(null);
+  const targetObj = useMemo(() => new THREE.Object3D(), []);
+
+  useFrame(() => {
+    if (spotRef.current && targetRef.current) {
+      // Keep target at a fixed distance ahead of current camera position so length never increases with scrolling
+      targetRef.current.position.set(0, 0, currentZ - 14);
+      targetRef.current.updateMatrixWorld();
+      spotRef.current.target = targetRef.current;
+    }
+  });
+
+  return (
+    <>
+      <primitive object={targetObj} ref={targetRef} />
+      {/* Soft dimmed ambient directional fill */}
+      <directionalLight
+        position={[0, 18, currentZ + 8]}
+        intensity={0.22}
+        color="#168BFF"
+      />
+      {/* Controlled, soft forward cyber spotlight with limited distance and feathered penumbra */}
+      <spotLight
+        ref={spotRef}
+        position={[0, 8.5, currentZ + 2]}
+        intensity={0.42}
+        color="#00D2FF"
+        distance={26}
+        angle={0.35}
+        penumbra={0.85}
+        decay={1.8}
+      />
+    </>
+  );
 }
 
 export function ExperienceCanvas({
@@ -57,9 +96,9 @@ export function ExperienceCanvas({
         <fogExp2 attach="fog" args={["#03060D", 0.0032]} />
 
         {/* Ambient & Sci-Fi City Lighting */}
-        <ambientLight intensity={0.5} color="#081426" />
-        <directionalLight position={[0, 25, currentZ + 15]} intensity={1.1} color="#168BFF" />
-        <pointLight position={[0, 16, currentZ - 20]} intensity={0.06} color="#168BFF" distance={80} decay={2} />
+        <ambientLight intensity={0.45} color="#081426" />
+        <HighwayLighting currentZ={currentZ} />
+        <pointLight position={[0, 16, currentZ - 20]} intensity={0.05} color="#168BFF" distance={80} decay={2} />
 
         <Suspense fallback={null}>
           {/* Camera Controller driven by scroll progress */}

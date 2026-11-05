@@ -345,7 +345,7 @@ export function Scene6Articles({ currentZ, isModalOpen }: Scene6ArticlesProps) {
                         href={article.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`group relative flex flex-col justify-between rounded-2xl p-4 bg-[#071122]/65 hover:bg-[#071122]/85 border backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer select-none overflow-visible ${
+                        className={`group relative flex flex-col justify-between rounded-2xl p-4 bg-[#040816]/94 sm:bg-[#071122]/65 hover:bg-[#071122]/90 border backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer select-none overflow-visible shadow-[0_8px_32px_rgba(0,0,0,0.7)] ${
                           isMobile ? "w-[85vw] max-w-[325px]" : "w-full"
                         } ${borderClasses}`}
                       >

@@ -119,8 +119,8 @@ function Achievement3DCard({
           onMouseLeave={() => setIsHovered(false)}
           className={`w-[90vw] max-w-[340px] sm:max-w-[350px] md:w-[350px] p-5 sm:p-6 rounded-3xl backdrop-blur-2xl transition-all duration-300 relative select-none flex flex-col justify-between overflow-visible group ${
             isHovered
-              ? "bg-[#061226]/85 border-2 border-[#00D2FF] shadow-[0_0_35px_rgba(0,210,255,0.45)]"
-              : "bg-[#040D1E]/80 border border-[#22D3EE]/40 shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_22px_rgba(34,211,238,0.2)]"
+              ? "bg-[#050D1E]/95 sm:bg-[#061226]/85 border-2 border-[#00D2FF] shadow-[0_0_35px_rgba(0,210,255,0.45)]"
+              : "bg-[#040816]/95 sm:bg-[#040D1E]/80 border border-[#22D3EE]/40 shadow-[0_8px_32px_rgba(0,0,0,0.8),0_0_22px_rgba(34,211,238,0.2)]"
           }`}
         >
           {/* Shiny Neon Blue Corner Edges */}

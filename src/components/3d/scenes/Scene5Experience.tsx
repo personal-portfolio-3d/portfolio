@@ -419,12 +419,12 @@ function ElectricCircleNode({
         >
           {/* Ultra-Transparent Circular / Pill Card */}
           <div
-            className={`px-5 sm:px-6 py-3 sm:py-3.5 rounded-3xl border backdrop-blur-md transition-all duration-300 text-center max-w-[85vw] sm:max-w-none sm:min-w-[220px] relative overflow-visible ${
+            className={`px-5 sm:px-6 py-3 sm:py-3.5 rounded-3xl border backdrop-blur-2xl transition-all duration-300 text-center max-w-[85vw] sm:max-w-none sm:min-w-[220px] relative overflow-visible ${
               isSelected
-                ? "bg-[#0A224D]/45 border-2 border-[#00F0FF] shadow-[0_0_35px_rgba(0,240,255,0.6)]"
+                ? "bg-[#0A224D]/90 sm:bg-[#0A224D]/45 border-2 border-[#00F0FF] shadow-[0_0_35px_rgba(0,240,255,0.6)]"
                 : isHovered
-                ? "bg-[#06142E]/35 border border-[#00F0FF]/70 shadow-[0_0_25px_rgba(0,240,255,0.45)]"
-                : "bg-[#04091A]/20 border border-[#00F0FF]/35 shadow-[0_0_20px_rgba(0,240,255,0.2)]"
+                ? "bg-[#040A18]/95 sm:bg-[#06142E]/35 border border-[#00F0FF]/70 shadow-[0_0_25px_rgba(0,240,255,0.45)]"
+                : "bg-[#040A18]/92 sm:bg-[#04091A]/20 border border-[#00F0FF]/35 shadow-[0_8px_32px_rgba(0,0,0,0.7),0_0_20px_rgba(0,240,255,0.2)]"
             }`}
           >
             {/* Shiny Neon Blue Corner Edges */}
@@ -588,7 +588,7 @@ export function Scene5Experience({
         }}
       >
         <div className="flex flex-col items-center select-none text-center">
-          <div className="flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#04091A]/35 border border-[#00F0FF]/35 backdrop-blur-md shadow-[0_0_20px_rgba(0,240,255,0.25)] max-w-[90vw]">
+          <div className="flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#040816]/90 sm:bg-[#04091A]/35 border border-[#00F0FF]/35 backdrop-blur-2xl shadow-[0_0_20px_rgba(0,240,255,0.25)] max-w-[90vw]">
             <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00F0FF] drop-shadow-[0_0_6px_#00F0FF]" />
             <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]">
               ENGINEERING TIMELINE // CAREER

@@ -42,8 +42,8 @@ function ProjectRoadsideCard({
   const [isHovered, setIsHovered] = useState(false);
 
   const dist = Math.abs(currentZ - z);
-  const maxDist = isMobile ? 18 : 38;
-  const fadeDist = isMobile ? 13 : 28;
+  const maxDist = isMobile ? 16 : 38;
+  const fadeDist = isMobile ? 11 : 28;
   const opacity = dist > maxDist ? 0 : Math.max(0, 1 - dist / fadeDist);
 
   const isLeft = side === "left";
@@ -116,10 +116,10 @@ function ProjectRoadsideCard({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onClick={() => onSelectProject(project)}
-          className={`w-[90vw] max-w-[370px] md:w-[410px] p-5 sm:p-5.5 rounded-3xl transition-all duration-300 backdrop-blur-md relative cursor-pointer overflow-visible select-none group ${
+          className={`w-[90vw] max-w-[365px] md:w-[410px] p-5 sm:p-5.5 rounded-3xl transition-all duration-300 backdrop-blur-2xl relative cursor-pointer overflow-visible select-none group ${
             isHovered
-              ? "bg-[#061226]/55 border-2 border-[#22D3EE] shadow-[0_0_35px_rgba(34,211,238,0.55)]"
-              : "bg-[#040817]/45 border border-[#22D3EE]/35 shadow-[0_0_22px_rgba(22,139,255,0.22)]"
+              ? "bg-[#050D1E]/95 sm:bg-[#061226]/55 border-2 border-[#22D3EE] shadow-[0_0_35px_rgba(34,211,238,0.55)]"
+              : "bg-[#040A18]/92 sm:bg-[#040817]/45 border border-[#22D3EE]/35 shadow-[0_8px_32px_rgba(0,0,0,0.7),0_0_22px_rgba(22,139,255,0.22)]"
           }`}
         >
           {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
@@ -211,31 +211,31 @@ export function Scene4Projects({ currentZ, onSelectProject, isModalOpen }: Scene
 
   const sideProjects = useMemo(() => {
     if (isMobile) {
-      // On mobile: Sequential drive-through layout directly along highway center (X = 0)
+      // On mobile: Sequential drive-through layout directly along highway center with spacious 18m spacing
       return [
-        { project: PROJECTS[0], x: 0, y: 1.8, z: -195, side: "left" as const },
-        { project: PROJECTS[1], x: 0, y: 1.8, z: -208, side: "right" as const },
-        { project: PROJECTS[2], x: 0, y: 1.8, z: -221, side: "left" as const },
-        { project: PROJECTS[3], x: 0, y: 1.8, z: -234, side: "right" as const },
-        { project: PROJECTS[4], x: 0, y: 1.8, z: -247, side: "left" as const },
-        { project: PROJECTS[5], x: 0, y: 1.8, z: -260, side: "right" as const },
-        { project: PROJECTS[6], x: 0, y: 1.8, z: -273, side: "left" as const },
-        { project: PROJECTS[7], x: 0, y: 1.8, z: -286, side: "right" as const },
-        { project: PROJECTS[8], x: 0, y: 1.8, z: -299, side: "left" as const },
-        { project: PROJECTS[9], x: 0, y: 1.8, z: -312, side: "right" as const },
+        { project: PROJECTS[0], x: 0, y: 1.8, z: -192, side: "left" as const },
+        { project: PROJECTS[1], x: 0, y: 1.8, z: -210, side: "right" as const },
+        { project: PROJECTS[2], x: 0, y: 1.8, z: -228, side: "left" as const },
+        { project: PROJECTS[3], x: 0, y: 1.8, z: -246, side: "right" as const },
+        { project: PROJECTS[4], x: 0, y: 1.8, z: -264, side: "left" as const },
+        { project: PROJECTS[5], x: 0, y: 1.8, z: -282, side: "right" as const },
+        { project: PROJECTS[6], x: 0, y: 1.8, z: -300, side: "left" as const },
+        { project: PROJECTS[7], x: 0, y: 1.8, z: -318, side: "right" as const },
+        { project: PROJECTS[8], x: 0, y: 1.8, z: -336, side: "left" as const },
+        { project: PROJECTS[9], x: 0, y: 1.8, z: -354, side: "right" as const },
       ].filter((item) => Boolean(item.project));
     }
     return [
-      { project: PROJECTS[0], x: -5.1, y: 1.8, z: -195, side: "left" as const },
-      { project: PROJECTS[1], x: 5.1, y: 1.8, z: -208, side: "right" as const },
-      { project: PROJECTS[2], x: -5.1, y: 1.8, z: -221, side: "left" as const },
-      { project: PROJECTS[3], x: 5.1, y: 1.8, z: -234, side: "right" as const },
-      { project: PROJECTS[4], x: -5.1, y: 1.8, z: -247, side: "left" as const },
-      { project: PROJECTS[5], x: 5.1, y: 1.8, z: -260, side: "right" as const },
-      { project: PROJECTS[6], x: -5.1, y: 1.8, z: -273, side: "left" as const },
-      { project: PROJECTS[7], x: 5.1, y: 1.8, z: -286, side: "right" as const },
-      { project: PROJECTS[8], x: -5.1, y: 1.8, z: -299, side: "left" as const },
-      { project: PROJECTS[9], x: 5.1, y: 1.8, z: -312, side: "right" as const },
+      { project: PROJECTS[0], x: -5.1, y: 1.8, z: -192, side: "left" as const },
+      { project: PROJECTS[1], x: 5.1, y: 1.8, z: -210, side: "right" as const },
+      { project: PROJECTS[2], x: -5.1, y: 1.8, z: -228, side: "left" as const },
+      { project: PROJECTS[3], x: 5.1, y: 1.8, z: -246, side: "right" as const },
+      { project: PROJECTS[4], x: -5.1, y: 1.8, z: -264, side: "left" as const },
+      { project: PROJECTS[5], x: 5.1, y: 1.8, z: -282, side: "right" as const },
+      { project: PROJECTS[6], x: -5.1, y: 1.8, z: -300, side: "left" as const },
+      { project: PROJECTS[7], x: 5.1, y: 1.8, z: -318, side: "right" as const },
+      { project: PROJECTS[8], x: -5.1, y: 1.8, z: -336, side: "left" as const },
+      { project: PROJECTS[9], x: 5.1, y: 1.8, z: -354, side: "right" as const },
     ].filter((item) => Boolean(item.project));
   }, [isMobile]);
 

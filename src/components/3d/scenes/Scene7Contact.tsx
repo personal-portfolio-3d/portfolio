@@ -95,7 +95,7 @@ export function Scene7Contact({ currentZ, onRestartExperience }: Scene7ContactPr
           pointerEvents: opacity > 0.4 ? "auto" : "none",
         }}
       >
-        <div className="w-[92vw] max-w-[400px] md:max-w-[780px] p-5 sm:p-7 rounded-3xl bg-[#060F22]/55 border-2 border-[#22D3EE] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_28px_rgba(34,211,238,0.35)] relative overflow-visible select-none">
+        <div className="w-[92vw] max-w-[400px] md:max-w-[780px] p-5 sm:p-7 rounded-3xl bg-[#040816]/95 sm:bg-[#060F22]/55 border-2 border-[#22D3EE] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.75),0_0_28px_rgba(34,211,238,0.35)] relative overflow-visible select-none">
           {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
           <NeonCardBorders rounded="3xl" />
           {/* Top Energy Accent */}
