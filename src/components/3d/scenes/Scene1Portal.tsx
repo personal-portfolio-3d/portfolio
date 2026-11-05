@@ -26,6 +26,10 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
   const flashlight1PointRef = useRef<THREE.PointLight>(null);
   const flashlight2SpotRef = useRef<THREE.SpotLight>(null);
   const flashlight2PointRef = useRef<THREE.PointLight>(null);
+  const flashlight3SpotRef = useRef<THREE.SpotLight>(null);
+  const flashlight3PointRef = useRef<THREE.PointLight>(null);
+  const flashlight4SpotRef = useRef<THREE.SpotLight>(null);
+  const flashlight4PointRef = useRef<THREE.PointLight>(null);
 
   const flashlight1Target = useMemo(() => {
     const obj = new THREE.Object3D();
@@ -39,6 +43,18 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
     return obj;
   }, []);
 
+  const flashlight3Target = useMemo(() => {
+    const obj = new THREE.Object3D();
+    obj.position.set(6.9, 1.8, 0);
+    return obj;
+  }, []);
+
+  const flashlight4Target = useMemo(() => {
+    const obj = new THREE.Object3D();
+    obj.position.set(-6.9, 1.8, 0);
+    return obj;
+  }, []);
+
   useEffect(() => {
     if (flashlight1SpotRef.current && flashlight1Target) {
       flashlight1SpotRef.current.target = flashlight1Target;
@@ -46,7 +62,13 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
     if (flashlight2SpotRef.current && flashlight2Target) {
       flashlight2SpotRef.current.target = flashlight2Target;
     }
-  }, [flashlight1Target, flashlight2Target]);
+    if (flashlight3SpotRef.current && flashlight3Target) {
+      flashlight3SpotRef.current.target = flashlight3Target;
+    }
+    if (flashlight4SpotRef.current && flashlight4Target) {
+      flashlight4SpotRef.current.target = flashlight4Target;
+    }
+  }, [flashlight1Target, flashlight2Target, flashlight3Target, flashlight4Target]);
 
   // Portal placed further down the highway at Z = -18 on desktop, -13 on mobile so it cleanly frames the intro
   const portalZ = isMobile ? -13 : -18;
@@ -88,7 +110,7 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
     if (innerSpinRef.current) {
       innerSpinRef.current.rotation.z = -t * 0.16;
     }
-    // Organic flashlight aim sway (as if someone is holding a flashlight pointed at the upper black housing)
+    // Organic flashlight aim sway (as if flashlights are pointed at parts of the black housing)
     if (flashlight1Target) {
       flashlight1Target.position.x = 1.8 + Math.sin(t * 0.75) * 0.28;
       flashlight1Target.position.y = 7.0 + Math.cos(t * 0.6) * 0.16;
@@ -104,6 +126,24 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
     if (flashlight2PointRef.current) {
       flashlight2PointRef.current.position.x = -2.0 + Math.cos(t * 0.7) * 0.24;
       flashlight2PointRef.current.position.y = 6.7 + Math.sin(t * 0.85) * 0.14;
+    }
+    // Right flank flashlight sway
+    if (flashlight3Target) {
+      flashlight3Target.position.x = 6.9 + Math.cos(t * 0.8) * 0.18;
+      flashlight3Target.position.y = 1.8 + Math.sin(t * 0.7) * 0.22;
+    }
+    if (flashlight3PointRef.current) {
+      flashlight3PointRef.current.position.x = 6.9 + Math.cos(t * 0.8) * 0.15;
+      flashlight3PointRef.current.position.y = 1.8 + Math.sin(t * 0.7) * 0.18;
+    }
+    // Left flank flashlight sway
+    if (flashlight4Target) {
+      flashlight4Target.position.x = -6.9 + Math.sin(t * 0.75) * 0.18;
+      flashlight4Target.position.y = 1.8 + Math.cos(t * 0.65) * 0.22;
+    }
+    if (flashlight4PointRef.current) {
+      flashlight4PointRef.current.position.x = -6.9 + Math.sin(t * 0.75) * 0.15;
+      flashlight4PointRef.current.position.y = 1.8 + Math.cos(t * 0.65) * 0.18;
     }
   });
 
@@ -264,6 +304,52 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
           intensity={4.0}
           color="#00D2FF"
           distance={4.0}
+          decay={2}
+        />
+
+        {/* Flashlight 3: Pointed at right-side flank of the black housing */}
+        <primitive object={flashlight3Target} />
+        <spotLight
+          ref={flashlight3SpotRef}
+          position={[7.8, 2.4, 3.6]}
+          target={flashlight3Target}
+          angle={0.42}
+          penumbra={0.85}
+          intensity={20}
+          color="#00D2FF"
+          distance={10}
+          decay={2}
+        />
+        {/* Localized specular highlight hotspot on right flank */}
+        <pointLight
+          ref={flashlight3PointRef}
+          position={[6.9, 1.8, 1.4]}
+          intensity={4.6}
+          color="#00D2FF"
+          distance={4.2}
+          decay={2}
+        />
+
+        {/* Flashlight 4: Pointed at left-side flank of the black housing */}
+        <primitive object={flashlight4Target} />
+        <spotLight
+          ref={flashlight4SpotRef}
+          position={[-7.8, 2.4, 3.6]}
+          target={flashlight4Target}
+          angle={0.42}
+          penumbra={0.85}
+          intensity={20}
+          color="#00D2FF"
+          distance={10}
+          decay={2}
+        />
+        {/* Localized specular highlight hotspot on left flank */}
+        <pointLight
+          ref={flashlight4PointRef}
+          position={[-6.9, 1.8, 1.4]}
+          intensity={4.6}
+          color="#00D2FF"
+          distance={4.2}
           decay={2}
         />
 
