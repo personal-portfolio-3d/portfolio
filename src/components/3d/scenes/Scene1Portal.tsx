@@ -20,6 +20,7 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
 
   const outerSpinRef = useRef<THREE.Group>(null);
   const innerSpinRef = useRef<THREE.Group>(null);
+  const housingShineRef = useRef<THREE.Group>(null);
 
   // Portal placed further down the highway at Z = -18 on desktop, -13 on mobile so it cleanly frames the intro
   const portalZ = isMobile ? -13 : -18;
@@ -60,6 +61,9 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
     }
     if (innerSpinRef.current) {
       innerSpinRef.current.rotation.z = -t * 0.16;
+    }
+    if (housingShineRef.current) {
+      housingShineRef.current.rotation.z = t * 0.12;
     }
   });
 
@@ -176,24 +180,35 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
       {/* 2. THE STARTING PORTAL UNIT                                    */}
       {/* ============================================================== */}
       <group position={[0, isMobile ? 3.8 : 4.4, portalZ]}>
-        {/* Main Massive Heavy Obsidian/Black Outer Housing */}
+        {/* Dedicated Local Cyber Portal Lights to bring out shine and reflection on black housing */}
+        <pointLight position={[0, 0, 3.2]} intensity={2.4} color="#00D2FF" distance={22} decay={2} />
+        <pointLight position={[-6.8, 4.2, 1.2]} intensity={1.6} color="#00D2FF" distance={15} decay={2} />
+        <pointLight position={[6.8, 4.2, 1.2]} intensity={1.6} color="#22D3EE" distance={15} decay={2} />
+        <pointLight position={[0, -5.2, 1.5]} intensity={1.2} color="#168BFF" distance={14} decay={2} />
+
+        {/* Main Massive Heavy Obsidian/Metallic Outer Housing */}
         <mesh position={[0, 0, 0]}>
           <torusGeometry args={[7.2, 0.42, 32, 100]} />
           <meshStandardMaterial
-            color="#04060E"
-            roughness={0.2}
-            metalness={0.95}
-            envMapIntensity={1}
+            color="#081426"
+            emissive="#00D2FF"
+            emissiveIntensity={0.25}
+            roughness={0.16}
+            metalness={0.92}
+            envMapIntensity={2.4}
           />
         </mesh>
 
-        {/* Secondary Inner Bevel Black Collar */}
+        {/* Secondary Inner Bevel Collar with Sheen */}
         <mesh position={[0, 0, 0.08]}>
           <torusGeometry args={[6.6, 0.22, 24, 80]} />
           <meshStandardMaterial
-            color="#020308"
-            roughness={0.3}
-            metalness={0.9}
+            color="#061022"
+            emissive="#168BFF"
+            emissiveIntensity={0.2}
+            roughness={0.22}
+            metalness={0.88}
+            envMapIntensity={2.0}
           />
         </mesh>
 
@@ -201,11 +216,74 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
         <mesh position={[0, 0, -0.1]}>
           <torusGeometry args={[6.0, 0.18, 24, 80]} />
           <meshStandardMaterial
-            color="#03050B"
-            roughness={0.4}
+            color="#040916"
+            emissive="#00D2FF"
+            emissiveIntensity={0.15}
+            roughness={0.3}
             metalness={0.8}
+            envMapIntensity={1.5}
           />
         </mesh>
+
+        {/* Outermost Glossy Cyan Bevel Rim Accent (Rings outer edge with brilliant gleam) */}
+        <mesh position={[0, 0, 0.06]}>
+          <torusGeometry args={[7.54, 0.035, 16, 96]} />
+          <meshStandardMaterial
+            color="#00D2FF"
+            emissive="#00D2FF"
+            emissiveIntensity={3.4}
+            roughness={0.1}
+            toneMapped={false}
+          />
+        </mesh>
+
+        {/* Mid-Housing Specular Accent Groove (Concentric cyan specular ring) */}
+        <mesh position={[0, 0, 0.1]}>
+          <torusGeometry args={[6.88, 0.028, 16, 96]} />
+          <meshStandardMaterial
+            color="#22D3EE"
+            emissive="#22D3EE"
+            emissiveIntensity={2.8}
+            roughness={0.12}
+            toneMapped={false}
+          />
+        </mesh>
+
+        {/* Inner Lip Metallic Accent Ring */}
+        <mesh position={[0, 0, 0.04]}>
+          <torusGeometry args={[6.25, 0.024, 16, 96]} />
+          <meshStandardMaterial
+            color="#168BFF"
+            emissive="#168BFF"
+            emissiveIntensity={3.0}
+            roughness={0.12}
+            toneMapped={false}
+          />
+        </mesh>
+
+        {/* Dynamic Sweeping Specular Chrome Glint traveling around the outer housing */}
+        <group ref={housingShineRef} position={[0, 0, 0.08]}>
+          <mesh rotation={[0, 0, 0]}>
+            <torusGeometry args={[7.2, 0.045, 16, 64, Math.PI * 0.45]} />
+            <meshStandardMaterial
+              color="#FFFFFF"
+              emissive="#00D2FF"
+              emissiveIntensity={3.8}
+              roughness={0.08}
+              toneMapped={false}
+            />
+          </mesh>
+          <mesh rotation={[0, 0, Math.PI]}>
+            <torusGeometry args={[7.2, 0.045, 16, 64, Math.PI * 0.45]} />
+            <meshStandardMaterial
+              color="#FFFFFF"
+              emissive="#22D3EE"
+              emissiveIntensity={3.8}
+              roughness={0.08}
+              toneMapped={false}
+            />
+          </mesh>
+        </group>
 
         {/* Segmented Pink & Blue Outer Lights (Refined balanced thickness) */}
         <group ref={outerSpinRef} position={[0, 0, 0.16]}>
