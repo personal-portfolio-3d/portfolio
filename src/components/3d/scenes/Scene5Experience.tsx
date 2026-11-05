@@ -512,12 +512,16 @@ export function Scene5Experience({
     []
   );
 
-  // Per-node smooth opacity calculation for seamless proximity fade
+  // Per-node smooth opacity: on mobile, 100% solid before and while in view
   const getNodeOpacity = (idx: number) => {
     if (!isMobile) return opacity;
     const nodeZ = zPos + nodePositions[idx][2];
-    const nodeDist = Math.abs(currentZ - nodeZ);
-    return nodeDist > 22 ? 0 : Math.max(0, 1 - nodeDist / 16);
+    const relZ = currentZ - nodeZ;
+    if (relZ > 20) return 0;
+    if (relZ > 12) return (20 - relZ) / 8;
+    if (relZ >= 3.5) return 1.0;
+    if (relZ > -2.5) return (relZ - (-2.5)) / 6;
+    return 0;
   };
 
   // BORDER-ONLY CONNECTION COORDINATES (Lines connect at borders - NEVER pass through circles!)

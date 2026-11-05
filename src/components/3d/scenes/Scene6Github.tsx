@@ -375,11 +375,19 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
     setTimeout(() => setCopiedCommand(false), 2000);
   };
 
-  // Continuous smooth linear opacity across approach distance
+  // Continuous smooth opacity: on mobile, 100% solid before and while in view
   const opacity = useMemo(() => {
+    if (isMobile) {
+      const relZ = currentZ - zPos;
+      if (relZ > 24) return 0;
+      if (relZ > 14) return (24 - relZ) / 10;
+      if (relZ >= 3.5) return 1.0;
+      if (relZ > -3.0) return (relZ - (-3.0)) / 6.5;
+      return 0;
+    }
     if (dist > 52) return 0;
     return Math.max(0, 1 - dist / 46);
-  }, [dist]);
+  }, [dist, currentZ, zPos, isMobile]);
 
   // Generate 3D Neural Constellation Network background lines
   const { nodePositions, linePositions } = useMemo(() => {

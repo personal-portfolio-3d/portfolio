@@ -23,7 +23,8 @@ export function Scene7Contact({ currentZ, onRestartExperience }: Scene7ContactPr
 
   const opacity = useMemo(() => {
     if (dist > 45) return 0;
-    return Math.max(0, 1 - dist / 40);
+    if (dist > 20) return Math.max(0, 1 - (dist - 20) / 25);
+    return 1.0;
   }, [dist]);
 
   useFrame((state) => {

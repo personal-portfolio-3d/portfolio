@@ -41,10 +41,21 @@ function ProjectRoadsideCard({
   const groupRef = useRef<THREE.Group>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  const dist = Math.abs(currentZ - z);
-  const maxDist = isMobile ? 16 : 38;
-  const fadeDist = isMobile ? 11 : 28;
-  const opacity = dist > maxDist ? 0 : Math.max(0, 1 - dist / fadeDist);
+  // On mobile: Card becomes 100% FULLY OPAQUE before and while in view, fading out only as camera passes it
+  const opacity = useMemo(() => {
+    if (isMobile) {
+      const relZ = currentZ - z;
+      if (relZ > 20) return 0; // Far ahead down the highway
+      if (relZ > 12) return (20 - relZ) / 8; // Smooth approach fade-in
+      if (relZ >= 3.5) return 1.0; // SWEET SPOT: 100% solid, fully legible, perfectly in view!
+      if (relZ > -2.5) return (relZ - (-2.5)) / 6; // Smooth fade-out behind camera
+      return 0;
+    }
+    const dist = Math.abs(currentZ - z);
+    const maxDist = 38;
+    const fadeDist = 28;
+    return dist > maxDist ? 0 : Math.max(0, 1 - dist / fadeDist);
+  }, [currentZ, z, isMobile]);
 
   const isLeft = side === "left";
   // On mobile: cards face screen directly along highway centerline (rotY = 0)

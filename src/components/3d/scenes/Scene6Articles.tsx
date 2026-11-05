@@ -54,9 +54,17 @@ export function Scene6Articles({ currentZ, isModalOpen }: Scene6ArticlesProps) {
   const roadEmblemRef = useRef<THREE.Group>(null);
 
   const opacity = useMemo(() => {
+    if (isMobile) {
+      const relZ = currentZ - zPos;
+      if (relZ > 24) return 0;
+      if (relZ > 14) return (24 - relZ) / 10;
+      if (relZ >= 3.5) return 1.0;
+      if (relZ > -3.0) return (relZ - (-3.0)) / 6.5;
+      return 0;
+    }
     if (dist > 52) return 0;
     return Math.max(0, 1 - dist / 44);
-  }, [dist]);
+  }, [dist, currentZ, zPos, isMobile]);
 
   // Subtle rotation of road holographic emblem
   useFrame((state) => {

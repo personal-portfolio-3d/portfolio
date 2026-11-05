@@ -78,16 +78,23 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
   }, [dist]);
 
   // Sequential card opacities on mobile as user drives forward
+  // Card is fully 100% visible BEFORE & WHEN in view, and smoothly fades out behind
   const card1MobileOpacity = useMemo(() => {
-    const d = Math.abs(currentZ - (zPos + 5));
-    if (d > 25) return 0;
-    return Math.max(0, 1 - d / 20);
+    const relZ = currentZ - (zPos + 12);
+    if (relZ > 22) return 0;
+    if (relZ > 13) return (22 - relZ) / 9;
+    if (relZ >= 3.5) return 1.0;
+    if (relZ > -2.5) return (relZ - (-2.5)) / 6;
+    return 0;
   }, [currentZ, zPos]);
 
   const card2MobileOpacity = useMemo(() => {
-    const d = Math.abs(currentZ - (zPos - 5));
-    if (d > 25) return 0;
-    return Math.max(0, 1 - d / 20);
+    const relZ = currentZ - (zPos - 12);
+    if (relZ > 22) return 0;
+    if (relZ > 13) return (22 - relZ) / 9;
+    if (relZ >= 3.5) return 1.0;
+    if (relZ > -2.5) return (relZ - (-2.5)) / 6;
+    return 0;
   }, [currentZ, zPos]);
 
   if (opacity <= 0.01) return null;
@@ -121,7 +128,7 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
       {/* Left Glassmorphic HUD Card: ABOUT ME */}
       <AboutRoadsideCard
         side="left"
-        position={isMobile ? [0, 0.4, 5] : [-4.8, 0.4, 0]}
+        position={isMobile ? [0, 0.4, 12] : [-4.8, 0.4, 0]}
         opacity={isMobile ? card1MobileOpacity : opacity}
         isModalOpen={isModalOpen}
         isMobile={isMobile}
@@ -241,7 +248,7 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
       {/* Right Glassmorphic HUD Card: PHILOSOPHY */}
       <AboutRoadsideCard
         side="right"
-        position={isMobile ? [0, 0.4, -5] : [4.8, 0.4, 0]}
+        position={isMobile ? [0, 0.4, -12] : [4.8, 0.4, 0]}
         opacity={isMobile ? card2MobileOpacity : opacity}
         isModalOpen={isModalOpen}
         isMobile={isMobile}
