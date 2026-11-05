@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
@@ -20,7 +20,33 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
 
   const outerSpinRef = useRef<THREE.Group>(null);
   const innerSpinRef = useRef<THREE.Group>(null);
-  const housingShineRef = useRef<THREE.Group>(null);
+
+  // Flashlight light sources and dynamic aim targets
+  const flashlight1SpotRef = useRef<THREE.SpotLight>(null);
+  const flashlight1PointRef = useRef<THREE.PointLight>(null);
+  const flashlight2SpotRef = useRef<THREE.SpotLight>(null);
+  const flashlight2PointRef = useRef<THREE.PointLight>(null);
+
+  const flashlight1Target = useMemo(() => {
+    const obj = new THREE.Object3D();
+    obj.position.set(1.8, 7.0, 0);
+    return obj;
+  }, []);
+
+  const flashlight2Target = useMemo(() => {
+    const obj = new THREE.Object3D();
+    obj.position.set(-2.0, 6.7, 0);
+    return obj;
+  }, []);
+
+  useEffect(() => {
+    if (flashlight1SpotRef.current && flashlight1Target) {
+      flashlight1SpotRef.current.target = flashlight1Target;
+    }
+    if (flashlight2SpotRef.current && flashlight2Target) {
+      flashlight2SpotRef.current.target = flashlight2Target;
+    }
+  }, [flashlight1Target, flashlight2Target]);
 
   // Portal placed further down the highway at Z = -18 on desktop, -13 on mobile so it cleanly frames the intro
   const portalZ = isMobile ? -13 : -18;
@@ -62,8 +88,22 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
     if (innerSpinRef.current) {
       innerSpinRef.current.rotation.z = -t * 0.16;
     }
-    if (housingShineRef.current) {
-      housingShineRef.current.rotation.z = t * 0.12;
+    // Organic flashlight aim sway (as if someone is holding a flashlight pointed at the upper black housing)
+    if (flashlight1Target) {
+      flashlight1Target.position.x = 1.8 + Math.sin(t * 0.75) * 0.28;
+      flashlight1Target.position.y = 7.0 + Math.cos(t * 0.6) * 0.16;
+    }
+    if (flashlight1PointRef.current) {
+      flashlight1PointRef.current.position.x = 1.8 + Math.sin(t * 0.75) * 0.24;
+      flashlight1PointRef.current.position.y = 7.0 + Math.cos(t * 0.6) * 0.14;
+    }
+    if (flashlight2Target) {
+      flashlight2Target.position.x = -2.0 + Math.cos(t * 0.7) * 0.28;
+      flashlight2Target.position.y = 6.7 + Math.sin(t * 0.85) * 0.16;
+    }
+    if (flashlight2PointRef.current) {
+      flashlight2PointRef.current.position.x = -2.0 + Math.cos(t * 0.7) * 0.24;
+      flashlight2PointRef.current.position.y = 6.7 + Math.sin(t * 0.85) * 0.14;
     }
   });
 
@@ -180,110 +220,93 @@ export function Scene1Portal({ currentZ, onExploreClick, isModalOpen }: Scene1Po
       {/* 2. THE STARTING PORTAL UNIT                                    */}
       {/* ============================================================== */}
       <group position={[0, isMobile ? 3.8 : 4.4, portalZ]}>
-        {/* Dedicated Local Cyber Portal Lights to bring out shine and reflection on black housing */}
-        <pointLight position={[0, 0, 3.2]} intensity={2.4} color="#00D2FF" distance={22} decay={2} />
-        <pointLight position={[-6.8, 4.2, 1.2]} intensity={1.6} color="#00D2FF" distance={15} decay={2} />
-        <pointLight position={[6.8, 4.2, 1.2]} intensity={1.6} color="#22D3EE" distance={15} decay={2} />
-        <pointLight position={[0, -5.2, 1.5]} intensity={1.2} color="#168BFF" distance={14} decay={2} />
+        {/* Flashlight Light Sources Aimed Specifically at Upper Black Housing */}
+        {/* Flashlight 1: Pointed at upper-right section of the black housing */}
+        <primitive object={flashlight1Target} />
+        <spotLight
+          ref={flashlight1SpotRef}
+          position={[2.4, 7.8, 3.6]}
+          target={flashlight1Target}
+          angle={0.44}
+          penumbra={0.85}
+          intensity={22}
+          color="#00D2FF"
+          distance={10}
+          decay={2}
+        />
+        {/* Localized specular highlight hotspot reflecting directly back into camera */}
+        <pointLight
+          ref={flashlight1PointRef}
+          position={[1.8, 7.0, 1.4]}
+          intensity={4.8}
+          color="#00D2FF"
+          distance={4.2}
+          decay={2}
+        />
 
-        {/* Main Massive Heavy Obsidian/Metallic Outer Housing */}
+        {/* Flashlight 2: Pointed at upper-left section of the black housing */}
+        <primitive object={flashlight2Target} />
+        <spotLight
+          ref={flashlight2SpotRef}
+          position={[-2.8, 7.4, 3.6]}
+          target={flashlight2Target}
+          angle={0.42}
+          penumbra={0.85}
+          intensity={18}
+          color="#00D2FF"
+          distance={10}
+          decay={2}
+        />
+        {/* Localized specular highlight hotspot reflecting directly back into camera */}
+        <pointLight
+          ref={flashlight2PointRef}
+          position={[-2.0, 6.7, 1.4]}
+          intensity={4.0}
+          color="#00D2FF"
+          distance={4.0}
+          decay={2}
+        />
+
+        {/* Main Massive Heavy Obsidian/Lacquer Pure Black Outer Housing */}
         <mesh position={[0, 0, 0]}>
           <torusGeometry args={[7.2, 0.42, 32, 100]} />
-          <meshStandardMaterial
-            color="#081426"
-            emissive="#00D2FF"
-            emissiveIntensity={0.25}
-            roughness={0.16}
-            metalness={0.92}
-            envMapIntensity={2.4}
+          <meshPhysicalMaterial
+            color="#000000"
+            emissive="#000000"
+            roughness={0.14}
+            metalness={0.15}
+            clearcoat={1.0}
+            clearcoatRoughness={0.06}
+            reflectivity={1.0}
           />
         </mesh>
 
-        {/* Secondary Inner Bevel Collar with Sheen */}
+        {/* Secondary Inner Bevel Glossy Black Collar */}
         <mesh position={[0, 0, 0.08]}>
           <torusGeometry args={[6.6, 0.22, 24, 80]} />
-          <meshStandardMaterial
-            color="#061022"
-            emissive="#168BFF"
-            emissiveIntensity={0.2}
-            roughness={0.22}
-            metalness={0.88}
-            envMapIntensity={2.0}
+          <meshPhysicalMaterial
+            color="#010102"
+            emissive="#000000"
+            roughness={0.18}
+            metalness={0.12}
+            clearcoat={0.85}
+            clearcoatRoughness={0.08}
+            reflectivity={0.9}
           />
         </mesh>
 
         {/* Inner Recessed Dark Lip */}
         <mesh position={[0, 0, -0.1]}>
           <torusGeometry args={[6.0, 0.18, 24, 80]} />
-          <meshStandardMaterial
-            color="#040916"
-            emissive="#00D2FF"
-            emissiveIntensity={0.15}
-            roughness={0.3}
-            metalness={0.8}
-            envMapIntensity={1.5}
+          <meshPhysicalMaterial
+            color="#020203"
+            emissive="#000000"
+            roughness={0.25}
+            metalness={0.1}
+            clearcoat={0.6}
+            clearcoatRoughness={0.12}
           />
         </mesh>
-
-        {/* Outermost Glossy Cyan Bevel Rim Accent (Rings outer edge with brilliant gleam) */}
-        <mesh position={[0, 0, 0.06]}>
-          <torusGeometry args={[7.54, 0.035, 16, 96]} />
-          <meshStandardMaterial
-            color="#00D2FF"
-            emissive="#00D2FF"
-            emissiveIntensity={3.4}
-            roughness={0.1}
-            toneMapped={false}
-          />
-        </mesh>
-
-        {/* Mid-Housing Specular Accent Groove (Concentric cyan specular ring) */}
-        <mesh position={[0, 0, 0.1]}>
-          <torusGeometry args={[6.88, 0.028, 16, 96]} />
-          <meshStandardMaterial
-            color="#22D3EE"
-            emissive="#22D3EE"
-            emissiveIntensity={2.8}
-            roughness={0.12}
-            toneMapped={false}
-          />
-        </mesh>
-
-        {/* Inner Lip Metallic Accent Ring */}
-        <mesh position={[0, 0, 0.04]}>
-          <torusGeometry args={[6.25, 0.024, 16, 96]} />
-          <meshStandardMaterial
-            color="#168BFF"
-            emissive="#168BFF"
-            emissiveIntensity={3.0}
-            roughness={0.12}
-            toneMapped={false}
-          />
-        </mesh>
-
-        {/* Dynamic Sweeping Specular Chrome Glint traveling around the outer housing */}
-        <group ref={housingShineRef} position={[0, 0, 0.08]}>
-          <mesh rotation={[0, 0, 0]}>
-            <torusGeometry args={[7.2, 0.045, 16, 64, Math.PI * 0.45]} />
-            <meshStandardMaterial
-              color="#FFFFFF"
-              emissive="#00D2FF"
-              emissiveIntensity={3.8}
-              roughness={0.08}
-              toneMapped={false}
-            />
-          </mesh>
-          <mesh rotation={[0, 0, Math.PI]}>
-            <torusGeometry args={[7.2, 0.045, 16, 64, Math.PI * 0.45]} />
-            <meshStandardMaterial
-              color="#FFFFFF"
-              emissive="#22D3EE"
-              emissiveIntensity={3.8}
-              roughness={0.08}
-              toneMapped={false}
-            />
-          </mesh>
-        </group>
 
         {/* Segmented Pink & Blue Outer Lights (Refined balanced thickness) */}
         <group ref={outerSpinRef} position={[0, 0, 0.16]}>
