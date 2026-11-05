@@ -260,10 +260,10 @@ export function Scene3Skills({ currentZ, isModalOpen }: Scene3SkillsProps) {
                 onMouseLeave={() => setHoveredSkillId(null)}
                 className={`px-5 py-3.5 rounded-2xl transition-all duration-300 backdrop-blur-2xl relative cursor-pointer select-none whitespace-nowrap flex items-center gap-3.5 ${
                   isHovered
-                    ? "bg-[#050D1E]/95 sm:bg-[#081836]/75 border-2 shadow-[0_0_28px_rgba(34,211,238,0.7)]"
+                    ? "bg-[#030714] sm:bg-[#081836]/75 border-2 shadow-[0_0_28px_rgba(34,211,238,0.7)]"
                     : card.isPrimary
-                    ? "bg-[#040A18]/92 sm:bg-[#060F22]/55 border border-[#22D3EE]/55 shadow-[0_8px_25px_rgba(0,0,0,0.7),0_0_14px_rgba(34,211,238,0.35)]"
-                    : "bg-[#040A18]/90 sm:bg-[#060F22]/45 border border-[#168BFF]/40 shadow-[0_8px_20px_rgba(0,0,0,0.6)]"
+                    ? "bg-[#030714] sm:bg-[#060F22]/55 border border-[#22D3EE]/55 shadow-[0_8px_25px_rgba(0,0,0,0.7),0_0_14px_rgba(34,211,238,0.35)]"
+                    : "bg-[#030714] sm:bg-[#060F22]/45 border border-[#168BFF]/40 shadow-[0_8px_20px_rgba(0,0,0,0.6)]"
                 }`}
                 style={{
                   borderColor: isHovered ? card.iconColor : undefined,

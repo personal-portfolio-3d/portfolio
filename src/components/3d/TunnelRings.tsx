@@ -16,17 +16,17 @@ export function TunnelRings({ velocity = 0 }: TunnelRingsProps) {
       // Skills entrance
       -115, -125,
       // Projects portal
-      -185, -195,
-      // Experience timeline arch
-      -342, -352,
-      // Medium Articles entrance
-      -442, -452,
-      // Achievements & Open Source portal
-      -542, -552,
-      // Final destination hyper-portal (Scene 8 Contact)
-      -640, -648, -654, -660,
+      -180, -186,
+      // Experience timeline arch (ahead of -410)
+      -392, -402,
+      // Medium Articles entrance (ahead of -510)
+      -492, -502,
+      // Achievements & Open Source portal (ahead of -610)
+      -592, -602,
+      // Final destination hyper-portal (Scene 8 Contact at -710)
+      -690, -698, -704, -710,
       // Continuous highway arches extending deep past Contact
-      -668, -678, -690, -705, -725, -750, -780, -815, -855, -900, -950, -1010, -1080, -1160, -1250, -1350,
+      -718, -728, -740, -755, -775, -800, -830, -865, -905, -950, -1000, -1060, -1130, -1210, -1300, -1400,
     ],
     []
   );
@@ -34,7 +34,7 @@ export function TunnelRings({ velocity = 0 }: TunnelRingsProps) {
   return (
     <group>
       {portalZPositions.map((z, index) => {
-        const isExitPortal = z >= -665 && z <= -635;
+        const isExitPortal = z >= -715 && z <= -685;
         const radius = isExitPortal ? 7.6 + (index % 4) * 0.4 : 7.2;
 
         // 70% Electric Neon Blue, 20% Cyan, 10% Violet
@@ -60,7 +60,7 @@ export function TunnelRings({ velocity = 0 }: TunnelRingsProps) {
             </mesh>
 
             {/* Subtle Inner Accent Glow */}
-            {(isExitPortal || (z < -665 && index % 2 === 0)) && (
+            {(isExitPortal || (z < -715 && index % 2 === 0)) && (
               <mesh position={[0, 0, 0.15]}>
                 <torusGeometry args={[radius - 0.55, 0.065, 16, 48, Math.PI]} />
                 <meshStandardMaterial

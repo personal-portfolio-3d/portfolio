@@ -46,7 +46,7 @@ export function Scene6Articles({ currentZ, isModalOpen }: Scene6ArticlesProps) {
   const { size, viewport } = useThree();
   const isMobile = size.width < 768 || viewport.aspect < 1.0;
 
-  const zPos = -460;
+  const zPos = -510;
   const dist = Math.abs(currentZ - zPos);
 
   const [activeCategory, setActiveCategory] = useState("All Posts");
@@ -345,7 +345,7 @@ export function Scene6Articles({ currentZ, isModalOpen }: Scene6ArticlesProps) {
                         href={article.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`group relative flex flex-col justify-between rounded-2xl p-4 bg-[#040816]/94 sm:bg-[#071122]/65 hover:bg-[#071122]/90 border backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer select-none overflow-visible shadow-[0_8px_32px_rgba(0,0,0,0.7)] ${
+                        className={`group relative flex flex-col justify-between rounded-2xl p-4 bg-[#030714] sm:bg-[#071122]/65 hover:bg-[#071122]/90 border backdrop-blur-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer select-none overflow-visible shadow-[0_8px_32px_rgba(0,0,0,0.8)] ${
                           isMobile ? "w-[85vw] max-w-[325px]" : "w-full"
                         } ${borderClasses}`}
                       >
@@ -363,15 +363,19 @@ export function Scene6Articles({ currentZ, isModalOpen }: Scene6ArticlesProps) {
                           </div>
                         </div>
 
-                        {/* Thumbnail Image / Tech Illustration */}
-                        <div className="relative w-full h-36 rounded-xl overflow-hidden mb-3.5 bg-[#03060D] border border-white/10">
+                        {/* Thumbnail Image / Tech Illustration - 100% Solid Opaque Backing on ALL screens */}
+                        <div
+                          className="relative w-full h-36 rounded-xl overflow-hidden mb-3.5 border border-[#22D3EE]/30 shadow-[0_4px_16px_rgba(0,0,0,0.85)]"
+                          style={{ backgroundColor: "#02050E", opacity: 1 }}
+                        >
+                          <div className="absolute inset-0 bg-[#02050E]" style={{ zIndex: 0 }} />
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={resolveAsset(article.image)}
                             alt={article.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            className="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-[#02050E]"
+                            style={{ backgroundColor: "#02050E", zIndex: 1 }}
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#071122] via-transparent to-transparent opacity-60" />
                         </div>
 
                       {/* Title */}

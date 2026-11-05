@@ -143,8 +143,8 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
               onMouseLeave={() => setIsHovered(false)}
               className={`w-[92vw] max-w-[390px] md:w-[470px] p-6 sm:p-7 rounded-2xl transition-all duration-300 backdrop-blur-2xl relative overflow-visible select-none flex flex-col justify-between ${
                 isHovered
-                  ? "bg-[#050D1E]/95 sm:bg-[#081836]/65 border-2 border-[#00D2FF] shadow-[0_0_35px_rgba(0,210,255,0.55)]"
-                  : "bg-[#040816]/94 sm:bg-[#060F22]/50 border border-[#00D2FF]/40 shadow-[0_8px_32px_rgba(0,0,0,0.7),0_0_20px_rgba(0,210,255,0.25)]"
+                  ? "bg-[#030714] sm:bg-[#081836]/65 border-2 border-[#00D2FF] shadow-[0_0_35px_rgba(0,210,255,0.55)]"
+                  : "bg-[#030714] sm:bg-[#060F22]/50 border border-[#00D2FF]/40 shadow-[0_8px_32px_rgba(0,0,0,0.85),0_0_20px_rgba(0,210,255,0.25)]"
               }`}
             >
               {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
@@ -263,8 +263,8 @@ export function Scene2About({ currentZ, onExploreMore, isModalOpen }: Scene2Abou
               onMouseLeave={() => setIsHovered(false)}
               className={`w-[92vw] max-w-[390px] md:w-[470px] p-6 sm:p-7 rounded-2xl transition-all duration-300 backdrop-blur-2xl relative overflow-visible select-none flex flex-col justify-between ${
                 isHovered
-                  ? "bg-[#050D1E]/95 sm:bg-[#081836]/65 border-2 border-[#168BFF] shadow-[0_0_35px_rgba(22,139,255,0.55)]"
-                  : "bg-[#040816]/94 sm:bg-[#060F22]/50 border border-[#168BFF]/45 shadow-[0_8px_32px_rgba(0,0,0,0.7),0_0_20px_rgba(22,139,255,0.25)]"
+                  ? "bg-[#030714] sm:bg-[#081836]/65 border-2 border-[#168BFF] shadow-[0_0_35px_rgba(22,139,255,0.55)]"
+                  : "bg-[#030714] sm:bg-[#060F22]/50 border border-[#168BFF]/45 shadow-[0_8px_32px_rgba(0,0,0,0.85),0_0_20px_rgba(22,139,255,0.25)]"
               }`}
             >
               {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}

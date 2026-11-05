@@ -119,8 +119,8 @@ function Achievement3DCard({
           onMouseLeave={() => setIsHovered(false)}
           className={`w-[90vw] max-w-[340px] sm:max-w-[350px] md:w-[350px] p-5 sm:p-6 rounded-3xl backdrop-blur-2xl transition-all duration-300 relative select-none flex flex-col justify-between overflow-visible group ${
             isHovered
-              ? "bg-[#050D1E]/95 sm:bg-[#061226]/85 border-2 border-[#00D2FF] shadow-[0_0_35px_rgba(0,210,255,0.45)]"
-              : "bg-[#040816]/95 sm:bg-[#040D1E]/80 border border-[#22D3EE]/40 shadow-[0_8px_32px_rgba(0,0,0,0.8),0_0_22px_rgba(34,211,238,0.2)]"
+              ? "bg-[#030714] sm:bg-[#061226]/85 border-2 border-[#00D2FF] shadow-[0_0_35px_rgba(0,210,255,0.45)]"
+              : "bg-[#030714] sm:bg-[#040D1E]/80 border border-[#22D3EE]/40 shadow-[0_8px_32px_rgba(0,0,0,0.85),0_0_22px_rgba(34,211,238,0.2)]"
           }`}
         >
           {/* Shiny Neon Blue Corner Edges */}
@@ -193,17 +193,21 @@ function Achievement3DCard({
               </span>
             </div>
 
-            {/* Project Image Banner with Solid Opaque Background */}
+            {/* Project Image Banner with 100% Solid Opaque Backing on ALL screens */}
             {project.image && (
-              <div className="relative w-full h-[105px] sm:h-[125px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-2 bg-[#040A18] shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
+              <div
+                className="relative w-full h-[105px] sm:h-[125px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-2 shadow-[0_4px_16px_rgba(0,0,0,0.85)]"
+                style={{ backgroundColor: "#02050E", opacity: 1 }}
+              >
+                <div className="absolute inset-0 bg-[#02050E]" style={{ zIndex: 0 }} />
                 <img
                   src={project.image}
                   alt={project.name}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-[#040A18]"
+                  className="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-[#02050E]"
+                  style={{ backgroundColor: "#02050E", zIndex: 1 }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#040A18]/50 via-transparent to-transparent pointer-events-none" />
               </div>
             )}
 
@@ -357,7 +361,7 @@ export function Scene6Github({ currentZ }: Scene6GithubProps) {
   const { size, viewport } = useThree();
   const isMobile = size.width < 768 || viewport.aspect < 1.0;
 
-  const zPos = -560;
+  const zPos = -610;
   const dist = Math.abs(currentZ - zPos);
   const constellationRef = useRef<THREE.Group>(null);
 

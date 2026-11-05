@@ -118,30 +118,34 @@ function ProjectRoadsideCard({
           onClick={() => onSelectProject(project)}
           className={`w-[90vw] max-w-[365px] md:w-[410px] p-5 sm:p-5.5 rounded-3xl transition-all duration-300 backdrop-blur-2xl relative cursor-pointer overflow-visible select-none group ${
             isHovered
-              ? "bg-[#050D1E]/95 sm:bg-[#061226]/55 border-2 border-[#22D3EE] shadow-[0_0_35px_rgba(34,211,238,0.55)]"
-              : "bg-[#040A18]/92 sm:bg-[#040817]/45 border border-[#22D3EE]/35 shadow-[0_8px_32px_rgba(0,0,0,0.7),0_0_22px_rgba(22,139,255,0.22)]"
+              ? "bg-[#030714] sm:bg-[#061226]/60 border-2 border-[#22D3EE] shadow-[0_0_35px_rgba(34,211,238,0.55)]"
+              : "bg-[#030714] sm:bg-[#040817]/45 border border-[#22D3EE]/35 shadow-[0_8px_32px_rgba(0,0,0,0.85),0_0_22px_rgba(22,139,255,0.22)]"
           }`}
         >
           {/* Shiny Neon Blue Corner Edges covering vertical and horizontal portions */}
           <NeonCardBorders rounded="3xl" />
 
-          {/* Project Image Thumbnail with Solid Opaque Background */}
-          <div className="relative w-full h-[165px] sm:h-[185px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-3.5 bg-[#040A18] shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
+          {/* Project Image Thumbnail - 100% Solid Opaque Backing on ALL screens */}
+          <div
+            className="relative w-full h-[165px] sm:h-[185px] rounded-2xl overflow-hidden border border-[#22D3EE]/40 mb-3.5 shadow-[0_6px_20px_rgba(0,0,0,0.85)]"
+            style={{ backgroundColor: "#02050E", opacity: 1 }}
+          >
+            <div className="absolute inset-0 bg-[#02050E]" style={{ zIndex: 0 }} />
             <img
               src={project.image}
               alt={project.title}
               loading="lazy"
               decoding="async"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-[#040A18]"
+              className="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-[#02050E]"
+              style={{ backgroundColor: "#02050E", zIndex: 1 }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#040A18]/60 via-transparent to-transparent pointer-events-none" />
 
             {/* Top Category Badge */}
-            <div className="absolute top-2.5 left-2.5 px-3 py-1 rounded-full bg-[#03060D]/85 border border-[#22D3EE]/70 text-[10.5px] font-mono text-[#22D3EE] font-bold shadow-[0_0_10px_rgba(34,211,238,0.5)]">
+            <div className="absolute top-2.5 left-2.5 z-10 px-3 py-1 rounded-full bg-[#03060D] border border-[#22D3EE]/70 text-[10.5px] font-mono text-[#22D3EE] font-bold shadow-[0_0_10px_rgba(34,211,238,0.5)]">
               {project.category}
             </div>
 
-            <div className="absolute bottom-2.5 right-2.5 p-2 rounded-full bg-[#168BFF] text-white shadow-[0_0_14px_#168BFF] group-hover:scale-110 transition-transform">
+            <div className="absolute bottom-2.5 right-2.5 z-10 p-2 rounded-full bg-[#168BFF] text-white shadow-[0_0_14px_#168BFF] group-hover:scale-110 transition-transform">
               <ArrowUpRight className="w-4 h-4 text-white" />
             </div>
           </div>
